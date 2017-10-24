@@ -8,6 +8,12 @@ public class Quiz {
     private Vector<String> choices;
     private Set<Integer> answers;
 
+    public Quiz(String question, Vector<String> choices, Set<Integer> answers) {
+        this.question = question;
+        this.choices = choices;
+        this.answers = answers;
+    }
+
     public String getQuestion() {
         return question;
     }

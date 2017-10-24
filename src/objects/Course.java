@@ -12,6 +12,12 @@ public class Course {
     private Vector<Note> sortedNotesByNumComments;
     private Vector<Note> sortedNotesByNumLikes;
 
+    public Course(String courseName, User instructor, Vector<User> students) {
+        this.courseName = courseName;
+        this.instructor = instructor;
+        this.students = students;
+    }
+
     public String getCourseName() {
         return courseName;
     }

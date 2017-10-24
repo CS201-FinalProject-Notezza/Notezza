@@ -11,6 +11,11 @@ public class Comment {
     private Set<User> likeUsers;
     private Set<User> dislikeUsers;
 
+    public Comment(User user, String content) {
+        this.user = user;
+        this.content = content;
+    }
+
     public User getUser() {
         return user;
     }
@@ -49,5 +54,25 @@ public class Comment {
 
     public void setDislikeUsers(Set<User> dislikeUsers) {
         this.dislikeUsers = dislikeUsers;
+    }
+
+    public int getScore() {
+        return likeUsers.size() - dislikeUsers.size();
+    }
+
+    public boolean hasLiked(User user) {
+        return likeUsers.contains(user);
+    }
+
+    public boolean hasDisliked(User user) {
+        return dislikeUsers.contains(user);
+    }
+
+    public void addLike(User user) {
+        likeUsers.add(user);
+    }
+
+    public void addDisklike(User user) {
+        dislikeUsers.add(user);
     }
 }

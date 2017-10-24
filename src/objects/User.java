@@ -12,6 +12,16 @@ public class User {
     private boolean isVisible;
     private Vector<Course> courses;
 
+    public User(String fname, String lname, String username, String email, long password, boolean isInstructor, boolean isVisible) {
+        this.fname = fname;
+        this.lname = lname;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isInstructor = isInstructor;
+        this.isVisible = isVisible;
+    }
+
     public void setFname(String fname) {
         this.fname = fname;
     }
@@ -76,6 +86,8 @@ public class User {
         return courses;
     }
 
+    public void addCourse(Course course){
 
+    }
 
 }

@@ -7,6 +7,10 @@ public class Engine {
     private Map<String,User> allUsers;
     private Set<Course> allCourses;
 
+    public Engine() {
+
+    }
+
     public Map<String, User> getAllUsers() {
         return allUsers;
     }

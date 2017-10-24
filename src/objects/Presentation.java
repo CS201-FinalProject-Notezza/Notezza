@@ -6,6 +6,11 @@ public class Presentation {
     private Vector<String> links;
     private Vector<Quiz> quizzes;
 
+    public Presentation(Vector<String> links, Vector<Quiz> quizzes) {
+        this.links = links;
+        this.quizzes = quizzes;
+    }
+
     public Vector<String> getLinks() {
         return links;
     }
