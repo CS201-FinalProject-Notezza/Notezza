@@ -87,7 +87,12 @@ public class User {
     }
 
     public void addCourse(Course course){
-
+        if (courses != null) {
+            courses.add(course);
+        } else {
+            courses = new Vector<>();
+            courses.add(course);
+        }
     }
 
 }

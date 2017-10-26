@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
@@ -98,7 +99,6 @@ public class Note {
         return likeUsers.size() - dislikeUsers.size();
     }
 
-
     public boolean hasLiked(User user) {
         return likeUsers.contains(user);
     }
@@ -108,18 +108,35 @@ public class Note {
     }
 
     public void addComment(Comment comment) {
-        comments.add(comment);
+        if (comments != null) {
+            comments.add(comment);
+        } else {
+            comments = new Vector<>();
+            comments.add(comment);
+        }
     }
 
     public void addLike(User user) {
-        likeUsers.add(user);
+        if (likeUsers != null) {
+            likeUsers.add(user);
+        } else {
+            likeUsers = new HashSet<>();
+            likeUsers.add(user);
+        }
     }
 
     public void addDislike(User user) {
-        dislikeUsers.add(user);
+        if (dislikeUsers != null) {
+            dislikeUsers.add(user);
+        } else {
+            dislikeUsers = new HashSet<>();
+            dislikeUsers.add(user);
+        }
     }
 
     @Override
+    // I actually don't know what this does.
+    // Someone implement this.
     public String toString() {
         return "";
     }

@@ -70,15 +70,32 @@ public class Course {
         return sortedNotesByNumComments;
     }
 
-    public void setSortedNotesByNumComments(Vector<Note> sortedNotesByNumComments) {
-        this.sortedNotesByNumComments = sortedNotesByNumComments;
-    }
+    public void setSortedNotesByNumComments(Vector<Note> sortedNotesByNumComments) { this.sortedNotesByNumComments = sortedNotesByNumComments; }
 
     public Vector<Note> getSortedNotesByNumLikes() {
         return sortedNotesByNumLikes;
     }
 
-    public void setSortedNotesByNumLikes(Vector<Note> sortedNotesByNumLikes) {
-        this.sortedNotesByNumLikes = sortedNotesByNumLikes;
+    public void setSortedNotesByNumLikes(Vector<Note> sortedNotesByNumLikes) { this.sortedNotesByNumLikes = sortedNotesByNumLikes; }
+
+    // I don't know what this does either
+    public Vector<Note> getFeeds() {
+        Vector<Note> feeds = new Vector<>();
+
+        return feeds;
+    }
+
+    //NEEEEEEEEEEEEED IMPLLEEEEEEEEEEMENTATIONNNNNNN
+    public Vector<Note> searchNote(String keyword) {
+        Vector<Note> notes = new Vector<>();
+
+        return notes;
+    }
+
+    public void addNote(Note note) {
+        if (allNotes == null) {
+            allNotes = new Vector<>();
+        }
+        allNotes.add(note);
     }
 }

@@ -37,4 +37,10 @@ public class Quiz {
     public void setAnswers(Set<Integer> answers) {
         this.answers = answers;
     }
+
+    // feel like we need a collection of correct answers
+    // NEEED IMPLEMENTATION LATERRRRRRRR!
+    public boolean isCorrect(Set<Integer> selectedAnswers) {
+        return false;
+    }
 }

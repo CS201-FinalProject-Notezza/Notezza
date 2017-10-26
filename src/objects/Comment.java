@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Comment {
@@ -69,10 +70,16 @@ public class Comment {
     }
 
     public void addLike(User user) {
+        if (likeUsers == null) {
+            likeUsers = new HashSet<>();
+        }
         likeUsers.add(user);
     }
 
     public void addDisklike(User user) {
+        if (dislikeUsers == null) {
+            dislikeUsers = new HashSet<>();
+        }
         dislikeUsers.add(user);
     }
 }

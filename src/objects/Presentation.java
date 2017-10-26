@@ -23,7 +23,5 @@ public class Presentation {
         return quizzes;
     }
 
-    public void setQuizzes(Vector<Quiz> quizzes) {
-        this.quizzes = quizzes;
-    }
+    public void setQuizzes(Vector<Quiz> quizzes) { this.quizzes = quizzes; }
 }
