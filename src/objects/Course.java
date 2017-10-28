@@ -8,6 +8,7 @@ public class Course {
     private Vector<User> students;
     private Vector<Note> allNotes;
     private Presentation currentLecture;
+    // Need further discussion on whether or not to cache the sets.
     private Vector<Note> sortedNotesByDate;
     private Vector<Note> sortedNotesByNumComments;
     private Vector<Note> sortedNotesByNumLikes;
@@ -62,21 +63,13 @@ public class Course {
         return sortedNotesByDate;
     }
 
-    public void setSortedNotesByDate(Vector<Note> sortedNotesByDate) {
-        this.sortedNotesByDate = sortedNotesByDate;
-    }
-
     public Vector<Note> getSortedNotesByNumComments() {
         return sortedNotesByNumComments;
     }
 
-    public void setSortedNotesByNumComments(Vector<Note> sortedNotesByNumComments) { this.sortedNotesByNumComments = sortedNotesByNumComments; }
-
     public Vector<Note> getSortedNotesByNumLikes() {
         return sortedNotesByNumLikes;
     }
-
-    public void setSortedNotesByNumLikes(Vector<Note> sortedNotesByNumLikes) { this.sortedNotesByNumLikes = sortedNotesByNumLikes; }
 
     // I don't know what this does either
     public Vector<Note> getFeeds() {

@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.Vector;
 
 public class Note {
-    private User user;
+    // Need discuss on setting finals
+    private final User user;
     private String title;
     private String textContent;
     private Vector<String> links;
@@ -59,10 +60,6 @@ public class Note {
         return dislikeUsers;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -85,14 +82,6 @@ public class Note {
 
     public void setComments(Vector<Comment> comments) {
         this.comments = comments;
-    }
-
-    public void setLikeUsers(Set<User> likeUsers) {
-        this.likeUsers = likeUsers;
-    }
-
-    public void setDislikeUsers(Set<User> dislikeUsers) {
-        this.dislikeUsers = dislikeUsers;
     }
 
     public int getRating() {
