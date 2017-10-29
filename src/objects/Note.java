@@ -8,20 +8,23 @@ import java.util.Vector;
 public class Note {
     // Need discuss on setting finals
     private final User user;
-    private String title;
-    private String textContent;
+    private final String title;
+    private final String textContent;
     private Vector<String> links;
     private Vector<String> tags;
-    private Date dateCreated;
+    private final String dateCreated;
     private Vector<Comment> comments;
     private Set<User> likeUsers;
     private Set<User> dislikeUsers;
 
-    public Note(User user, String title, Vector<String> links, Vector<String> tags) {
+    public Note(User user, String title, Vector<String> links, Vector<String> tags, String date, String textContent) {
         this.user = user;
         this.title = title;
         this.links = links;
         this.tags = tags;
+        // if we are not allow to change anything after uploading
+        this.dateCreated = date;
+        this.textContent = textContent;
     }
 
     public User getUser() {
@@ -44,7 +47,7 @@ public class Note {
         return tags;
     }
 
-    public Date getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
@@ -60,24 +63,12 @@ public class Note {
         return dislikeUsers;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setTextContent(String textContent) {
-        this.textContent = textContent;
-    }
-
     public void setLinks(Vector<String> links) {
         this.links = links;
     }
 
     public void setTags(Vector<String> tags) {
         this.tags = tags;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
     }
 
     public void setComments(Vector<Comment> comments) {

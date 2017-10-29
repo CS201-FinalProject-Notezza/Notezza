@@ -3,12 +3,13 @@ package chatRoom;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 import java.util.Vector;
 
 
 public class ChatRoom {
 
-    private Vector<ServerThread> serverThreads;
+    private List<ServerThread> serverThreads;
 
     private ChatRoom(int port) {
         try {
@@ -17,6 +18,11 @@ public class ChatRoom {
             System.out.println("Bound to port " + port);
             serverThreads = new Vector<>();
             while (true) {
+                for (ServerThread serverThread : serverThreads) {
+                    if (serverThread == null) {
+                        serverThreads.remove(serverThread);
+                    }
+                }
                 Socket s = ss.accept(); // blocking
                 System.out.println("Connection from: " + s.getInetAddress());
                 ServerThread st = new ServerThread(s, this);
@@ -29,13 +35,10 @@ public class ChatRoom {
 
     //void broadcast(String message, ServerThread st) {
     void broadcast(ChatMessage cm, ServerThread st) {
-        //if (message != null) {
         if (cm != null) {
-            //System.out.println(message);
             System.out.println(cm.getUsername() + ":" + cm.getMessage());
             for (ServerThread threads : serverThreads) {
                 if (st != threads) {
-                    //threads.sendMessage(message);
                     threads.sendMessage(cm);
                 }
             }

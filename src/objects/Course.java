@@ -3,15 +3,13 @@ package objects;
 import java.util.Vector;
 
 public class Course {
-    private String courseName;
-    private User instructor;
-    private Vector<User> students;
+    private final String courseName;
+    private final User instructor;
+    private final Vector<User> students;
     private Vector<Note> allNotes;
     private Presentation currentLecture;
-    // Need further discussion on whether or not to cache the sets.
-    private Vector<Note> sortedNotesByDate;
-    private Vector<Note> sortedNotesByNumComments;
-    private Vector<Note> sortedNotesByNumLikes;
+
+    // We also need a sort && search method maybe here or other places
 
     public Course(String courseName, User instructor, Vector<User> students) {
         this.courseName = courseName;
@@ -23,24 +21,12 @@ public class Course {
         return courseName;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
     public User getInstructor() {
         return instructor;
     }
 
-    public void setInstructor(User instructor) {
-        this.instructor = instructor;
-    }
-
     public Vector<User> getStudents() {
         return students;
-    }
-
-    public void setStudents(Vector<User> students) {
-        this.students = students;
     }
 
     public Vector<Note> getAllNotes() {
@@ -57,18 +43,6 @@ public class Course {
 
     public void setCurrentLecture(Presentation currentLecture) {
         this.currentLecture = currentLecture;
-    }
-
-    public Vector<Note> getSortedNotesByDate() {
-        return sortedNotesByDate;
-    }
-
-    public Vector<Note> getSortedNotesByNumComments() {
-        return sortedNotesByNumComments;
-    }
-
-    public Vector<Note> getSortedNotesByNumLikes() {
-        return sortedNotesByNumLikes;
     }
 
     // I don't know what this does either

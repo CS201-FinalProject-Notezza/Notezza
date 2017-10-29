@@ -14,8 +14,6 @@ class ServerThread extends Thread{
     ServerThread(Socket s, ChatRoom cr) {
         try {
             this.cr = cr;
-            //pw = new PrintWriter(s.getOutputStream());
-            //br = new BufferedReader(new InputStreamReader(s.getInputStream()));
             objectOutputStream = new ObjectOutputStream(s.getOutputStream());
             objectInputStream = new ObjectInputStream(s.getInputStream());
             this.start();
@@ -28,10 +26,10 @@ class ServerThread extends Thread{
     public void run() {
         try {
             while (true) {
-                //String line = br.readLine();
-                //cr.broadcast(line, this);
                 ChatMessage cm = (ChatMessage) objectInputStream.readObject();
-                cr.broadcast(cm,this);
+                if (cm != null) {
+                    cr.broadcast(cm, this);
+                }
             }
         } catch (ClassNotFoundException cnfe){
             System.out.println("cnfe:" + cnfe.getMessage());
@@ -41,8 +39,6 @@ class ServerThread extends Thread{
     }
 
     void sendMessage(ChatMessage message) {
-        //pw.println(message);
-        //pw.flush();
         try {
             objectOutputStream.writeObject(message);
             objectOutputStream.flush();
