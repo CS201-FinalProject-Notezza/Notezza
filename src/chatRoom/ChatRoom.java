@@ -3,6 +3,7 @@ package chatRoom;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -18,11 +19,6 @@ public class ChatRoom {
             System.out.println("Bound to port " + port);
             serverThreads = new Vector<>();
             while (true) {
-                for (ServerThread serverThread : serverThreads) {
-                    if (serverThread == null) {
-                        serverThreads.remove(serverThread);
-                    }
-                }
                 Socket s = ss.accept(); // blocking
                 System.out.println("Connection from: " + s.getInetAddress());
                 ServerThread st = new ServerThread(s, this);
@@ -33,15 +29,21 @@ public class ChatRoom {
         }
     }
 
-    //void broadcast(String message, ServerThread st) {
     void broadcast(ChatMessage cm, ServerThread st) {
-        if (cm != null) {
-            System.out.println(cm.getUsername() + ":" + cm.getMessage());
-            for (ServerThread threads : serverThreads) {
-                if (st != threads) {
-                    threads.sendMessage(cm);
+        if (cm == null) {
+            return;
+        }
+        System.out.println(cm.getUsername() + ":" + cm.getMessage());
+        for (Iterator<ServerThread> iterator = serverThreads.iterator(); iterator.hasNext();) {
+            ServerThread thread = iterator.next();
+            if (thread.isAlive()) {
+                if (st != thread) {
+                    thread.sendMessage(cm);
                 }
+            } else {
+                iterator.remove();
             }
+
         }
     }
 

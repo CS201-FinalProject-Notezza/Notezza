@@ -5,8 +5,6 @@ import java.net.Socket;
 
 class ServerThread extends Thread{
 
-    //private PrintWriter pw;
-    //private BufferedReader br;
     private ChatRoom cr;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
@@ -17,7 +15,6 @@ class ServerThread extends Thread{
             objectOutputStream = new ObjectOutputStream(s.getOutputStream());
             objectInputStream = new ObjectInputStream(s.getInputStream());
             this.start();
-
         } catch (IOException ioe) {
             System.out.println("ioe in ServerThread constructor: " + ioe.getMessage());
         }
@@ -27,9 +24,10 @@ class ServerThread extends Thread{
         try {
             while (true) {
                 ChatMessage cm = (ChatMessage) objectInputStream.readObject();
-                if (cm != null) {
-                    cr.broadcast(cm, this);
+                if (cm == null) {
+                    continue;
                 }
+                cr.broadcast(cm, this);
             }
         } catch (ClassNotFoundException cnfe){
             System.out.println("cnfe:" + cnfe.getMessage());
