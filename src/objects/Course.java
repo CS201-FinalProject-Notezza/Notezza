@@ -15,6 +15,7 @@ public class Course {
         this.courseName = courseName;
         this.instructor = instructor;
         this.students = students;
+        this.allNotes = new Vector<>();
     }
 
     public String getCourseName() {
@@ -59,10 +60,5 @@ public class Course {
         return notes;
     }
 
-    public void addNote(Note note) {
-        if (allNotes == null) {
-            allNotes = new Vector<>();
-        }
-        allNotes.add(note);
-    }
+    public void addNote(Note note) { allNotes.add(note);}
 }

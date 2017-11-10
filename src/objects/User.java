@@ -20,6 +20,7 @@ public class User {
         this.password = password;
         this.isInstructor = isInstructor;
         this.isVisible = isVisible;
+        this.courses = new Vector<>();
     }
 
     public void setPassword(long password) {
@@ -64,13 +65,6 @@ public class User {
         return courses;
     }
 
-    public void addCourse(Course course){
-        if (courses != null) {
-            courses.add(course);
-        } else {
-            courses = new Vector<>();
-            courses.add(course);
-        }
-    }
+    public void addCourse(Course course){ courses.add(course); }
 
 }

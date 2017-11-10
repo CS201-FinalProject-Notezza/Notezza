@@ -18,9 +18,7 @@ public class Quiz {
         return question;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
+    public void setQuestion(String question) { this.question = question; }
 
     public Vector<String> getChoices() {
         return choices;

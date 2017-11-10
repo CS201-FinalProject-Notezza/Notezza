@@ -25,6 +25,9 @@ public class Note {
         // if we are not allow to change anything after uploading
         this.dateCreated = date;
         this.textContent = textContent;
+        this.comments = new Vector<>();
+        this.likeUsers = new HashSet<>();
+        this.dislikeUsers = new HashSet<>();
     }
 
     public User getUser() {
@@ -87,32 +90,11 @@ public class Note {
         return dislikeUsers.contains(user);
     }
 
-    public void addComment(Comment comment) {
-        if (comments != null) {
-            comments.add(comment);
-        } else {
-            comments = new Vector<>();
-            comments.add(comment);
-        }
-    }
+    public void addComment(Comment comment) { comments.add(comment); }
 
-    public void addLike(User user) {
-        if (likeUsers != null) {
-            likeUsers.add(user);
-        } else {
-            likeUsers = new HashSet<>();
-            likeUsers.add(user);
-        }
-    }
+    public void addLike(User user) { likeUsers.add(user); }
 
-    public void addDislike(User user) {
-        if (dislikeUsers != null) {
-            dislikeUsers.add(user);
-        } else {
-            dislikeUsers = new HashSet<>();
-            dislikeUsers.add(user);
-        }
-    }
+    public void addDislike(User user) { dislikeUsers.add(user); }
 
     @Override
     // I actually don't know what this does.

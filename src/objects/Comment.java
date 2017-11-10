@@ -16,6 +16,8 @@ public class Comment {
         this.user = user;
         this.content = content;
         this.dateCreated = date;
+        this.likeUsers = new HashSet<>();
+        this.dislikeUsers = new HashSet<>();
     }
 
     public User getUser() {
@@ -50,17 +52,7 @@ public class Comment {
         return dislikeUsers.contains(user);
     }
 
-    public void addLike(User user) {
-        if (likeUsers == null) {
-            likeUsers = new HashSet<>();
-        }
-        likeUsers.add(user);
-    }
+    public void addLike(User user) { likeUsers.add(user); }
 
-    public void addDisklike(User user) {
-        if (dislikeUsers == null) {
-            dislikeUsers = new HashSet<>();
-        }
-        dislikeUsers.add(user);
-    }
+    public void addDisklike(User user) { dislikeUsers.add(user); }
 }
