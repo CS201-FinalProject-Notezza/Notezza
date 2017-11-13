@@ -34,7 +34,7 @@ public class ServerThread extends Thread {
 
             }
         } catch (EOFException e) {
-            System.out.println("A player quits.");
+            System.out.println("A client quits.");
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

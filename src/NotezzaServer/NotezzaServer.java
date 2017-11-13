@@ -28,7 +28,27 @@ public class NotezzaServer {
     }
 
     void processCommand(Command command, ServerThread thread) {
+        CommandType type = command.getType();
+        switch (type) {
+            case LOGIN:
 
+                break;
+            case REGISTER:
+
+                break;
+            case CREATE_CLASS:
+
+                break;
+            case VIEW_PRESENTATION:
+
+                break;
+            case CREATE_PRESENTATION:
+
+                break;
+            case VIEW_CLASS_INFORMATION:
+
+                break;
+        }
     }
 
     public static void main(String[] args) {

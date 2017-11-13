@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.Vector;
 
 public class Note {
-    // Need discuss on setting finals
+
     private final User user;
     private final String title;
     private final String textContent;
