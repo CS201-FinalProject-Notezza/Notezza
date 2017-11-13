@@ -10,7 +10,7 @@ CREATE TABLE UserTable
 	lname VARCHAR(32) NOT NULL,
 	username VARCHAR(32) NOT NULL,
 	email VARCHAR(32) NOT NULL,
-	pword VARCHAR(32) NOT NULL,
+	pword BIGINT NOT NULL,
 	isInstructor CHAR(5) NOT NULL,
 	isVisible CHAR(5) NOT NULL,
 	UNIQUE (username)
@@ -104,11 +104,11 @@ CREATE TABLE CommentVote
 );
 
 INSERT INTO UserTable (fname, lname, username, email, pword, isInstructor, isVisible)
-		VALUES 	("Jeffrey", "Miller", "miller", "jeffrey.miller@usc.edu", "MillerhashedPWORD", "true", "true"),
-						("Joey", "Blundell", "blundell", "blundell@usc.edu", "JoeyhashedPWORD", "false", "true"),
-						("Willie", "Shen", "shen", "williesh@usc.edu", "WilliehashedPWORD", "false", "true"),
-                        ("Tim", "Hu", "hu", "tianyuh@usc.edu", "TimhashedPWORD", "false", "true"),
-                        ("Stan", "Shi", "shi", "zifanshi@usc.edu", "StanhashedPWORD", "false", "true");
+		VALUES 	("Jeffrey", "Miller", "miller", "jeffrey.miller@usc.edu", 1111111111111, "true", "true"),
+						("Joey", "Blundell", "blundell", "blundell@usc.edu", 2222222222222, "false", "true"),
+						("Willie", "Shen", "shen", "williesh@usc.edu", 3333333333333, "false", "true"),
+                        ("Tim", "Hu", "hu", "tianyuh@usc.edu", 4444444444444, "false", "true"),
+                        ("Stan", "Shi", "shi", "zifanshi@usc.edu", 5555555555555, "false", "true");
                         
 INSERT INTO Course (courseName, instructorID)
 		VALUES 	("CSCI 201", 1);
