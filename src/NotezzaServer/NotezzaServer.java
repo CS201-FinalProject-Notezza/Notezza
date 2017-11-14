@@ -30,6 +30,9 @@ public class NotezzaServer {
     void processCommand(Command command, ServerThread thread) {
         CommandType type = command.getType();
         switch (type) {
+            case INITIALIZATION:
+                
+                break;
             case LOGIN:
 
                 break;

@@ -1,6 +1,7 @@
 package NotezzaServer;
 
 public enum CommandType {
+    INITIALIZATION,
     LOGIN, // Check with the server if already registered
     REGISTER,
     CREATE_CLASS,
