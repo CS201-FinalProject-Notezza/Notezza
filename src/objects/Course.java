@@ -46,17 +46,22 @@ public class Course {
         this.currentLecture = currentLecture;
     }
 
-    // I don't know what this does either
-    public Vector<Note> getFeeds() {
-        Vector<Note> feeds = new Vector<>();
 
-        return feeds;
-    }
-
-    //NEEEEEEEEEEEEED IMPLLEEEEEEEEEEMENTATIONNNNNNN
+    // Returns a vector of notes that contains certain keywords.
     public Vector<Note> searchNote(String keyword) {
         Vector<Note> notes = new Vector<>();
+        // split keywords
+        String[] keywords = keyword.split("\\s+");
 
+        // substring search
+        for (Note note : notes) {
+            String contentOfNote = note.toString();
+            for (String word : keywords) {
+                if (contentOfNote.contains(word.replaceAll("[^A-Za-z0-9]", "").toLowerCase())) {
+                    notes.add(note);
+                }
+            }
+        }
         return notes;
     }
 

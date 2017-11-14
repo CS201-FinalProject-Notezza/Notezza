@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
-import java.util.Date;
 
 public class Note implements Comparable<Note> {
 
@@ -23,7 +22,7 @@ public class Note implements Comparable<Note> {
     private int sortBy;
     
     
-    public Note(User user, String title, Vector<String> links, Vector<String> tags, String date, String textContent) {
+    public Note(User user, String title, Vector<String> links, Vector<String> tags, Date date, String textContent) {
         this.user = user;
         this.title = title;
         this.links = links;
@@ -110,51 +109,40 @@ public class Note implements Comparable<Note> {
 
     public void addDislike(User user) { dislikeUsers.add(user); numDislikes++;}
 
-    public void setSortBy(int sortBy){
-        this.sortBy = sortBy;
-    }
+    public void setSortBy(int sortBy){ this.sortBy = sortBy; }
     
     @Override
     public int compareTo(Note o) {
         switch (sortBy) {
-                
                 // Sort by number of comments
             case 1:
-                if(this.numComments > o.getNumComments()){
-                    return 1;
-                } else if ( this.numComments == o.getNumComments() ){
-                    return 0;
-                } else {
-                    return -1;
-                }
+                return Integer.compare(this.numComments, o.getNumComments());
                 // Sort by number of likes
             case 2:
-                if(this.numLikes > o.getNumLikes()){
-                    return 1;
-                } else if ( this.numLikes == o.getNumLikes()){
-                    return 0;
-                } else {
-                    return -1;
-                }
+                return Integer.compare(this.numLikes, o.getNumLikes());
                 // Sort by rating
             case 3:
-                if(this.getRating() > o.getRating()){
-                    return 1;
-                } else if ( this.getRating() == o.getRating()){
-                    return 0;
-                } else {
-                    return -1;
-                }
+                return Integer.compare(this.getRating(), o.getRating());
                 // Sort by date
             case 0:
             default:
                 return this.dateCreated.compareTo(o.getDateCreated());
         }
     }
+
     @Override
-    // I actually don't know what this does.
-    // Someone implement this.
+    // This toString method is used for the convenience of Substring Search
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        // Get rid of all non alpha numerical values of everything
+        String title = this.title.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        String textContext = this.textContent.replaceAll("[^A-Za-z0-9]","").toLowerCase();
+        sb.append(title);
+        sb.append(textContext);
+        for (String tag : tags) {
+            tag = tag.replaceAll("[^A-Za-z0-9]", "");
+            sb.append(tag);
+        }
+        return sb.toString();
     }
 }

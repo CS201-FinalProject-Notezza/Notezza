@@ -31,7 +31,7 @@ public class NotezzaServer {
         CommandType type = command.getType();
         switch (type) {
             case INITIALIZATION:
-                
+
                 break;
             case LOGIN:
 
