@@ -4,19 +4,25 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
+import java.util.Date;
 
-public class Note {
+public class Note implements Comparable<Note> {
 
     private final User user;
     private final String title;
     private final String textContent;
     private Vector<String> links;
     private Vector<String> tags;
-    private final String dateCreated;
+    private final Date dateCreated;
     private Vector<Comment> comments;
     private Set<User> likeUsers;
     private Set<User> dislikeUsers;
-
+    private int numComments;
+    private int numLikes;
+    private int numDislikes;
+    private int sortBy;
+    
+    
     public Note(User user, String title, Vector<String> links, Vector<String> tags, String date, String textContent) {
         this.user = user;
         this.title = title;
@@ -50,7 +56,7 @@ public class Note {
         return tags;
     }
 
-    public String getDateCreated() {
+    public Date getDateCreated() {
         return dateCreated;
     }
 
@@ -78,8 +84,16 @@ public class Note {
         this.comments = comments;
     }
 
+    public int getNumComments(){
+        return numComments;
+    }
+    
+    public int getNumLikes(){
+        return numLikes;
+    }
+    
     public int getRating() {
-        return likeUsers.size() - dislikeUsers.size();
+        return numLikes - numDislikes;
     }
 
     public boolean hasLiked(User user) {
@@ -92,10 +106,51 @@ public class Note {
 
     public void addComment(Comment comment) { comments.add(comment); }
 
-    public void addLike(User user) { likeUsers.add(user); }
+    public void addLike(User user) { likeUsers.add(user); numLikes++;}
 
-    public void addDislike(User user) { dislikeUsers.add(user); }
+    public void addDislike(User user) { dislikeUsers.add(user); numDislikes++;}
 
+    public void setSortBy(int sortBy){
+        this.sortBy = sortBy;
+    }
+    
+    @Override
+    public int compareTo(Note o) {
+        switch (sortBy) {
+                
+                // Sort by number of comments
+            case 1:
+                if(this.numComments > o.getNumComments()){
+                    return 1;
+                } else if ( this.numComments == o.getNumComments() ){
+                    return 0;
+                } else {
+                    return -1;
+                }
+                // Sort by number of likes
+            case 2:
+                if(this.numLikes > o.getNumLikes()){
+                    return 1;
+                } else if ( this.numLikes == o.getNumLikes()){
+                    return 0;
+                } else {
+                    return -1;
+                }
+                // Sort by rating
+            case 3:
+                if(this.getRating() > o.getRating()){
+                    return 1;
+                } else if ( this.getRating() == o.getRating()){
+                    return 0;
+                } else {
+                    return -1;
+                }
+                // Sort by date
+            case 0:
+            default:
+                return this.dateCreated.compareTo(o.getDateCreated());
+        }
+    }
     @Override
     // I actually don't know what this does.
     // Someone implement this.
