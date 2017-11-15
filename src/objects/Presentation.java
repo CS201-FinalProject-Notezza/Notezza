@@ -1,5 +1,6 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 public class Presentation implements Serializable {

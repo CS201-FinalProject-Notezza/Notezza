@@ -1,12 +1,13 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
 
-public class Note implements Comparable<Note>, Serializable{
+public class Note implements Comparable<Note>, Serializable {
     public static final long serialVersionUID = 3;
     private final User user;
     private final String title;

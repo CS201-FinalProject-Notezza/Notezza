@@ -1,8 +1,9 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class Course implements Serializable{
+public class Course implements Serializable {
     public static final long serialVersionUID = 1;
     private final String courseName;
     private final User instructor;

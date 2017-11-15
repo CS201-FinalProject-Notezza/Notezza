@@ -1,8 +1,9 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class User implements Serializable{
+public class User implements Serializable {
     public static final long serialVersionUID = 2;
     private final String fname;
     private final String lname;

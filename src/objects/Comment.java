@@ -1,10 +1,11 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Comment implements Serializable{
+public class Comment implements Serializable {
     public static final long serialVersionUID = 4;
     private final User user;
     private final String content;

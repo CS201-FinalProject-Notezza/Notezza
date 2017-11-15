@@ -1,9 +1,10 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.Vector;
 
-public class Quiz implements Serializable{
+public class Quiz implements Serializable {
     public static final long serialVersionUID = 6;
     private String question;
     private Vector<String> choices;
