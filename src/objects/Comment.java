@@ -54,5 +54,5 @@ public class Comment implements Serializable{
 
     public void addLike(User user) { likeUsers.add(user); }
 
-    public void addDisklike(User user) { dislikeUsers.add(user); }
+    public void addDislike(User user) { dislikeUsers.add(user); }
 }
