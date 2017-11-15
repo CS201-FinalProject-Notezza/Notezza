@@ -52,14 +52,10 @@ public class Course {
         Vector<Note> notes = new Vector<>();
         // split keywords
         String[] keywords = keyword.split("\\s+");
-
         // substring search
         for (Note note : notes) {
-            String contentOfNote = note.toString();
-            for (String word : keywords) {
-                if (contentOfNote.contains(word.replaceAll("[^A-Za-z0-9]", "").toLowerCase())) {
-                    notes.add(note);
-                }
+            if (note.search(keywords)) {
+                notes.add(note);
             }
         }
         return notes;

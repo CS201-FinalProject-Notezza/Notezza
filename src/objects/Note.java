@@ -139,5 +139,15 @@ public class Note implements Comparable<Note> {
         return sb.toString();
     }
 
+    public boolean search(String[] keywords) {
+        for (String keyword : keywords) {
+            String noteContent = this.toString();
+            if (noteContent.contains(keyword.replaceAll("[^A-Za-z0-9]", "").toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
