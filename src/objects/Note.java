@@ -7,7 +7,7 @@ import java.util.Vector;
 
 
 public class Note implements Comparable<Note>, Serializable{
-
+    public static final long serialVersionUID = 3;
     private final User user;
     private final String title;
     private final String textContent;
@@ -31,67 +31,67 @@ public class Note implements Comparable<Note>, Serializable{
         this.dislikeUsers = new HashSet<>();
         this.sortType = SortType.DATE;
     }
-
+    
     public User getUser() {
         return user;
     }
-
+    
     public String getTitle() {
         return title;
     }
-
+    
     public String getTextContent() {
         return textContent;
     }
-
+    
     public Vector<String> getTags() {
         return tags;
     }
-
+    
     public Date getDateCreated() {
         return dateCreated;
     }
-
+    
     public Vector<Comment> getComments() {
         return comments;
     }
-
+    
     public Set<User> getLikeUsers() {
         return likeUsers;
     }
-
+    
     public Set<User> getDislikeUsers() {
         return dislikeUsers;
     }
-
+    
     public void setTags(Vector<String> tags) {
         this.tags = tags;
     }
-
+    
     public void setComments(Vector<Comment> comments) {
         this.comments = comments;
     }
-
+    
     public int getNumComments(){ return comments.size(); }
-
+    
     public int getNumLikes(){ return likeUsers.size(); }
-
+    
     public int getRating() { return likeUsers.size() - dislikeUsers.size(); }
-
+    
     public boolean hasLiked(User user) {
         return likeUsers.contains(user);
     }
-
+    
     public boolean hasDisliked(User user) {
         return dislikeUsers.contains(user);
     }
-
+    
     public void addComment(Comment comment) { comments.add(comment); }
-
+    
     public void addLike(User user) { likeUsers.add(user);}
-
+    
     public void addDislike(User user) { dislikeUsers.add(user);}
-
+    
     public void setSortBy(SortType SortType){ this.sortType = SortType; }
     
     @Override
@@ -112,7 +112,7 @@ public class Note implements Comparable<Note>, Serializable{
                 return this.dateCreated.compareTo(o.getDateCreated());
         }
     }
-
+    
     @Override
     // This toString method is used for the convenience of Substring Search
     public String toString() {
@@ -128,7 +128,7 @@ public class Note implements Comparable<Note>, Serializable{
         }
         return sb.toString();
     }
-
+    
     public boolean search(String[] keywords) {
         for (String keyword : keywords) {
             String noteContent = this.toString();
@@ -138,6 +138,6 @@ public class Note implements Comparable<Note>, Serializable{
         }
         return false;
     }
-
-
+    
+    
 }
