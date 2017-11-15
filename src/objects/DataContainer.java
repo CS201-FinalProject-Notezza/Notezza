@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class DataContainer {
     private Map<String,User> allUsers;
-    private Set<Course> allCourses;
+    private Map<String,Course> allCourses;
 
     // Leave this to TIMMMMMMMMMMMMM
     public DataContainer() {
@@ -20,11 +20,11 @@ public class DataContainer {
         this.allUsers = allUsers;
     }
 
-    public Set<Course> getAllCourses() {
+    public Map<String, Course> getAllCourses() {
         return allCourses;
     }
 
-    public void setAllCourses(Set<Course> allCourses) {
+    public void setAllCourses(Map<String,Course> allCourses) {
         this.allCourses = allCourses;
     }
 
