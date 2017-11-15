@@ -17,7 +17,7 @@ public class Note implements Comparable<Note> {
     private Vector<Comment> comments;
     private Set<User> likeUsers;
     private Set<User> dislikeUsers;
-    private sortType sortType;
+    private SortType sortType;
     
     
     public Note(User user, String title, Vector<String> links, Vector<String> tags, Date date, String textContent) {
@@ -31,7 +31,7 @@ public class Note implements Comparable<Note> {
         this.comments = new Vector<>();
         this.likeUsers = new HashSet<>();
         this.dislikeUsers = new HashSet<>();
-        this.sortType = objects.sortType.DATE;
+        this.sortType = SortType.DATE;
     }
 
     public User getUser() {
@@ -102,7 +102,7 @@ public class Note implements Comparable<Note> {
 
     public void addDislike(User user) { dislikeUsers.add(user);}
 
-    public void setSortBy(int sortBy){ this.sortType = sortType; }
+    public void setSortBy(SortType SortType){ this.sortType = SortType; }
     
     @Override
     public int compareTo(Note o) {

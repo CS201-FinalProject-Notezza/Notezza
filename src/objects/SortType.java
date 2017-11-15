@@ -1,6 +1,6 @@
 package objects;
 
-public enum sortType {
+public enum SortType {
     NUMBER_OF_COMMENTS,
     NUMBER_OF_LIKES,
     RATING,
