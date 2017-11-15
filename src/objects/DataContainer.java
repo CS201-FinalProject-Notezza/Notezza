@@ -3,12 +3,12 @@ package objects;
 import java.util.Map;
 import java.util.Set;
 
-public class Engine {
+public class DataContainer {
     private Map<String,User> allUsers;
     private Set<Course> allCourses;
 
     // Leave this to TIMMMMMMMMMMMMM
-    public Engine() {
+    public DataContainer() {
 
     }
 
