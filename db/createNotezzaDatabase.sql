@@ -136,7 +136,7 @@ INSERT INTO QuestionChoice (content, correctBool, questionID)
                         ("Miller", "true", 2),
 						("Millar", "false", 2),
                         ("Mills", "false", 2),
-                        ("Miler", "false", 2);
+                        ("Also Miller", "true", 2);
                         
 INSERT INTO Note (title, content, postedDate, courseID, userID)
 		VALUES 	("Welcome to CS201!", "Welcome to the CS201 Notezza page.\nPlease use this as a place to help out your classmates by posting notes as well as viewing our lectures and testing your knowledge!\nLooking forward to a great semester", 
