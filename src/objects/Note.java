@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.Vector;
 
 
-public class Note implements Comparable<Note> {
+public class Note implements Comparable<Note>, Serializable{
 
     private final User user;
     private final String title;

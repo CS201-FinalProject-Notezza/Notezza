@@ -2,7 +2,7 @@ package objects;
 
 import java.util.Vector;
 
-public class Course {
+public class Course implements Serializable{
     private final String courseName;
     private final User instructor;
     private final Vector<User> students;

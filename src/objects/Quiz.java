@@ -3,7 +3,7 @@ package objects;
 import java.util.Set;
 import java.util.Vector;
 
-public class Quiz {
+public class Quiz implements Serializable{
     private String question;
     private Vector<String> choices;
     private Set<Integer> answers;

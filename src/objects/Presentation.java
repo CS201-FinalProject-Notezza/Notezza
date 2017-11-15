@@ -2,7 +2,7 @@ package objects;
 
 import java.util.Vector;
 
-public class Presentation {
+public class Presentation implements Serializable{
     private Vector<String> links;
     private Vector<Quiz> quizzes;
 

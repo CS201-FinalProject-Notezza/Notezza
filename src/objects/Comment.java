@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Comment {
+public class Comment implements Serializable{
 
     private final User user;
     private final String content;
