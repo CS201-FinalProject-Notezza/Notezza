@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
+
 public class Note implements Comparable<Note> {
 
     private final User user;
@@ -16,10 +17,7 @@ public class Note implements Comparable<Note> {
     private Vector<Comment> comments;
     private Set<User> likeUsers;
     private Set<User> dislikeUsers;
-    private int numComments;
-    private int numLikes;
-    private int numDislikes;
-    private int sortBy;
+    private sortType sortType;
     
     
     public Note(User user, String title, Vector<String> links, Vector<String> tags, Date date, String textContent) {
@@ -33,6 +31,7 @@ public class Note implements Comparable<Note> {
         this.comments = new Vector<>();
         this.likeUsers = new HashSet<>();
         this.dislikeUsers = new HashSet<>();
+        this.sortType = objects.sortType.DATE;
     }
 
     public User getUser() {
@@ -83,17 +82,11 @@ public class Note implements Comparable<Note> {
         this.comments = comments;
     }
 
-    public int getNumComments(){
-        return numComments;
-    }
-    
-    public int getNumLikes(){
-        return numLikes;
-    }
-    
-    public int getRating() {
-        return numLikes - numDislikes;
-    }
+    public int getNumComments(){ return comments.size(); }
+
+    public int getNumLikes(){ return likeUsers.size(); }
+
+    public int getRating() { return likeUsers.size() - dislikeUsers.size(); }
 
     public boolean hasLiked(User user) {
         return likeUsers.contains(user);
@@ -105,26 +98,26 @@ public class Note implements Comparable<Note> {
 
     public void addComment(Comment comment) { comments.add(comment); }
 
-    public void addLike(User user) { likeUsers.add(user); numLikes++;}
+    public void addLike(User user) { likeUsers.add(user);}
 
-    public void addDislike(User user) { dislikeUsers.add(user); numDislikes++;}
+    public void addDislike(User user) { dislikeUsers.add(user);}
 
-    public void setSortBy(int sortBy){ this.sortBy = sortBy; }
+    public void setSortBy(int sortBy){ this.sortType = sortType; }
     
     @Override
     public int compareTo(Note o) {
-        switch (sortBy) {
+        switch (sortType) {
                 // Sort by number of comments
-            case 1:
-                return Integer.compare(this.numComments, o.getNumComments());
+            case NUMBER_OF_COMMENTS:
+                return Integer.compare(this.getNumComments(), o.getNumComments());
                 // Sort by number of likes
-            case 2:
-                return Integer.compare(this.numLikes, o.getNumLikes());
+            case NUMBER_OF_LIKES:
+                return Integer.compare(this.getNumLikes(), o.getNumLikes());
                 // Sort by rating
-            case 3:
+            case RATING:
                 return Integer.compare(this.getRating(), o.getRating());
                 // Sort by date
-            case 0:
+            case DATE:
             default:
                 return this.dateCreated.compareTo(o.getDateCreated());
         }
@@ -145,4 +138,6 @@ public class Note implements Comparable<Note> {
         }
         return sb.toString();
     }
+
+
 }
