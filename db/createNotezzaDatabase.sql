@@ -59,6 +59,7 @@ CREATE TABLE QuestionChoice
 CREATE TABLE Note
 (
 	noteID INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(128) NOT NULL,
 	content VARCHAR(8000) NOT NULL,
 	postedDate VARCHAR(32) NOT NULL,
 	courseID INT NOT NULL,
@@ -124,32 +125,42 @@ INSERT INTO PresentationLink (link, courseID)
 		VALUES 	("http://www-scf.usc.edu/~csci201/lectures/Lecture1/Introduction.pdf", 1);
         
 INSERT INTO PresentationQuestion (content, courseID)
-		VALUES 	("What is the professor's first name?", 1);
+		VALUES 	("What is the professor's first name?", 1),
+						("What is the professor's last name?", 1);
 
 INSERT INTO QuestionChoice (content, correctBool, questionID)
 		VALUES 	("Geoffrey", "false", 1),
 						("Geoffery", "false", 1),
                         ("Jeffrey", "true", 1),
-                        ("Jeffery", "false", 1);
+                        ("Jeffery", "false", 1),
+                        ("Miller", "true", 2),
+						("Millar", "false", 2),
+                        ("Mills", "false", 2),
+                        ("Miler", "false", 2);
                         
-INSERT INTO Note (content, postedDate, courseID, userID)
-		VALUES 	("Welcome to the CS201 Notezza page.\nPlease use this as a place to help out your classmates by posting notes as well as viewing our lectures and testing your knowledge!\nLooking forward to a great semester", 
-								"08/20/17 14:00", 1, 1),
-						("Classes vs Objects\n\tFor objects, the code knows what each method will do, but doesn’t need to know how it does it\n\tAn object is a high-level term for the idea behind a class, the implementation of the object is a class, and an instance of the class in code is typically referred to as an object\n\tNo functions in Java, called methods instead\n\tAccess modifiers for variables and methods:\n\t\tpublic\n\t\tprivate (only the class in which variable or method is declared can access it)\n\t\tprotected (any class in same package or who inherits from the class can access)\n\t\t<package> (any class in same package can access it)\n\tA class is considered encapsulated if all of the data is declared private\n\tA class is considered fully encapsulated if all the data is declared private and you provide a getter and setter for each piece of data\n", 
-								"08/24/17 10:00", 1, 2);
+INSERT INTO Note (title, content, postedDate, courseID, userID)
+		VALUES 	("Welcome to CS201!", "Welcome to the CS201 Notezza page.\nPlease use this as a place to help out your classmates by posting notes as well as viewing our lectures and testing your knowledge!\nLooking forward to a great semester", 
+								"Aug 20, 2017 2:00:00 PM", 1, 1),
+						("Lecture 1: Classes vs Objects", "Classes vs Objects\n\tFor objects, the code knows what each method will do, but doesn’t need to know how it does it\n\tAn object is a high-level term for the idea behind a class, the implementation of the object is a class, and an instance of the class in code is typically referred to as an object\n\tNo functions in Java, called methods instead\n\tAccess modifiers for variables and methods:\n\t\tpublic\n\t\tprivate (only the class in which variable or method is declared can access it)\n\t\tprotected (any class in same package or who inherits from the class can access)\n\t\t<package> (any class in same package can access it)\n\tA class is considered encapsulated if all of the data is declared private\n\tA class is considered fully encapsulated if all the data is declared private and you provide a getter and setter for each piece of data\n", 
+								"Aug 24, 2017 10:00:00 PM", 1, 2);
                                 
 INSERT INTO Tag (tag, noteID)
-		VALUES 	("Lecture1", 1),
-						("Classes", 1),
-						("Objects", 1);
+		VALUES 	("Welcome", 1),
+						("Lecture1", 2),
+						("Classes", 2),
+						("Objects", 2);
                         
 INSERT INTO NoteVote (likeBool, userID, noteID)
-		VALUES 	("true", 3, 1),
+		VALUES 	("true", 2, 1),
+						("true", 3, 1),
 						("true", 4, 1),
-                        ("false", 5, 1);
+                        ("true", 5, 1),
+						("true", 3, 2),
+						("true", 4, 2),
+                        ("false", 5, 2);
                         
 INSERT INTO NoteComment (content, postedDate, noteID, userID)
-		VALUES 	("Nice", "8/24/17 10:50", 1, 3);
+		VALUES 	("Nice", "Aug 24, 2017 10:50:00 PM", 2, 3);
         
 INSERT INTO CommentVote (likeBool, userID, commentID)
 		VALUES 	("true", 2, 1);

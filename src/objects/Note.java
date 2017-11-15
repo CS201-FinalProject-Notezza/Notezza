@@ -11,7 +11,6 @@ public class Note implements Comparable<Note>, Serializable{
     private final User user;
     private final String title;
     private final String textContent;
-    private Vector<String> links;
     private Vector<String> tags;
     private final Date dateCreated;
     private Vector<Comment> comments;
@@ -20,10 +19,9 @@ public class Note implements Comparable<Note>, Serializable{
     private SortType sortType;
     
     
-    public Note(User user, String title, Vector<String> links, Vector<String> tags, Date date, String textContent) {
+    public Note(User user, String title, Vector<String> tags, Date date, String textContent) {
         this.user = user;
         this.title = title;
-        this.links = links;
         this.tags = tags;
         // if we are not allow to change anything after uploading
         this.dateCreated = date;
@@ -46,10 +44,6 @@ public class Note implements Comparable<Note>, Serializable{
         return textContent;
     }
 
-    public Vector<String> getLinks() {
-        return links;
-    }
-
     public Vector<String> getTags() {
         return tags;
     }
@@ -68,10 +62,6 @@ public class Note implements Comparable<Note>, Serializable{
 
     public Set<User> getDislikeUsers() {
         return dislikeUsers;
-    }
-
-    public void setLinks(Vector<String> links) {
-        this.links = links;
     }
 
     public void setTags(Vector<String> tags) {
