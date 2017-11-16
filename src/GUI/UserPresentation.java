@@ -37,35 +37,35 @@ public class UserPresentation extends JFrame {
 	 * Create the frame.
 	 */
 	public UserPresentation() {
-		setBounds(100, 100, 573, 428);
+		setBounds(100, 100, 791, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JList list = new JList();
-		list.setBounds(366, 183, 186, 145);
+		list.setBounds(500, 258, 265, 189);
 		contentPane.add(list);
 		
 		textField = new JTextField();
-		textField.setBounds(376, 339, 164, 27);
+		textField.setBounds(574, 449, 164, 27);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnSendMessage = new JButton("Send Message");
-		btnSendMessage.setBounds(391, 371, 149, 29);
+		btnSendMessage.setBounds(574, 488, 149, 29);
 		contentPane.add(btnSendMessage);
 		
 		JButton button = new JButton("<");
-		button.setBounds(83, 330, 38, 29);
+		button.setBounds(140, 469, 38, 29);
 		contentPane.add(button);
 		
 		JButton button_1 = new JButton(">");
-		button_1.setBounds(150, 330, 38, 29);
+		button_1.setBounds(222, 469, 38, 29);
 		contentPane.add(button_1);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(32, 42, 289, 246);
+		panel.setBounds(32, 42, 427, 383);
 		contentPane.add(panel);
 	}
 }
