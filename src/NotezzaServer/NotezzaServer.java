@@ -118,8 +118,8 @@ public class NotezzaServer {
         int encryptedCode;
         
         int idx = 0;
-        while(password[idx]){
-            passInt += (long)(Math.pow(128, n-1-idx))*int(password[idx]);
+        while(password.charAt[idx] != null){
+            passInt += (long)(Math.pow(128, n-1-idx))*int(Character.getNumericValue(password.charAt[idx]));
             idx++;
         }
         
