@@ -1,5 +1,9 @@
 package GUI;
 
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import objects.LoginCredential;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -19,9 +23,11 @@ import java.awt.event.ActionListener;
 import java.awt.Frame;
 import javax.swing.JPanel;
 
+import static NotezzaServer.CommandType.*;
+
 public class LoginScreen {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JFrame frame2;
 	private JTextField textField;
 	private JLabel lblPassword;
@@ -33,12 +39,14 @@ public class LoginScreen {
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
+    private NotezzaClient client;
 
 	/**
 	 * Launch the application.
 	 * we might want to have a constructor that accepts the database of the program when moving to the user windows
 	 * from those windows, we might want to pass in the user object and print out each components
 	 */
+	/*
 	public static void main(String[] args) { 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,12 +59,14 @@ public class LoginScreen {
 			}
 		});
 	}
+    */
 
 	/**
 	 * Create the application.
 	 */
-	public LoginScreen() {
-		initialize();
+	public LoginScreen(NotezzaClient client) {
+	    initialize();
+	    this.client = client;
 	}
 
 	/**
@@ -128,6 +138,10 @@ public class LoginScreen {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(passwordField.getPassword());
 			System.out.println(textField.getText());
+			String password = String.copyValueOf(passwordField.getPassword());
+            LoginCredential loginCredential = new LoginCredential(textField.getText(),password);
+            Command login = new Command(LOGIN,loginCredential);
+            client.sendCommand(login);
 		}
 	}
 	private class SwingAction_1 extends AbstractAction {

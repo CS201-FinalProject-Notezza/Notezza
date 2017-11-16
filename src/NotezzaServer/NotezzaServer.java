@@ -20,8 +20,9 @@ public class NotezzaServer {
             ServerSocket ss = new ServerSocket(port);
             System.out.println("Notezza server has started. Bind to port " + port);
             serverThreads = new Vector<>();
-            parseDatabase();
-            
+            DatabaseManager dm = new DatabaseManager();
+            DataContainer dc = dm.getDateContainer();
+
             while (true) {
                 Socket socket = ss.accept(); // blocking
                 System.out.println("Connection from: " + socket.getInetAddress());
@@ -58,16 +59,11 @@ public class NotezzaServer {
         NotezzaServer server = new NotezzaServer(port);
     }
     
-    
-    public void parseDatabase() {
-        
-    }
-    
     void processCommand(Command command, ServerThread thread) {
         CommandType type = command.getType();
         switch (type) {
             case INITIALIZATION:
-                
+
                 break;
             case LOGIN:
                 
