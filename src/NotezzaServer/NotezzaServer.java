@@ -5,9 +5,7 @@ import db.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 
 import static NotezzaServer.CommandType.*;
 
@@ -64,12 +62,15 @@ public class NotezzaServer {
     
     void processCommand(Command command, ServerThread thread) {
         CommandType type = command.getType();
+        Object obj = command.getObject();
         switch (type) {
-            case INITIALIZATION:
-
+            case INITIALIZATION_STUDENT:
+            case INITIALIZATION_INSTRUCTOR:
+                String userName = (String) obj;
+                CourseList courseList = new CourseList(data.findUserCourses(userName));
+                thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseList));
                 break;
             case LOGIN:
-                Object obj = command.getObject();
                 LoginCredential loginCredential = (LoginCredential) obj;
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
@@ -78,14 +79,10 @@ public class NotezzaServer {
                 Map<String,User> allUsers = data.getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
-                    String commandMessage = "SUCCESS";
-                    if (tempUser.isInstructor()) {
-                        commandMessage += "I";
-                    }
-                    Command loginSuccessful = new Command(LOGIN, commandMessage);
+                    Command loginSuccessful = new Command(LOGIN,tempUser);
                     thread.sendCommand(loginSuccessful);
                 } else {
-                    Command loginFailed = new Command(LOGIN, "FAILED");
+                    Command loginFailed = new Command(LOGIN_FAIL, null);
                     thread.sendCommand(loginFailed);
                 }
                 break;
