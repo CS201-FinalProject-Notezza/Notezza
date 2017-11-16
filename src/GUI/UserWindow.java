@@ -1,4 +1,7 @@
 package GUI;
+import NotezzaClient.NotezzaClient;
+import objects.Note;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -31,15 +34,17 @@ public class UserWindow extends JFrame {
 	private final Action action_1 = new SwingAction_1();
 	private final Action action_2 = new SwingAction_2();
 	private final Action action_3 = new SwingAction_3();
+	private NotezzaClient client;
 
 	/**
 	 * Launch the application.
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserWindow frame = new UserWindow();
+					UserWindow frame = new UserWindow(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +56,9 @@ public class UserWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserWindow() {
+	public UserWindow(NotezzaClient client) {
+		this.client = client;
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();

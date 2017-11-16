@@ -74,7 +74,7 @@ public class NotezzaServer {
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
                 int hashedPassword = passwordHasher(password);
-                
+
                 Map<String,User> allUsers = data.getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
