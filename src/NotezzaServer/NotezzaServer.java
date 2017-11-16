@@ -5,9 +5,9 @@ import db.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Vector;
-import java.util.Math;
 
 import static NotezzaServer.CommandType.*;
 
@@ -73,22 +73,18 @@ public class NotezzaServer {
                 LoginCredential loginCredential = (LoginCredential) obj;
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
-                boolean found = false;
-                for (User user : data.getAllUsers()) {
-                    if (user.getUsername().equals(username) || user.getUsername().equals(password)) {
-                        // Send command back to tell that the user can login
-                        found = true;
-                        String commandMessage = "SUCCESS";
-                        // HARDCODE to indicate instructor
-                        if (user.isInstructor()) {
-                            commandMessage += "I";
-                        }
-                        Command loginSuccessful = new Command(LOGIN, commandMessage);
-                        thread.sendCommand(loginSuccessful);
-                        break;
+                int hashedPassword = passwordHasher(password);
+                
+                Map<String,User> allUsers = data.getAllUsers();
+                User tempUser = allUsers.get(username);
+                if (tempUser != null && tempUser.getPassword() == hashedPassword) {
+                    String commandMessage = "SUCCESS";
+                    if (tempUser.isInstructor()) {
+                        commandMessage += "I";
                     }
-                }
-                if (!found) {
+                    Command loginSuccessful = new Command(LOGIN, commandMessage);
+                    thread.sendCommand(loginSuccessful);
+                } else {
                     Command loginFailed = new Command(LOGIN, "FAILED");
                     thread.sendCommand(loginFailed);
                 }
@@ -113,18 +109,16 @@ public class NotezzaServer {
     
     public int passwordHasher(String password){
         long passInt = 0;
-        int n = password.size();
+        int n = password.length();
         int [] passArr = new int[4];
         int encryptedCode;
-        
-        int idx = 0;
-        while(password.charAt[idx] != null){
-            passInt += (long)(Math.pow(128, n-1-idx))*int(Character.getNumericValue(password.charAt[idx]));
-            idx++;
+
+        for (int idx = 0; idx < n; idx ++) {
+            passInt += (long)(Math.pow(128, n-1-idx))* Character.getNumericValue(password.charAt(idx));
         }
         
-        for(int i = 3; i >=0; i--){
-            passArr[i] = passInt % 65521;
+        for (int i = 3; i >=0; i--){
+            passArr[i] = (int) (passInt % 65521);
             passInt = passInt / 65521;
         }
         
