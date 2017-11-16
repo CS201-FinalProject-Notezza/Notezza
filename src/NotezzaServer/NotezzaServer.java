@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.Math;
 
 import static NotezzaServer.CommandType.*;
 
@@ -110,6 +111,28 @@ public class NotezzaServer {
         }
     }
     
+    public int passwordHasher(String password){
+        long passInt = 0;
+        int n = password.size();
+        int [] passArr = new int[4];
+        int encryptedCode;
+        
+        int idx = 0;
+        while(password[idx]){
+            passInt += (long)(Math.pow(128, n-1-idx))*int(password[idx]);
+            idx++;
+        }
+        
+        for(int i = 3; i >=0; i--){
+            passArr[i] = passInt % 65521;
+            passInt = passInt / 65521;
+        }
+        
+        encryptedCode = (45912*passArr[0] + 35511*passArr[1]
+                         + 65169*passArr[2] + 4625*passArr[3]) % 65521;
+        
+        return encryptedCode;
+    }
     
     
 }
