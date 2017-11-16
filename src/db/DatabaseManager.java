@@ -39,8 +39,8 @@ public class DatabaseManager {
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			// REPLACE USERNAME AND PASSWORD HERE WITH YOUR OWN MYSQL SETTINGS
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/Notezza?user=root&password=Joey<3SQL&useSSL=false");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
 			st = conn.createStatement();
 			
 			Vector<User> userObjects = new Vector<User>();
