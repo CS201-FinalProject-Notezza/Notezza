@@ -1,6 +1,7 @@
 package NotezzaClient;
 
 import GUI.LoginScreen;
+import GUI.UserWindow;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
 
@@ -56,6 +57,12 @@ public class NotezzaClient extends Thread {
 
         switch (type) {
             case LOGIN:
+                String info = (String) obj;
+                if (info.equals("SUCCESS")) {
+                    // pop up userWindow
+                } else if (info.equals("SUCCESSI")) {
+                    // pop up instructor window
+                }
                 break;
         }
     }

@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.Vector;
 
+import static NotezzaServer.CommandType.*;
+
 
 public class NotezzaServer {
     
@@ -21,7 +23,7 @@ public class NotezzaServer {
             System.out.println("Notezza server has started. Bind to port " + port);
             serverThreads = new Vector<>();
             DatabaseManager dm = new DatabaseManager();
-            DataContainer dc = dm.getDataContainer();
+            data = dm.getDataContainer();
 
             while (true) {
                 Socket socket = ss.accept(); // blocking
@@ -66,7 +68,29 @@ public class NotezzaServer {
 
                 break;
             case LOGIN:
-                
+                Object obj = command.getObject();
+                LoginCredential loginCredential = (LoginCredential) obj;
+                String username = loginCredential.getUsername();
+                String password = loginCredential.getPassword();
+                boolean found = false;
+                for (User user : data.getAllUsers()) {
+                    if (user.getUsername().equals(username) || user.getUsername().equals(password)) {
+                        // Send command back to tell that the user can login
+                        found = true;
+                        String commandMessage = "SUCCESS";
+                        // HARDCODE to indicate instructor
+                        if (user.isInstructor()) {
+                            commandMessage += "I";
+                        }
+                        Command loginSuccessful = new Command(LOGIN, commandMessage);
+                        thread.sendCommand(loginSuccessful);
+                        break;
+                    }
+                }
+                if (!found) {
+                    Command loginFailed = new Command(LOGIN, "FAILED");
+                    thread.sendCommand(loginFailed);
+                }
                 break;
             case REGISTER:
                 
