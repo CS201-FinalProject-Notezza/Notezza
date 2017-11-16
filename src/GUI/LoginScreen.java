@@ -72,7 +72,7 @@ public class LoginScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+private void initialize() {
 		
 		
 		frame = new JFrame();
@@ -80,7 +80,7 @@ public class LoginScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNotezza = new JLabel("Notezza", SwingConstants.CENTER);
+		JLabel lblNotezza = new JLabel("Notezza", SwingConstants.CENTER); //use new JLabel(new ImageIcon(getClass.getResourse("<file path>")) to upload image
 		lblNotezza.setBackground(new Color(255, 51, 0));
 		lblNotezza.setBounds(126, 27, 201, 60);
 		frame.getContentPane().add(lblNotezza);
@@ -123,6 +123,14 @@ public class LoginScreen {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(126, 139, 150, 26);
 		frame.getContentPane().add(passwordField);
+		
+		ImageIcon logo = new ImageIcon("Notezza.png");
+		JLabel lblNewLabel = new JLabel(logo);
+		
+		frame.getContentPane().add(lblNewLabel);
+		
+		lblNewLabel.setBounds(86, 27, 73, 60);
+		frame.getContentPane().add(lblNewLabel);
 		
 		
 		
