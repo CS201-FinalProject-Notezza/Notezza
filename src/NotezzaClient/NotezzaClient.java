@@ -1,6 +1,7 @@
 package NotezzaClient;
 
 import GUI.*;
+import objects.*;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
 
