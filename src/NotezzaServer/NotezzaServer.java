@@ -65,10 +65,14 @@ public class NotezzaServer {
         Object obj = command.getObject();
         switch (type) {
             case INITIALIZATION_STUDENT:
-            case INITIALIZATION_INSTRUCTOR:
                 String userName = (String) obj;
                 CourseList courseList = new CourseList(data.findUserCourses(userName));
                 thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseList));
+                break;
+            case INITIALIZATION_INSTRUCTOR:
+                String instructorName = (String) obj;
+                CourseList instructorCourseList = new CourseList(data.findInstructorCourses(instructorName));
+                thread.sendCommand(new Command(INITIALIZATION_STUDENT,instructorCourseList));
                 break;
             case LOGIN:
                 LoginCredential loginCredential = (LoginCredential) obj;
