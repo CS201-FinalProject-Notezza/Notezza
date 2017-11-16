@@ -30,9 +30,9 @@ public class DataContainer {
     
     public List<Course> findUserCourses(String name){
         List<Course> courses= new ArrayList<>();
-        for(Map.Entry<String, Course> entry : allCourses) {
-            Course course = entry.getValue();
-            if(course.containsStudent(name)){
+        for(Map.Value<String, Course> course : allCourses.valueSet()) {
+            //Course course = entry.getValue();
+            if(course.containStudent(name)){
                 courses.add(course);
             }
         }
