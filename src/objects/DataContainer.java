@@ -31,7 +31,6 @@ public class DataContainer {
     public List<Course> findUserCourses(String name){
         List<Course> courses= new ArrayList<>();
         for(Course course : allCourses.values()) {
-            //Course course = entry.getValue();
             if(course.containStudent(name)){
                 courses.add(course);
             }
@@ -41,8 +40,7 @@ public class DataContainer {
     
     public List<Course> findInstructorCourses(String name) {
         List<Course> courses= new ArrayList<>();
-        for(Map.Entry<String, Course> entry : allCourses) {
-            Course course = entry.getValue();
+        for(Course course : allCourses.values()) {
             if(course.getInstructor().getUsername().equals(name)){
                 courses.add(course);
             }
