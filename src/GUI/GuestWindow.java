@@ -11,6 +11,8 @@ import javax.swing.JMenuItem;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
+
 import java.awt.TextField;
 import java.awt.Color;
 import java.awt.TextArea;
@@ -57,44 +59,58 @@ public class GuestWindow extends JFrame {
 		btnUserProfile.setBounds(877, 6, 117, 29);
 		contentPane.add(btnUserProfile);
 		
-		
-		TextArea textArea = new TextArea();
-		textArea.setBounds(472, 442, 499, 179);
-		contentPane.add(textArea);
-		
-		Button button = new Button("Add Note");
+		/*Button button = new Button("Add Note");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		button.setBounds(772, 627, 117, 29);
-		contentPane.add(button);
+		contentPane.add(button);*/
 		
 		List list = new List();
-		list.setBounds(46, 124, 290, 532);
-		//list.add("<string>");
+		list.setBounds(46, 156, 290, 500);
 		contentPane.add(list);
 		
-		
 		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setEditable(false);
-		textField.setBounds(35, 72, 130, 26);
+		textField.setBounds(34, 61, 130, 26);
 		contentPane.add(textField);
 		textField.setColumns(10);
-	
+		
+		JComboBox<String> allClasses = new JComboBox<String>(); //for the Classes
+		allClasses.setBounds(24, 7, 141, 27);
+		contentPane.add(allClasses);
+		
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(177, 72, 117, 29);
+		btnSearch.setBounds(177, 61, 117, 29);
 		contentPane.add(btnSearch);
 		
-		//for the combo box, we need to return the student's class vector
-		//put the vector into the constructor of the JComboBox
+		//String[] sortOptions = {"Date Uploaded", "Number of Comments", "Number of Likes", "Number of Ratings"};
+		JComboBox<String> sortComboBox = new JComboBox<String>(); //this is for the search options for the List
+		sortComboBox.setModel(new DefaultComboBoxModel(new String[] {"Date Uploaded", "Most Likes", "Highest Rating", "Number of Comments"}));
+		sortComboBox.setBounds(34, 91, 212, 27);
+		contentPane.add(sortComboBox);
 		
-		//and when you click on the specific class, we update the list of posts and stuff 
+		JButton btnAddNote = new JButton("Add Note");
+		btnAddNote.setEnabled(false);
+		btnAddNote.setBounds(47, 123, 117, 29);
+		contentPane.add(btnAddNote);
 		
-		JComboBox<String> comboBox = new JComboBox<String>() ;
-		comboBox.setBounds(36, 25, 141, 27);
-		contentPane.add(comboBox);
+		JButton btnViewMembers = new JButton("View Members");
+		btnViewMembers.setEnabled(false);
+		btnViewMembers.setBounds(618, 6, 117, 29);
+		contentPane.add(btnViewMembers);
+		
+		
+		JButton btnAddPresentation = new JButton("View Presentation");
+		btnAddPresentation.setEnabled(false);
+		/*btnAddPresentation.setAction(action_1);
+		btnAddPresentation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});*/
+		btnAddPresentation.setBounds(377, 6, 158, 29);
+		contentPane.add(btnAddPresentation);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -102,7 +118,7 @@ public class GuestWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			UserProfile profile = new UserProfile();
+			GuestProfile profile = new GuestProfile();
 			profile.setVisible(true);
 		}
 	}

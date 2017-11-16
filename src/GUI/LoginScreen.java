@@ -32,6 +32,7 @@ public class LoginScreen {
 	private JFrame createAccountFrame;
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
+	private final Action action_1 = new SwingAction_1();
 
 	/**
 	 * Launch the application.
@@ -105,6 +106,7 @@ public class LoginScreen {
 		frame.getContentPane().add(btnCreateAccount);
 		
 		btnGuest = new JButton("Guest");
+		btnGuest.setAction(action_1);
 		btnGuest.setBounds(309, 206, 117, 29);
 		frame.getContentPane().add(btnGuest);
 		
@@ -126,6 +128,17 @@ public class LoginScreen {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(passwordField.getPassword());
 			System.out.println(textField.getText());
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		public SwingAction_1() {
+			putValue(NAME, "Guest");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			GuestWindow guest = new GuestWindow();
+			frame.setVisible(false);
+			guest.setVisible(true);
 		}
 	}
 }
