@@ -13,9 +13,9 @@ public class ServerThread extends Thread {
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
 
-    ServerThread(Socket socket, NotezzaServer gameServer) {
+    ServerThread(Socket socket, NotezzaServer server) {
         try {
-            this.server = gameServer;
+            this.server = server;
 
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());

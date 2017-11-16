@@ -21,6 +21,7 @@ import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.List;
 import javax.swing.JTabbedPane;
+import javax.swing.JList;
 
 public class UserWindow extends JFrame {
 
@@ -29,6 +30,7 @@ public class UserWindow extends JFrame {
 	private JTextField textField;
 	private final Action action_1 = new SwingAction_1();
 	private final Action action_2 = new SwingAction_2();
+	private final Action action_3 = new SwingAction_3();
 
 	/**
 	 * Launch the application.
@@ -113,6 +115,25 @@ public class UserWindow extends JFrame {
 		btnAddPresentation.setBounds(377, 6, 158, 29);
 		contentPane.add(btnAddPresentation);
 		
+		JList list_1 = new JList();
+		list_1.setBackground(Color.WHITE);
+		list_1.setBounds(395, 655, 345, -248);
+		contentPane.add(list_1);
+		
+		List list_2 = new List();
+		list_2.setBounds(389, 407, 579, 188);
+		contentPane.add(list_2);
+		
+		JButton btnAddComment = new JButton("Add Comment");
+		btnAddComment.setAction(action_3);
+		btnAddComment.setBounds(644, 615, 117, 29);
+		contentPane.add(btnAddComment);
+		
+		TextArea textArea = new TextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(369, 123, 625, 231);
+		contentPane.add(textArea);
+		
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -144,6 +165,16 @@ public class UserWindow extends JFrame {
 			AddNote newNote = new AddNote(); //want to pass in a constructor of the user window to update the list of posts
 			newNote.setVisible(true);
 			
+		}
+	}
+	private class SwingAction_3 extends AbstractAction {
+		public SwingAction_3() {
+			putValue(NAME, "Add Comment");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			AddComment addComment = new AddComment();
+			addComment.setVisible(true);
 		}
 	}
 }

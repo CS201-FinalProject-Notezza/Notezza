@@ -1,40 +1,66 @@
 package NotezzaClient;
 
-import objects.*;
+import GUI.LoginScreen;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+
 import java.io.IOException;
-import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class NotezzaClient extends Thread {
+
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    
+
     NotezzaClient(String hostname, int port) {
+
         try {
             System.out.println("Trying to connect to " + hostname + ":" + port);
             Socket s = new Socket(hostname, port);
             System.out.println("Connected to " + hostname + ":" + port);
-            while (true) {
-                
-            }
-            
+            LoginScreen loginScreen = new LoginScreen(this);
+            loginScreen.frame.setVisible(true);
+
             this.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void run() {
-        while (true) {
-            Command cmd = (Command) ois.readObject();
-            Object obj = cmd.getObject();
-            
+        // Keep listening from server
+        try {
+            while (true) {
+                Command cm = (Command) ois.readObject();
+                processCommand(cm);
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
-        
     }
-    
+
+    public void sendCommand(Command cm) {
+        try {
+            oos.writeObject(cm);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processCommand(Command cm) {
+        CommandType type = cm.getType();
+        Object obj = cm.getObject();
+
+        switch (type) {
+            case LOGIN:
+                break;
+        }
+    }
+
     public static void main(String[] args) {
-        //NotezzaClient = new NotezzaClient(host,6879);
+        //NotezzaClient client = new NotezzaClient("localhost",6879);
     }
 }

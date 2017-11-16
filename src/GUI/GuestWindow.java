@@ -100,6 +100,14 @@ public class GuestWindow extends JFrame {
 		btnViewMembers.setBounds(618, 6, 117, 29);
 		contentPane.add(btnViewMembers);
 		
+		TextArea textArea = new TextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(369, 123, 625, 231);
+		contentPane.add(textArea);
+		
+		List list_2 = new List();
+		list_2.setBounds(389, 407, 579, 188);
+		contentPane.add(list_2);
 		
 		JButton btnAddPresentation = new JButton("View Presentation");
 		btnAddPresentation.setEnabled(false);
@@ -111,6 +119,11 @@ public class GuestWindow extends JFrame {
 		});*/
 		btnAddPresentation.setBounds(377, 6, 158, 29);
 		contentPane.add(btnAddPresentation);
+		
+		JButton btnAddComment = new JButton("Add Comment");
+		btnAddComment.setEnabled(false);
+		btnAddComment.setBounds(644, 615, 117, 29);
+		contentPane.add(btnAddComment);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
