@@ -12,8 +12,8 @@ import java.net.Socket;
 import static NotezzaServer.CommandType.*;
 
 public class NotezzaClient extends Thread {
-    private User;
-    private List<Course> courses;
+    private User user;
+    private CourseList courseList;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
 
@@ -72,7 +72,7 @@ public class NotezzaClient extends Thread {
                 // Wait for GUI to finish
                 break;
             case INITIALIZATION_STUDENT:
-                
+                courseList = (CourseList)obj;
                 // pop up userWindow
                 UserWindow userwindow = new UserWindow(this);
                 userwindow.setVisible(true);
