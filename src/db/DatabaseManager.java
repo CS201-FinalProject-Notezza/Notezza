@@ -1,5 +1,3 @@
-package db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +13,7 @@ import java.util.Vector;
 
 import objects.Comment;
 import objects.Course;
+import objects.DataContainer;
 import objects.Note;
 import objects.Presentation;
 import objects.Quiz;
@@ -23,8 +21,15 @@ import objects.User;
 
 public class DatabaseManager {
 	
+	private DataContainer dc;
+	
 	public DatabaseManager() {
+		dc = new DataContainer();
 		initializeObjectTree();
+	}
+	
+	public DataContainer getDataContainer() {
+		return dc;
 	}
 	
 	public void initializeObjectTree() {
@@ -38,8 +43,8 @@ public class DatabaseManager {
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/Notezza?user=root&password=Joey<3SQL&useSSL=false");
 			st = conn.createStatement();
 			
-			ArrayList<User> userObjects = new ArrayList<User>();
-			ArrayList<Course> courseObjects = new ArrayList<Course>();
+			Vector<User> userObjects = new Vector<User>();
+			Vector<Course> courseObjects = new Vector<Course>();
 						
 			HashMap<Integer, User> userIDToObject = new HashMap<Integer, User>();
 			HashMap<Integer, Course> courseIDToObject = new HashMap<Integer, Course>();
@@ -320,12 +325,15 @@ public class DatabaseManager {
 				}
 			}
 			
+			dc.setAllUsers(userObjects);
+			dc.setAllCourses(courseObjects);
+			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println("cnfe: " + cnfe.getMessage());
 		} finally {
-			// CLOSE IN OPPOSITE ORDER YOU OPENED
+			// Close in opposite order as opened
 			try {
 				if (conn != null) {
 					conn.close();

@@ -20,6 +20,9 @@ public class ServerThread extends Thread {
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
             this.start();
+            while (true) {
+            	
+            }
         } catch (IOException ioe) {
             System.out.println("ioe in Server.ServerThread constructor: " + ioe.getMessage());
         }
@@ -39,7 +42,8 @@ public class ServerThread extends Thread {
             e.printStackTrace();
         }
     }
-
+    
+    
     void sendCommand(Command command) {
         try {
             oos.writeObject(command);
@@ -47,5 +51,9 @@ public class ServerThread extends Thread {
         } catch (IOException ioe) {
             System.out.println("ioe: " + ioe.getMessage());
         }
+    }
+    
+    void readCommand() {
+    		
     }
 }
