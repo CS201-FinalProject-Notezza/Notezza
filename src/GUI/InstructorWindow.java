@@ -1,4 +1,6 @@
 package GUI;
+import NotezzaClient.NotezzaClient;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -27,15 +29,17 @@ public class InstructorWindow extends JFrame {
 	private JTextField textField;
 	private final Action action_1 = new SwingAction_1();
 	private final Action action_2 = new SwingAction_2();
+	private NotezzaClient client;
 
 	/**
 	 * Launch the application.
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InstructorWindow frame = new InstructorWindow();
+					InstructorWindow frame = new InstructorWindow(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,10 +48,12 @@ public class InstructorWindow extends JFrame {
 		});
 	}
 
+
 	/**
 	 * Create the frame.
 	 */
-	public InstructorWindow() {
+	public InstructorWindow(NotezzaClient client) {
+		this.client = client;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
