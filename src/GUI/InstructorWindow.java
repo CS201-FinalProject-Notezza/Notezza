@@ -18,12 +18,14 @@ import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.List;
 import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
 
 public class InstructorWindow extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
 	private JTextField textField;
+	private final Action action_1 = new SwingAction_1();
 
 	/**
 	 * Launch the application.
@@ -57,34 +59,58 @@ public class InstructorWindow extends JFrame {
 		btnUserProfile.setBounds(877, 6, 117, 29);
 		contentPane.add(btnUserProfile);
 		
-		TextArea textArea = new TextArea();
-		textArea.setBounds(472, 442, 499, 179);
-		contentPane.add(textArea);
-		
-		Button button = new Button("Add Note");
+		/*Button button = new Button("Add Note");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		button.setBounds(772, 627, 117, 29);
-		contentPane.add(button);
+		contentPane.add(button);*/
 		
 		List list = new List();
-		list.setBounds(46, 124, 290, 532);
+		list.setBounds(46, 156, 290, 500);
 		contentPane.add(list);
 		
 		textField = new JTextField();
-		textField.setBounds(35, 72, 130, 26);
+		textField.setBounds(34, 61, 130, 26);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JComboBox<String> comboBox = new JComboBox<String>() ;
-		comboBox.setBounds(24, 25, 141, 27);
-		contentPane.add(comboBox);
+		JComboBox<String> allClasses = new JComboBox<String>(); //for the Classes
+		allClasses.setBounds(24, 7, 141, 27);
+		contentPane.add(allClasses);
 		
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(177, 72, 117, 29);
+		btnSearch.setBounds(177, 61, 117, 29);
 		contentPane.add(btnSearch);
+		
+		JButton btnNewClass = new JButton("New Class");
+		btnNewClass.setBounds(177, 6, 117, 29);
+		contentPane.add(btnNewClass);
+		
+		//String[] sortOptions = {"Date Uploaded", "Number of Comments", "Number of Likes", "Number of Ratings"};
+		JComboBox<String> sortComboBox = new JComboBox<String>(); //this is for the search options for the List
+		sortComboBox.setModel(new DefaultComboBoxModel(new String[] {"Date Uploaded", "Most Likes", "Highest Rating", "Number of Comments"}));
+		sortComboBox.setBounds(34, 91, 212, 27);
+		contentPane.add(sortComboBox);
+		
+		JButton btnAddNote = new JButton("Add Note");
+		btnAddNote.setBounds(47, 123, 117, 29);
+		contentPane.add(btnAddNote);
+		
+		JButton btnAddPresentation = new JButton("View Presentation");
+		btnAddPresentation.setAction(action_1);
+		btnAddPresentation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnAddPresentation.setBounds(377, 6, 158, 29);
+		contentPane.add(btnAddPresentation);
+		
+		JButton btnViewMembers = new JButton("View Members");
+		btnViewMembers.setBounds(618, 6, 117, 29);
+		contentPane.add(btnViewMembers);
 		
 		//might need a button to list all the classes
 		
@@ -97,8 +123,18 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			UserProfile profile = new UserProfile();
+			InstructorProfile profile = new InstructorProfile();
 			profile.setVisible(true);
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		public SwingAction_1() {
+			putValue(NAME, "View Presentation");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			InstructorPresentation presentation = new InstructorPresentation();
+			presentation.setVisible(true);
 		}
 	}
 }
