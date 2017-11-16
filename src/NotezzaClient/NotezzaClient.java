@@ -66,6 +66,30 @@ public class NotezzaClient extends Thread {
                 break;
         }
     }
+    
+    public int passwordHasher(String password){
+        long passInt = 0;
+        int n = password.size();
+        int [] passArr = new int[4];
+        int encryptedCode;
+        
+        int idx = 0;
+        while(password.charAt[idx] != null){
+            passInt += (long)(Math.pow(128, n-1-idx))*int(Character.getNumericValue(password.charAt[idx]));
+            idx++;
+        }
+        
+        for(int i = 3; i >=0; i--){
+            passArr[i] = passInt % 65521;
+            passInt = passInt / 65521;
+        }
+        
+        encryptedCode = (45912*passArr[0] + 35511*passArr[1]
+                         + 65169*passArr[2] + 4625*passArr[3]) % 65521;
+        
+        return encryptedCode;
+    }
+
 
     public static void main(String[] args) {
         //NotezzaClient client = new NotezzaClient("localhost",6879);
