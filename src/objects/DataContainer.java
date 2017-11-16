@@ -1,6 +1,8 @@
 package objects;
 
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 public class DataContainer {
     private Map<String, User> allUsers;
@@ -24,6 +26,17 @@ public class DataContainer {
 
     public void setAllCourses(Map<String, Course> allCourses) {
         this.allCourses = allCourses;
+    }
+    
+    public List<Course> findUserCourses(String name){
+        List<Course> courses= new ArrayList<>();
+        for(Map<String, Course> entry : allCourses) {
+            Course course = entry.getValue();
+            if(course.containsStudent(name)){
+                courses.add(course);
+            }
+        }
+        return courses;
     }
 
 }

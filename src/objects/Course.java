@@ -64,4 +64,13 @@ public class Course implements Serializable {
     }
     
     public void addNote(Note note) { allNotes.add(note);}
+    
+    public boolean containStudent(String username){
+        for (User student : studetns) {
+            if(student.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

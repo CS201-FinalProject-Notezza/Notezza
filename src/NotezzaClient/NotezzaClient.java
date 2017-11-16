@@ -1,8 +1,6 @@
 package NotezzaClient;
 
-import GUI.InstructorWindow;
-import GUI.LoginScreen;
-import GUI.UserWindow;
+import GUI.*;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
 
@@ -11,8 +9,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class NotezzaClient extends Thread {
+import static NotezzaServer.CommandType.*;
 
+public class NotezzaClient extends Thread {
+    private User;
+    private List<Course> courses;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
 
@@ -57,17 +58,34 @@ public class NotezzaClient extends Thread {
         Object obj = cm.getObject();
 
         switch (type) {
+                
             case LOGIN:
-                String info = (String) obj;
-                if (info.equals("SUCCESS")) {
-                    // pop up userWindow
-                    UserWindow userwindow = new UserWindow(this);
-                    userwindow.setVisible(true);
-                } else if (info.equals("SUCCESSI")) {
-                    // pop up instructor window
-                    InstructorWindow instructorWindow = new InstructorWindow(this);
-                    instructorWindow.setVisible(true);
+                user = (User) obj;
+                if(user.isInstructor()){
+                    sendCommand(new Command(INITIALIZATION_INSTRUCTOR, user.getUsername()));
+                } else {
+                    sendCommand(new Command(INITIALIZATION_STUDENT, user.getUsername()));
                 }
+                break;
+            case LOGIN_FAIL:
+                // Need to displaye login failure message on login window
+                // Wait for GUI to finish
+                break;
+            case INITIALIZATION_STUDENT:
+                
+                // pop up userWindow
+                UserWindow userwindow = new UserWindow(this);
+                userwindow.setVisible(true);
+                break
+            case INITIALIZATION_INSTRUCTOR:
+                // pop up instructor window
+                InstructorWindow instructorWindow = new InstructorWindow(this);
+                instructorWindow.setVisible(true);
+                break;
+                
+                
+                
+            default:
                 break;
         }
     }
