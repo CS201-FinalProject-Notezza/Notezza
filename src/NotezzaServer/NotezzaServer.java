@@ -21,7 +21,7 @@ public class NotezzaServer {
             System.out.println("Notezza server has started. Bind to port " + port);
             serverThreads = new Vector<>();
             DatabaseManager dm = new DatabaseManager();
-            DataContainer dc = dm.getDateContainer();
+            DataContainer dc = dm.getDataContainer();
 
             while (true) {
                 Socket socket = ss.accept(); // blocking
