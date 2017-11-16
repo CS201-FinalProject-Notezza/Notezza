@@ -26,6 +26,7 @@ public class InstructorWindow extends JFrame {
 	private final Action action = new SwingAction();
 	private JTextField textField;
 	private final Action action_1 = new SwingAction_1();
+	private final Action action_2 = new SwingAction_2();
 
 	/**
 	 * Launch the application.
@@ -116,6 +117,20 @@ public class InstructorWindow extends JFrame {
 		
 		//and for the window that lists classes and students taking that class, open a new window when adding new classes/students into class, with the classWindow pointing into that new window or something similar
 		//and when submitted, a function is called to update the listing
+		
+		List list_2 = new List();
+		list_2.setBounds(389, 407, 579, 188);
+		contentPane.add(list_2);
+		
+		JButton btnAddComment = new JButton("Add Comment");
+		btnAddComment.setAction(action_2);
+		btnAddComment.setBounds(644, 615, 117, 29);
+		contentPane.add(btnAddComment);
+		
+		TextArea textArea = new TextArea();
+		textArea.setEditable(false);
+		textArea.setBounds(369, 123, 625, 231);
+		contentPane.add(textArea);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -135,6 +150,16 @@ public class InstructorWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			InstructorPresentation presentation = new InstructorPresentation();
 			presentation.setVisible(true);
+		}
+	}
+	private class SwingAction_2 extends AbstractAction {
+		public SwingAction_2() {
+			putValue(NAME, "Add Comment");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			AddComment addComment = new AddComment();
+			addComment.setVisible(true);
 		}
 	}
 }
