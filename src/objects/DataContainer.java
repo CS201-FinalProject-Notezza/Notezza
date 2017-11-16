@@ -1,28 +1,28 @@
 package objects;
 
-import java.util.Vector;
+import java.util.Map;
 
 public class DataContainer {
-    private Vector<User> allUsers;
-    private Vector<Course> allCourses;
+    private Map<String, User> allUsers;
+    private Map<String, Course> allCourses;
 
     public DataContainer() {
     	
     }
 
-    public Vector<User> getAllUsers() {
+    public Map<String, User> getAllUsers() {
         return allUsers;
     }
 
-    public void setAllUsers(Vector<User> allUsers) {
+    public void setAllUsers(Map<String, User> allUsers) {
         this.allUsers = allUsers;
     }
 
-    public Vector<Course> getAllCourses() {
+    public Map<String, Course> getAllCourses() {
         return allCourses;
     }
 
-    public void setAllCourses(Vector<Course> allCourses) {
+    public void setAllCourses(Map<String, Course> allCourses) {
         this.allCourses = allCourses;
     }
 

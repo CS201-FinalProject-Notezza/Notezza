@@ -327,8 +327,18 @@ public class DatabaseManager {
 				}
 			}
 			
-			dc.setAllUsers(userObjects);
-			dc.setAllCourses(courseObjects);
+			HashMap<String, User> usernameToUserObject = new HashMap<String, User>();
+			HashMap<String, Course> courseNameToCourseObject = new HashMap<String, Course>();
+			
+			for (User u : userObjects) {
+				usernameToUserObject.put(u.getUsername(), u);
+			}
+			for (Course c : courseObjects) {
+				courseNameToCourseObject.put(c.getCourseName(), c);
+			}
+			
+			dc.setAllUsers(usernameToUserObject);
+			dc.setAllCourses(courseNameToCourseObject);
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());

@@ -5,8 +5,11 @@ import db.*;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Vector;
+
+import static NotezzaServer.CommandType.*;
 
 
 public class NotezzaServer {
@@ -21,7 +24,7 @@ public class NotezzaServer {
             System.out.println("Notezza server has started. Bind to port " + port);
             serverThreads = new Vector<>();
             DatabaseManager dm = new DatabaseManager();
-            DataContainer dc = dm.getDataContainer();
+            data = dm.getDataContainer();
 
             while (true) {
                 Socket socket = ss.accept(); // blocking
@@ -66,7 +69,25 @@ public class NotezzaServer {
 
                 break;
             case LOGIN:
-                
+                Object obj = command.getObject();
+                LoginCredential loginCredential = (LoginCredential) obj;
+                String username = loginCredential.getUsername();
+                String password = loginCredential.getPassword();
+                int hashedPassword = passwordHasher(password);
+
+                Map<String,User> allUsers = data.getAllUsers();
+                User tempUser = allUsers.get(username);
+                if (tempUser != null && tempUser.getPassword() == hashedPassword) {
+                    String commandMessage = "SUCCESS";
+                    if (tempUser.isInstructor()) {
+                        commandMessage += "I";
+                    }
+                    Command loginSuccessful = new Command(LOGIN, commandMessage);
+                    thread.sendCommand(loginSuccessful);
+                } else {
+                    Command loginFailed = new Command(LOGIN, "FAILED");
+                    thread.sendCommand(loginFailed);
+                }
                 break;
             case REGISTER:
                 
@@ -86,6 +107,26 @@ public class NotezzaServer {
         }
     }
     
+    public int passwordHasher(String password){
+        long passInt = 0;
+        int n = password.length();
+        int [] passArr = new int[4];
+        int encryptedCode;
+
+        for (int idx = 0; idx < n; idx ++) {
+            passInt += (long)(Math.pow(128, n-1-idx))* Character.getNumericValue(password.charAt(idx));
+        }
+        
+        for (int i = 3; i >=0; i--){
+            passArr[i] = (int) (passInt % 65521);
+            passInt = passInt / 65521;
+        }
+        
+        encryptedCode = (45912*passArr[0] + 35511*passArr[1]
+                         + 65169*passArr[2] + 4625*passArr[3]) % 65521;
+        
+        return encryptedCode;
+    }
     
     
 }
