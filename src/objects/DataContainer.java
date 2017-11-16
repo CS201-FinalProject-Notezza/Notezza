@@ -38,5 +38,16 @@ public class DataContainer {
         }
         return courses;
     }
+    
+    public List<Course> findInstructorCourses(String name) {
+        List<Course> courses= new ArrayList<>();
+        for(Map.Entry<String, Course> entry : allCourses) {
+            Course course = entry.getValue();
+            if(course.getInstructor().getUsername().equals(name)){
+                courses.add(course);
+            }
+        }
+        return courses;
+    }
 
 }

@@ -17,6 +17,12 @@ public class NotezzaClient extends Thread {
     private CourseList courseList;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    
+    // Windows
+    private LoginScreen loginWindow;
+    private UserWindow userWindow;
+    private InstructorWindow instructorWindow;
+    
 
     NotezzaClient(String hostname, int port) {
 
@@ -75,22 +81,20 @@ public class NotezzaClient extends Thread {
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList)obj;
                 // pop up userWindow
-                UserWindow userwindow = new UserWindow(this);
-                userwindow.setVisible(true);
-                break
+                userWindow = new UserWindow(this);
+                userWindow.setVisible(true);
+                break;
             case INITIALIZATION_INSTRUCTOR:
                 // pop up instructor window
-                InstructorWindow instructorWindow = new InstructorWindow(this);
+                instructorWindow = new InstructorWindow(this);
                 instructorWindow.setVisible(true);
                 break;
-                
-                
                 
             default:
                 break;
         }
     }
-
+    
     public static void main(String[] args) {
         //NotezzaClient client = new NotezzaClient("localhost",6879);
     }

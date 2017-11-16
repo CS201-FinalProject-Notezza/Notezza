@@ -66,7 +66,7 @@ public class Course implements Serializable {
     public void addNote(Note note) { allNotes.add(note);}
     
     public boolean containStudent(String username){
-        for (User student : studetns) {
+        for (User student : students) {
             if(student.getUsername().equals(username)){
                 return true;
             }
