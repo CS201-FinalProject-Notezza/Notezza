@@ -56,15 +56,15 @@ public class InstructorProfile extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(100, 75, 89, 16);
+		lblUsername.setBounds(100, 75, 289, 16);
 		contentPane.add(lblUsername);
 		
 		JLabel lblFirstName = new JLabel("First Name:");
-		lblFirstName.setBounds(100, 93, 89, 16);
+		lblFirstName.setBounds(100, 93, 289, 16);
 		contentPane.add(lblFirstName);
 		
 		JLabel lblLastName = new JLabel("Last Name:");
-		lblLastName.setBounds(100, 111, 70, 16);
+		lblLastName.setBounds(100, 111, 289, 16);
 		contentPane.add(lblLastName);
 		
 		JCheckBox chckbxPrivate = new JCheckBox("Private");
@@ -73,7 +73,7 @@ public class InstructorProfile extends JFrame {
 		contentPane.add(chckbxPrivate);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(100, 131, 61, 16);
+		lblEmail.setBounds(100, 131, 267, 16);
 		contentPane.add(lblEmail);
 		
 		JButton btnApply = new JButton("Apply");
