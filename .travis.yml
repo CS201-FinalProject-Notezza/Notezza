@@ -1,4 +1,4 @@
-nguage: java
+language: java
 script:
-        - mkdir -p out
-              - find * -type f -name '*.java' -exec javac -cp AbsoluteLayout.jar -sourcepath src -d out {} \;
+     - mkdir -p out
+     - find * -type f -name '*.java' -exec javac -cp AbsoluteLayout.jar -sourcepath src -d out {} \;
