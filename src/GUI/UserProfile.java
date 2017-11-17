@@ -74,15 +74,15 @@ public class UserProfile extends JFrame {
 		}
 
 		JLabel lblUsername = new JLabel("Username: " + userName);
-		lblUsername.setBounds(100, 75, 89, 16);
+		lblUsername.setBounds(100, 75, 310, 16);
 		contentPane.add(lblUsername);
 
 		JLabel lblFirstName = new JLabel("First Name: " + fName);
-		lblFirstName.setBounds(100, 93, 89, 16);
+		lblFirstName.setBounds(100, 93, 284, 16);
 		contentPane.add(lblFirstName);
 		
 		JLabel lblLastName = new JLabel("Last Name: " + lName);
-		lblLastName.setBounds(100, 111, 70, 16);
+		lblLastName.setBounds(100, 111, 268, 16);
 		contentPane.add(lblLastName);
 		
 		JCheckBox chckbxPrivate = new JCheckBox("Private");
@@ -90,7 +90,7 @@ public class UserProfile extends JFrame {
 		contentPane.add(chckbxPrivate);
 		
 		JLabel lblEmail = new JLabel("Email: " + email);
-		lblEmail.setBounds(100, 131, 61, 16);
+		lblEmail.setBounds(100, 131, 268, 16);
 		contentPane.add(lblEmail);
 		
 		JButton btnApply = new JButton("Apply");
