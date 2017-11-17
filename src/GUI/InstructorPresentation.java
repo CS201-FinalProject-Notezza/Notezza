@@ -9,15 +9,25 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JButton;
 import javax.swing.Box;
+import javax.swing.ImageIcon;
+
 import java.awt.Color;
+import javax.swing.border.BevelBorder;
+import javax.swing.JLabel;
 
 public class InstructorPresentation extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 
+	private JList chatList;
+	private JComboBox questionBox;
+	private ImageIcon presentationSlide;
+	private JLabel slideLabel; 
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +48,19 @@ public class InstructorPresentation extends JFrame {
 	 * Create the frame.
 	 */
 	public InstructorPresentation() {
+		setTitle("Presentation");
+		setResizable(false);
 	
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look and feel.
+		}
 		
 		
 		setBounds(100, 100, 791, 545);
@@ -47,17 +69,17 @@ public class InstructorPresentation extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JList list = new JList();
-		list.setBounds(500, 258, 265, 189);
-		contentPane.add(list);
+		chatList = new JList();
+		chatList.setBounds(501, 122, 265, 303);
+		contentPane.add(chatList);
 		
 		textField = new JTextField();
-		textField.setBounds(574, 449, 164, 27);
+		textField.setBounds(496, 469, 164, 27);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnSendMessage = new JButton("Send Message");
-		btnSendMessage.setBounds(574, 488, 149, 29);
+		btnSendMessage.setBounds(664, 469, 121, 29);
 		contentPane.add(btnSendMessage);
 		
 		JButton button = new JButton("<");
@@ -69,12 +91,35 @@ public class InstructorPresentation extends JFrame {
 		contentPane.add(button_1);
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panel.setBounds(32, 42, 427, 383);
 		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		presentationSlide = new ImageIcon("Notezza.png");
+		
+		slideLabel = new JLabel(presentationSlide);
+		slideLabel.setBounds(6, 6, 415, 371);
+		panel.add(slideLabel);
+		
+		
+		//JLabel lblNewLabel = new JLabel(logo);
+		
 		
 		JButton btnNewPresentation = new JButton("New Presentation");
 		btnNewPresentation.setBounds(67, 371, 153, 29);
 		contentPane.add(btnNewPresentation);
+		
+		JButton btnNewPresentation_1 = new JButton("New Presentation");
+		btnNewPresentation_1.setBounds(633, 6, 152, 29);
+		contentPane.add(btnNewPresentation_1);
+		
+		 questionBox = new JComboBox();
+		questionBox.setBounds(491, 70, 294, 27);
+		contentPane.add(questionBox);
+		
+		JLabel lblQuestions = new JLabel("Questions:");
+		lblQuestions.setBounds(491, 42, 112, 16);
+		contentPane.add(lblQuestions);
 	}
-	
 }

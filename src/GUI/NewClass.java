@@ -1,25 +1,25 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
-public class AddNote extends JFrame {
+public class NewClass extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
 	private final Action action = new SwingAction();
 
 	/**
@@ -29,7 +29,7 @@ public class AddNote extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddNote frame = new AddNote();
+					NewClass frame = new NewClass();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class AddNote extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddNote() {
+	public NewClass() {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -55,48 +55,39 @@ public class AddNote extends JFrame {
 		}
 		
 		
-		setTitle("New Note");
+		setTitle("New Class");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 569, 407);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblClassName = new JLabel("Class Name");
+		lblClassName.setBounds(47, 27, 94, 16);
+		contentPane.add(lblClassName);
+		
 		textField = new JTextField();
-		textField.setBounds(153, 45, 270, 26);
+		textField.setBounds(173, 22, 130, 26);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblTitle = new JLabel("Title:");
-		lblTitle.setBounds(107, 50, 61, 16);
-		contentPane.add(lblTitle);
+		JLabel lblEmailsOfStudents = new JLabel("Emails of Students (Separated By Commas)");
+		lblEmailsOfStudents.setBounds(57, 65, 295, 16);
+		contentPane.add(lblEmailsOfStudents);
 		
-		JLabel lblTags = new JLabel("Tags:");
-		lblTags.setBounds(107, 83, 61, 16);
-		contentPane.add(lblTags);
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(61, 93, 295, 122);
+		contentPane.add(textPane);
 		
-		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setBounds(107, 119, 94, 16);
-		contentPane.add(lblDescription);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(107, 147, 425, 173);
-		contentPane.add(textArea);
-		
-		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(21, 340, 94, 26);
-		contentPane.add(btnSubmit);
+		JButton btnOk = new JButton("OK");
+		btnOk.setBounds(47, 230, 117, 29);
+		contentPane.add(btnOk);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setAction(action);
-		btnCancel.setBounds(117, 339, 117, 29);
+		btnCancel.setBounds(207, 230, 117, 29);
 		contentPane.add(btnCancel);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(153, 83, 270, 26);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
