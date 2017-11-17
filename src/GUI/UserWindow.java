@@ -108,6 +108,10 @@ public class UserWindow extends JFrame {
 		button.setBounds(772, 627, 117, 29);
 		contentPane.add(button);*/
 		
+		//get the list of the notes
+		//Print out the Title of the notes
+		//when click on the note list, print out the description
+		
 		noteList = new List();
 		noteList.setBounds(46, 156, 290, 500);
 		contentPane.add(noteList);
@@ -117,9 +121,25 @@ public class UserWindow extends JFrame {
 		contentPane.add(searchField);
 		searchField.setColumns(10);
 		
-		allClasses = new JComboBox<String>(); //for the Classes
+		//fill an arraylist with the String names of the classes
+		//and then add it to the comboBox
+		
+		java.util.List<Course> allCourses = courseList.getCourse();
+		
+		java.util.List<String> allCourseNames = (java.util.List<String>) new List();
+		
+		for(int i = 0; i<allCourses.size(); i++)
+		{
+			allCourseNames.add(allCourses.get(i).getCourseName());
+		}
+		
+		allClasses = new JComboBox<String>(new DefaultComboBoxModel(allCourseNames.toArray())); //for the Classes
 		allClasses.setBounds(24, 7, 141, 27);
 		contentPane.add(allClasses);
+		
+		/*
+		 * Have a function below to update the allClasses ComboBox should a new class be added
+		 */
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setAction(action_6);
@@ -179,8 +199,9 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-		    User user = client.getUser();
-			UserProfile profile = new UserProfile(user);
+			
+		
+			UserProfile profile = new UserProfile(null);
 			profile.setVisible(true);
 		}
 	}
@@ -201,9 +222,9 @@ public class UserWindow extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			//open up the AddNote Window
-			AddNote newNote = new AddNote(client); //want to pass in a constructor of the user window to update the list of posts
+			AddNote newNote = new AddNote(); //want to pass in a constructor of the user window to update the list of posts
 			newNote.setVisible(true);
-
+			
 		}
 	}
 	private class SwingAction_3 extends AbstractAction { //This function is for adding comments
