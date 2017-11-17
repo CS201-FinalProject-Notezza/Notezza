@@ -11,6 +11,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.AbstractAction;
@@ -50,7 +52,19 @@ public class createNewUser extends JFrame {
 	 * Create the frame.
 	 */
 	public createNewUser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+		
+		
 		setBounds(100, 100, 575, 397);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

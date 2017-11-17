@@ -1,15 +1,17 @@
 package GUI;
-import NotezzaClient.NotezzaClient;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import NotezzaClient.NotezzaClient;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
@@ -20,16 +22,29 @@ import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.List;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.DefaultComboBoxModel;
+
 
 public class InstructorWindow extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
-	private JTextField textField;
+	private JTextField commentText;
 	private final Action action_1 = new SwingAction_1();
 	private final Action action_2 = new SwingAction_2();
+	private final Action action_3 = new SwingAction_3();
 	private NotezzaClient client;
+	private final Action action_4 = new SwingAction_4();
+	
+	private JComboBox<String> allClasses;
+	private List noteList;
+	private List commentList;
+	private final Action action_5 = new SwingAction_5();
+	
+	private JTextField searchField;
+	private final Action action_6 = new SwingAction_6();
 
 	/**
 	 * Launch the application.
@@ -53,6 +68,19 @@ public class InstructorWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public InstructorWindow(NotezzaClient client) {
+		
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+		
+		
 		this.client = client;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
@@ -74,24 +102,32 @@ public class InstructorWindow extends JFrame {
 		button.setBounds(772, 627, 117, 29);
 		contentPane.add(button);*/
 		
-		List list = new List();
-		list.setBounds(46, 156, 290, 500);
-		contentPane.add(list);
+		noteList = new List();
+		noteList.setBounds(46, 156, 290, 500);
+		contentPane.add(noteList);
+
+		searchField = new JTextField();
+		searchField.setBounds(34, 61, 130, 26);
+		contentPane.add(searchField);
+		searchField.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setBounds(34, 61, 130, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		commentText = new JTextField();
+		commentText.setBounds(437, 617, 361, 26);
+		contentPane.add(commentText);
+		commentText.setColumns(10);
 		
-		JComboBox<String> allClasses = new JComboBox<String>(); //for the Classes
+		
+		allClasses = new JComboBox<String>(); //for the Classes
 		allClasses.setBounds(24, 7, 141, 27);
 		contentPane.add(allClasses);
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setAction(action_6);
 		btnSearch.setBounds(177, 61, 117, 29);
 		contentPane.add(btnSearch);
 		
 		JButton btnNewClass = new JButton("New Class");
+		btnNewClass.setAction(action_4);
 		btnNewClass.setBounds(177, 6, 117, 29);
 		contentPane.add(btnNewClass);
 		
@@ -116,6 +152,7 @@ public class InstructorWindow extends JFrame {
 		contentPane.add(btnAddPresentation);
 		
 		JButton btnViewMembers = new JButton("View Members");
+		btnViewMembers.setAction(action_3);
 		btnViewMembers.setBounds(618, 6, 117, 29);
 		contentPane.add(btnViewMembers);
 		
@@ -124,19 +161,24 @@ public class InstructorWindow extends JFrame {
 		//and for the window that lists classes and students taking that class, open a new window when adding new classes/students into class, with the classWindow pointing into that new window or something similar
 		//and when submitted, a function is called to update the listing
 		
-		List list_2 = new List();
-		list_2.setBounds(389, 407, 579, 188);
-		contentPane.add(list_2);
-		
-		JButton btnAddComment = new JButton("Add Comment");
-		btnAddComment.setAction(action_2);
-		btnAddComment.setBounds(644, 615, 117, 29);
-		contentPane.add(btnAddComment);
+		commentList = new List();
+		commentList.setBounds(389, 407, 579, 188);
+		contentPane.add(commentList);
 		
 		TextArea textArea = new TextArea();
 		textArea.setEditable(false);
 		textArea.setBounds(369, 123, 625, 231);
 		contentPane.add(textArea);
+		
+		JTextField textField_1 = new JTextField();
+		textField_1.setBounds(437, 617, 361, 26);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JButton btnComment = new JButton("Comment");
+		btnComment.setAction(action_5);
+		btnComment.setBounds(824, 617, 117, 29);
+		contentPane.add(btnComment);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -163,9 +205,57 @@ public class InstructorWindow extends JFrame {
 			putValue(NAME, "Add Comment");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
+		public void actionPerformed(ActionEvent e) { //this is for adding comments
+			//AddComment addComment = new AddComment();
+			//addComment.setVisible(true);
+		}
+	}
+	private class SwingAction_3 extends AbstractAction {
+		public SwingAction_3() {
+			putValue(NAME, "View Members");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
 		public void actionPerformed(ActionEvent e) {
-			AddComment addComment = new AddComment();
-			addComment.setVisible(true);
+			ViewStudentsInClass viewMembers = new ViewStudentsInClass();
+			viewMembers.setVisible(true);
+		}
+	}
+	private class SwingAction_4 extends AbstractAction {
+		public SwingAction_4() {
+			putValue(NAME, "New Class");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			NewClass newClass = new NewClass();
+			newClass.setVisible(true);
+		}
+	}
+	private class SwingAction_5 extends AbstractAction {
+		public SwingAction_5() {
+			putValue(NAME, "Comment");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(commentText.getText().equals("")) 
+			{
+				//open a dialogue to warn the user
+				JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			}
+		}
+	}
+	private class SwingAction_6 extends AbstractAction {
+		public SwingAction_6() {
+			putValue(NAME, "Search");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(searchField.getText().equals("")) 
+			{
+				//open a dialogue to warn the user
+				JOptionPane.showMessageDialog(contentPane, "ERROR: Search Field Cannot be Empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			}
 		}
 	}
 }

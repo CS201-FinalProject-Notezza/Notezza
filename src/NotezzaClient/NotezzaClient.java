@@ -30,9 +30,11 @@ public class NotezzaClient extends Thread {
             System.out.println("Trying to connect to " + hostname + ":" + port);
             Socket s = new Socket(hostname, port);
             System.out.println("Connected to " + hostname + ":" + port);
+            ois = new ObjectInputStream(s.getInputStream());
+            oos = new ObjectOutputStream(s.getOutputStream());
             LoginScreen loginScreen = new LoginScreen(this);
             loginScreen.frame.setVisible(true);
-
+            System.out.println("Window opened");
             this.start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,6 +57,7 @@ public class NotezzaClient extends Thread {
         try {
             oos.writeObject(cm);
             oos.flush();
+            System.out.println("Command sent: " + cm.getObject().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,7 +78,7 @@ public class NotezzaClient extends Thread {
                 }
                 break;
             case LOGIN_FAIL:
-                // Need to displaye login failure message on login window
+                // Need to display login failure message on login window
                 // Wait for GUI to finish
                 break;
             case INITIALIZATION_STUDENT:
@@ -89,13 +92,12 @@ public class NotezzaClient extends Thread {
                 instructorWindow = new InstructorWindow(this);
                 instructorWindow.setVisible(true);
                 break;
-                
             default:
                 break;
         }
     }
     
     public static void main(String[] args) {
-        //NotezzaClient client = new NotezzaClient("localhost",6879);
+        NotezzaClient client = new NotezzaClient("localhost",1234);
     }
 }

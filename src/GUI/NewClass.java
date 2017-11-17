@@ -1,26 +1,27 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.TextArea;
-import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
-public class AddComment extends JFrame {
+public class NewClass extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField textField;
 	private final Action action = new SwingAction();
-	private TextArea commentText;
-	private final Action action_1 = new SwingAction_1();
+
 	/**
 	 * Launch the application.
 	 */
@@ -28,7 +29,7 @@ public class AddComment extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddComment frame = new AddComment();
+					NewClass frame = new NewClass();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +41,7 @@ public class AddComment extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddComment() {
+	public NewClass() {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -54,31 +55,40 @@ public class AddComment extends JFrame {
 		}
 		
 		
+		setTitle("New Class");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblComment = new JLabel("Comment");
-		lblComment.setBounds(47, 35, 72, 16);
-		contentPane.add(lblComment);
+		JLabel lblClassName = new JLabel("Class Name");
+		lblClassName.setBounds(47, 27, 94, 16);
+		contentPane.add(lblClassName);
 		
-		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setAction(action_1);
-		btnSubmit.setBounds(47, 222, 117, 29);
-		contentPane.add(btnSubmit);
+		textField = new JTextField();
+		textField.setBounds(173, 22, 130, 26);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblEmailsOfStudents = new JLabel("Emails of Students (Separated By Commas)");
+		lblEmailsOfStudents.setBounds(57, 65, 295, 16);
+		contentPane.add(lblEmailsOfStudents);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(61, 93, 295, 122);
+		contentPane.add(textPane);
+		
+		JButton btnOk = new JButton("OK");
+		btnOk.setBounds(47, 230, 117, 29);
+		contentPane.add(btnOk);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setAction(action);
-		btnCancel.setBounds(194, 222, 117, 29);
+		btnCancel.setBounds(207, 230, 117, 29);
 		contentPane.add(btnCancel);
-		
-		commentText = new TextArea();
-		commentText.setBounds(57, 57, 354, 157);
-		contentPane.add(commentText);
 	}
-
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "Cancel");
@@ -86,20 +96,6 @@ public class AddComment extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
-		}
-	}
-	private class SwingAction_1 extends AbstractAction {
-		public SwingAction_1() {
-			putValue(NAME, "Comment");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-			if(commentText.getText().equals("")) 
-				{
-					//open a dialogue to warn the user
-					JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
-				
-				}
 		}
 	}
 }

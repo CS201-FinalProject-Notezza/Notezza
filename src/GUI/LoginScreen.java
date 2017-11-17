@@ -1,29 +1,28 @@
 package GUI;
 
+import static NotezzaServer.CommandType.LOGIN;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import objects.LoginCredential;
-
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
-import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JPasswordField;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
-import java.awt.event.ActionListener;
-import java.awt.Frame;
-import javax.swing.JPanel;
-
-import static NotezzaServer.CommandType.*;
 
 public class LoginScreen {
 
@@ -39,19 +38,21 @@ public class LoginScreen {
 	private JPasswordField passwordField;
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
+
     private NotezzaClient client;
+
 
 	/**
 	 * Launch the application.
 	 * we might want to have a constructor that accepts the database of the program when moving to the user windows
 	 * from those windows, we might want to pass in the user object and print out each components
 	 */
-	/*
+	
 	public static void main(String[] args) { 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginScreen window = new LoginScreen();
+					LoginScreen window = new LoginScreen(null);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,12 +60,24 @@ public class LoginScreen {
 			}
 		});
 	}
-    */
+    
 
 	/**
 	 * Create the application.
 	 */
 	public LoginScreen(NotezzaClient client) {
+		
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+		
 	    initialize();
 	    this.client = client;
 	}
@@ -72,7 +85,7 @@ public class LoginScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-private void initialize() {
+	private void initialize() {
 		
 		
 		frame = new JFrame();

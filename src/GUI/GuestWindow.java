@@ -5,9 +5,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
@@ -25,8 +28,11 @@ public class GuestWindow extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
-	private JTextField textField;
+	private JTextField searchField;
 
+	private List noteList; 
+	private List commentList;
+	private final Action action_1 = new SwingAction_1();
 	/**
 	 * Launch the application.
 	 */
@@ -47,6 +53,20 @@ public class GuestWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public GuestWindow() {
+		
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (Exception e) {
+			// If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+		
+		
+		setTitle("Guest Notezza");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
@@ -67,20 +87,22 @@ public class GuestWindow extends JFrame {
 		button.setBounds(772, 627, 117, 29);
 		contentPane.add(button);*/
 		
-		List list = new List();
-		list.setBounds(46, 156, 290, 500);
-		contentPane.add(list);
+		noteList = new List();
+		noteList.setBounds(46, 156, 290, 500);
+		contentPane.add(noteList);
 		
-		textField = new JTextField();
-		textField.setBounds(34, 61, 130, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		searchField = new JTextField();
+		searchField.setBounds(34, 61, 130, 26);
+		contentPane.add(searchField);
+		searchField.setColumns(10);
 		
 		JComboBox<String> allClasses = new JComboBox<String>(); //for the Classes
+		allClasses.setEnabled(false);
 		allClasses.setBounds(24, 7, 141, 27);
 		contentPane.add(allClasses);
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setAction(action_1);
 		btnSearch.setBounds(177, 61, 117, 29);
 		contentPane.add(btnSearch);
 		
@@ -105,9 +127,9 @@ public class GuestWindow extends JFrame {
 		textArea.setBounds(369, 123, 625, 231);
 		contentPane.add(textArea);
 		
-		List list_2 = new List();
-		list_2.setBounds(389, 407, 579, 188);
-		contentPane.add(list_2);
+	    commentList = new List();
+		commentList.setBounds(389, 407, 579, 188);
+		contentPane.add(commentList);
 		
 		JButton btnAddPresentation = new JButton("View Presentation");
 		btnAddPresentation.setEnabled(false);
@@ -120,10 +142,17 @@ public class GuestWindow extends JFrame {
 		btnAddPresentation.setBounds(377, 6, 158, 29);
 		contentPane.add(btnAddPresentation);
 		
-		JButton btnAddComment = new JButton("Add Comment");
-		btnAddComment.setEnabled(false);
-		btnAddComment.setBounds(644, 615, 117, 29);
-		contentPane.add(btnAddComment);
+		JTextField textField_1 = new JTextField();
+		textField_1.setEnabled(false);
+		textField_1.setEditable(false);
+		textField_1.setBounds(437, 617, 361, 26);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JButton btnComment = new JButton("Comment");
+		btnComment.setEnabled(false);
+		btnComment.setBounds(824, 617, 117, 29);
+		contentPane.add(btnComment);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -133,6 +162,20 @@ public class GuestWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			GuestProfile profile = new GuestProfile();
 			profile.setVisible(true);
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		public SwingAction_1() {
+			putValue(NAME, "Search");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(searchField.getText().equals("")) 
+			{
+				//open a dialogue to warn the user
+				JOptionPane.showMessageDialog(contentPane, "ERROR: Search Field Cannot be Empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			}
 		}
 	}
 }

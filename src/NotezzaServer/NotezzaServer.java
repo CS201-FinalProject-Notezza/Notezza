@@ -24,6 +24,9 @@ public class NotezzaServer {
             DatabaseManager dm = new DatabaseManager();
             data = dm.getDataContainer();
 
+            System.out.println("Printing database...");
+            System.out.println(data.toString());
+
             while (true) {
                 Socket socket = ss.accept(); // blocking
                 System.out.println("Connection from: " + socket.getInetAddress());
@@ -75,6 +78,7 @@ public class NotezzaServer {
                 thread.sendCommand(new Command(INITIALIZATION_STUDENT,instructorCourseList));
                 break;
             case LOGIN:
+                System.out.println("Received login request...");
                 LoginCredential loginCredential = (LoginCredential) obj;
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
@@ -108,7 +112,7 @@ public class NotezzaServer {
         }
     }
     
-    public int passwordHasher(String password){
+    private int passwordHasher(String password){
         long passInt = 0;
         int n = password.length();
         int [] passArr = new int[4];

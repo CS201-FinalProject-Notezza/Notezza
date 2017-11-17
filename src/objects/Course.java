@@ -56,7 +56,7 @@ public class Course implements Serializable {
         String[] keywords = keyword.split("\\s+");
         // substring search
         for (Note note : notes) {
-            if (note.search(keywords)) {
+            if (note.containKeywords(keywords)) {
                 notes.add(note);
             }
         }

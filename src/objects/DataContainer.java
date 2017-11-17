@@ -48,4 +48,16 @@ public class DataContainer {
         return courses;
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Course course : allCourses.values()) {
+            sb.append(course.getCourseName()).append("\n");
+        }
+        for(User user : allUsers.values()) {
+            sb.append(user.getUsername()).append("\n");
+        }
+        return sb.toString();
+    }
+
+
 }
