@@ -124,16 +124,29 @@ public class UserWindow extends JFrame {
 		//fill an arraylist with the String names of the classes
 		//and then add it to the comboBox
 		
-		java.util.List<Course> allCourses = courseList.getCourse();
-		
-		java.util.List<String> allCourseNames = (java.util.List<String>) new List();
-		
-		for(int i = 0; i<allCourses.size(); i++)
+		if(courseList!=null)
 		{
-			allCourseNames.add(allCourses.get(i).getCourseName());
+			java.util.List<Course> allCourses = courseList.getCourse();
+			
+			java.util.List<String> allCourseNames = (java.util.List<String>) new List();
+			
+			for(int i = 0; i<allCourses.size(); i++)
+			{
+				allCourseNames.add(allCourses.get(i).getCourseName());
+			}
+			
+			if(allCourses.size()!=0)
+			{
+				allClasses = new JComboBox<String>(new DefaultComboBoxModel(allCourseNames.toArray())); //for the Classes
+			}
 		}
 		
-		allClasses = new JComboBox<String>(new DefaultComboBoxModel(allCourseNames.toArray())); //for the Classes
+		
+		else
+		{
+			allClasses = new JComboBox<String>(); //for the Classes
+		}
+		
 		allClasses.setBounds(24, 7, 141, 27);
 		contentPane.add(allClasses);
 		
