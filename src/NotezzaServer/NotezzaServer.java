@@ -124,15 +124,17 @@ public class NotezzaServer {
                 System.out.println("Received request to add comment...");
                 Comment comment = (Comment) obj;
                 // Add to the database
-                //...................dm.addComment(comment);
+                dm.addComment(comment);
                 //Broadcast the comment
                 broadcast(new Command(UPDATE_COMMENT, comment));
                 break;
             case ADD_NOTE:
                 System.out.println("Received request to add note...");
-                Note note = (Note) obj;
+                CourseANDNote cn = (CourseANDNote) obj;
+                Course course = cn.getCourse();
+                Note note = cn.getNote();
                 // Add to the database
-                //...................dm.addNote(note);
+                //..........dm.addNote(note,course);
                 broadcast(new Command(UPDATE_NOTE,note));
                 break;
         }
