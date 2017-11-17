@@ -105,6 +105,7 @@ public class NotezzaClient extends Thread {
                 break;
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList) obj;
+                System.out.println("WE GOT EVERYTHING! POPING UP THE WINDOW!");
                 // pop up userWindow
                 userWindow = new UserWindow(this, courseList);
                 userWindow.setVisible(true);

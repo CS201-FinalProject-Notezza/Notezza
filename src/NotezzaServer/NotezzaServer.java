@@ -90,9 +90,11 @@ public class NotezzaServer {
                 Map<String,User> allUsers = data.getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
+                    System.out.println("LOGIN SUCCESS");
                     Command loginSuccessful = new Command(LOGIN,tempUser);
                     thread.sendCommand(loginSuccessful);
                 } else {
+                    System.out.println("LOGIN FAIL");
                     Command loginFailed = new Command(LOGIN_FAIL, null);
                     thread.sendCommand(loginFailed);
                 }
