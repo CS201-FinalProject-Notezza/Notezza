@@ -8,6 +8,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -18,9 +19,11 @@ import javax.swing.border.EmptyBorder;
 public class AddNote extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField titleField;
+	private JTextField tagsField;
+	private JTextArea descriptionText;
 	private final Action action = new SwingAction();
+	private final Action action_1 = new SwingAction_1();
 
 	/**
 	 * Launch the application.
@@ -63,10 +66,10 @@ public class AddNote extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(153, 45, 270, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		titleField = new JTextField();
+		titleField.setBounds(153, 45, 270, 26);
+		contentPane.add(titleField);
+		titleField.setColumns(10);
 		
 		JLabel lblTitle = new JLabel("Title:");
 		lblTitle.setBounds(107, 50, 61, 16);
@@ -80,11 +83,12 @@ public class AddNote extends JFrame {
 		lblDescription.setBounds(107, 119, 94, 16);
 		contentPane.add(lblDescription);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(107, 147, 425, 173);
-		contentPane.add(textArea);
+		descriptionText = new JTextArea();
+		descriptionText.setBounds(107, 147, 425, 173);
+		contentPane.add(descriptionText);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setAction(action_1);
 		btnSubmit.setBounds(21, 340, 94, 26);
 		contentPane.add(btnSubmit);
 		
@@ -93,10 +97,10 @@ public class AddNote extends JFrame {
 		btnCancel.setBounds(117, 339, 117, 29);
 		contentPane.add(btnCancel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(153, 83, 270, 26);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		tagsField = new JTextField();
+		tagsField.setBounds(153, 83, 270, 26);
+		contentPane.add(tagsField);
+		tagsField.setColumns(10);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -105,6 +109,22 @@ public class AddNote extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
+		}
+	}
+	private class SwingAction_1 extends AbstractAction { //The action here first checks if the fields are blank, and if they are, then we will open an error dialoge to alert user that fields cannot be blank
+		public SwingAction_1() {
+			putValue(NAME, "Submit");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(descriptionText.getText().equals("")
+					|| titleField.getText().equals("") 
+					|| tagsField.getText().equals("")) 
+				{
+					//open a dialogue to warn the user
+					JOptionPane.showMessageDialog(contentPane, "ERROR: One of more of these fields cannot be empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+				
+				}
 		}
 	}
 }
