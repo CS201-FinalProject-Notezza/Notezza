@@ -179,9 +179,8 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			
-		
-			UserProfile profile = new UserProfile();
+		    User user = client.getUser();
+			UserProfile profile = new UserProfile(user);
 			profile.setVisible(true);
 		}
 	}

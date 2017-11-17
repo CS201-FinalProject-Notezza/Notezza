@@ -1,5 +1,7 @@
 package GUI;
 
+import objects.User;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -16,6 +18,8 @@ public class UserProfile extends JFrame {
 
 	private JPanel contentPane;
 
+	private User user;
+
 	/**
 	 * Launch the application.
 	 */
@@ -23,7 +27,7 @@ public class UserProfile extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserProfile frame = new UserProfile();
+					UserProfile frame = new UserProfile(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,8 +39,9 @@ public class UserProfile extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserProfile() {
-		
+	public UserProfile(User user) {
+		this.user = user;
+
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -53,16 +58,30 @@ public class UserProfile extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblUsername = new JLabel("Username:");
+
+		String userName,fName,lName,email;
+
+		if (user.isVisible()) {
+			userName = user.getUsername();
+			fName = user.getFname();
+			lName = user.getLname();
+			email = user.getEmail();
+		} else {
+			userName = "N/A";
+			fName = "N/A";
+			lName = "N/A";
+			email = "N/A";
+		}
+
+		JLabel lblUsername = new JLabel("Username: " + userName);
 		lblUsername.setBounds(100, 75, 89, 16);
 		contentPane.add(lblUsername);
-		
-		JLabel lblFirstName = new JLabel("First Name:");
+
+		JLabel lblFirstName = new JLabel("First Name: " + fName);
 		lblFirstName.setBounds(100, 93, 89, 16);
 		contentPane.add(lblFirstName);
 		
-		JLabel lblLastName = new JLabel("Last Name:");
+		JLabel lblLastName = new JLabel("Last Name: " + lName);
 		lblLastName.setBounds(100, 111, 70, 16);
 		contentPane.add(lblLastName);
 		
@@ -70,7 +89,7 @@ public class UserProfile extends JFrame {
 		chckbxPrivate.setBounds(147, 177, 128, 23);
 		contentPane.add(chckbxPrivate);
 		
-		JLabel lblEmail = new JLabel("Email:");
+		JLabel lblEmail = new JLabel("Email: " + email);
 		lblEmail.setBounds(100, 131, 61, 16);
 		contentPane.add(lblEmail);
 		
