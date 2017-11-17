@@ -1,5 +1,4 @@
 package GUI;
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.List;
 import java.awt.TextArea;
@@ -7,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -14,7 +14,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,7 +24,11 @@ import javax.swing.border.EmptyBorder;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.*;
+import objects.Comment;
+import objects.Course;
+import objects.CourseList;
+import objects.Note;
+import objects.User;
 
 public class UserWindow extends JFrame {
 
@@ -49,6 +52,8 @@ public class UserWindow extends JFrame {
 	private CourseList courseList;
 	private Course currentCourse;
 	private Note currentNote;
+	
+	private TextArea noteArea;
 
 
 	/**
@@ -114,6 +119,24 @@ public class UserWindow extends JFrame {
 		
 		noteList = new List();
 		noteList.setBounds(46, 156, 290, 500);
+		
+		//first, get all Notes for the current Class. before you do, make sure courseList is not null
+		if(courseList!=null)
+		{
+			currentCourse = courseList.getCourse().get(0);
+			
+			Vector<Note> allNotes = currentCourse.getAllNotes();
+			
+			//update the list
+			
+			for(int i = 0; i<allNotes.size(); i++)
+			{
+				noteList.add(allNotes.get(i).getTitle());
+			}
+			
+		}
+		
+		//noteList.add(String)
 		contentPane.add(noteList);
 		
 		searchField = new JTextField();
@@ -187,13 +210,34 @@ public class UserWindow extends JFrame {
 		contentPane.add(btnAddPresentation);
 		
 		commentList = new List();
+		
+		if(courseList!=null)
+		{
+			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
+			
+			for(int i = 0; i<currentNote.getComments().size(); i++)
+			{
+				commentList.add(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
+			}
+		}
 		commentList.setBounds(389, 407, 579, 188);
+		
+		
 		contentPane.add(commentList);
 		
-		TextArea textArea = new TextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(369, 123, 625, 231);
-		contentPane.add(textArea);
+		TextArea noteArea = new TextArea();
+		noteArea.setEditable(false);
+		if(courseList!=null)
+		{
+			currentCourse = courseList.getCourse().get(0);
+			currentNote = currentCourse.getAllNotes().get(0);
+			
+			noteArea.setText(currentNote.getTextContent());
+			
+			
+		}
+		noteArea.setBounds(369, 123, 625, 231);
+		contentPane.add(noteArea);
 		
 		commentText = new JTextField();
 		commentText.setBounds(437, 617, 361, 26);
