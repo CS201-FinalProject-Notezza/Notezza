@@ -3,6 +3,8 @@ package GUI;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
+import objects.Course;
+import objects.CourseANDNote;
 import objects.Note;
 import objects.User;
 
@@ -35,7 +37,7 @@ public class AddNote extends JFrame {
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
 	private NotezzaClient client;
-
+    private Course course;
 	/**
 	 * Launch the application.
 	 */
@@ -43,7 +45,7 @@ public class AddNote extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddNote frame = new AddNote(null);
+					AddNote frame = new AddNote(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,8 +57,9 @@ public class AddNote extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddNote(NotezzaClient client) {
+	public AddNote(NotezzaClient client, Course course) {
 		this.client = client;
+		this.course = course;
 
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -151,7 +154,8 @@ public class AddNote extends JFrame {
                 df.format(d);
 
                 Note note = new Note(user,title,tags,d,textContent);
-                client.sendCommand(new Command(CommandType.ADD_NOTE,note));
+                CourseANDNote cn = new CourseANDNote(course,note);
+                client.sendCommand(new Command(CommandType.ADD_NOTE,cn));
             }
 		}
 	}
