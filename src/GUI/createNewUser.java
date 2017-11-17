@@ -187,9 +187,23 @@ public class createNewUser extends JFrame {
 				String userName = UserNameField.getText();
 				String email = EmailField.getText();
 				User user;
-				if (rdbtnStudent.isSelected()) {
+				if (rdbtnStudent.isSelected()) { //first, check to see if the User wishes to be a student
 					//user = new User(fname,lname,);
-				};
+					//User(String fname, String lname, String username, String email, long password, boolean isInstructor, boolean isVisible)
+					if(chckbxVisible.isSelected()) //if the user wants to be visible
+					{
+						user = new User(fname, lname, userName, email, /*hashed password goes here */ , false, true);
+					}
+					
+					else
+					{
+						user = new User(fname, lname, userName, email, /*hashed password goes here */ , false, false);
+					}
+				}
+				else //if the user wants to be an instructor
+				{
+					user = new User(fname, lname, userName, email, /*hashed password goes here */, true, true);
+				}
 
 			}
 		}
