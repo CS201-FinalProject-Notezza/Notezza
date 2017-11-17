@@ -1,5 +1,11 @@
 package GUI;
 
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.Course;
+import objects.User;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -14,6 +20,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import java.util.Set;
+import java.util.Vector;
 import javax.swing.Action;
 
 public class NewClass extends JFrame {
@@ -21,6 +29,11 @@ public class NewClass extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private final Action action = new SwingAction();
+	private JTextPane textPane;
+	private final Action addClass = new SwingAction();
+
+	private NotezzaClient client;
+	private Set<User> userSet;
 
 	/**
 	 * Launch the application.
@@ -29,7 +42,7 @@ public class NewClass extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewClass frame = new NewClass();
+					NewClass frame = new NewClass(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +54,7 @@ public class NewClass extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewClass() {
+	public NewClass(NotezzaClient client, Set<User> userSet) {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -53,7 +66,8 @@ public class NewClass extends JFrame {
 		} catch (Exception e) {
 			// If Nimbus is not available, you can set the GUI to another look and feel.
 		}
-		
+		this.client = client;
+		this.userSet = userSet;
 		
 		setTitle("New Class");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,11 +90,12 @@ public class NewClass extends JFrame {
 		lblEmailsOfStudents.setBounds(57, 65, 295, 16);
 		contentPane.add(lblEmailsOfStudents);
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setBounds(61, 93, 295, 122);
 		contentPane.add(textPane);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.setAction(addClass);
 		btnOk.setBounds(47, 230, 117, 29);
 		contentPane.add(btnOk);
 		
@@ -96,6 +111,29 @@ public class NewClass extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
+		}
+	}
+	private class AddClass extends AbstractAction {
+ 		public AddClass() {
+						putValue(NAME, "OK");
+						putValue(SHORT_DESCRIPTION, "Some short description");
+					}
+ 		public void actionPerformed(ActionEvent e) {
+			String courseName = textField.getText();
+			String studentEmailStrings = textPane.getText();
+			String[] studentEmailArrays = studentEmailStrings.split(",");
+			Vector<User> studentVector = new Vector<>();
+			for (String email : studentEmailArrays) {
+					for (User user : userSet) {
+							if (user.getEmail().equals(email)) {
+									studentVector.add(user);
+								}
+						}
+				}
+
+					User instructor = client.getUser();
+			Course course = new Course(courseName,instructor,studentVector);
+			client.sendCommand(new Command(CommandType.CREATE_CLASS,course));
 		}
 	}
 }
