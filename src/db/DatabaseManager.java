@@ -1,5 +1,3 @@
-package db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,6 +8,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -25,6 +24,8 @@ public class DatabaseManager {
 	
 	private DataContainer dc;
 	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+	private HashMap<Integer, User> userIDToObject;
+	private HashMap<Integer, Note> noteIDToObject;
 	
 	public DatabaseManager() {
 		dc = new DataContainer();
@@ -48,7 +49,7 @@ public class DatabaseManager {
 			Vector<User> userObjects = new Vector<User>();
 			Vector<Course> courseObjects = new Vector<Course>();
 						
-			HashMap<Integer, User> userIDToObject = new HashMap<Integer, User>();
+			userIDToObject = new HashMap<Integer, User>();
 			HashMap<Integer, Course> courseIDToObject = new HashMap<Integer, Course>();
 			HashMap<Integer, Vector<User>> courseIDToUsers = new HashMap<Integer, Vector<User>>();
 			
@@ -200,7 +201,7 @@ public class DatabaseManager {
 			}
 			
 			HashMap<Integer, Vector<Note>> courseIDToNoteObjects = new HashMap<Integer, Vector<Note>>();
-			HashMap<Integer, Note> noteIDToObject = new HashMap<Integer, Note>();
+			noteIDToObject = new HashMap<Integer, Note>();
 			
 			rs = st.executeQuery("SELECT * FROM Note");
 			while (rs.next()) {
@@ -380,8 +381,70 @@ public class DatabaseManager {
 			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
 			st = conn.createStatement();
 			
+			String updateString = "INSERT INTO UserTable (fname, lname, username, email, pword, isInstructor, isVisible) VALUES (";
+			updateString += "'" + u.getFname() + "', '" + u.getLname() + "', '" + u.getUsername() + "', '" + u.getEmail() + "', '" + u.getPassword() + "', '" + Boolean.toString(u.isInstructor()) + "', '" + Boolean.toString(u.isVisible()) + "');";
+			
+			st.executeUpdate(updateString);
 			
 			
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	
+	public void addComment(Comment c) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			String updateString = "INSERT INTO NoteComment (content, postedDate, noteID, userID) VALUES (";
+			updateString += "'" + c.getContent() + "', '" + df.format(c.getDateCreated()) + "', "; 
+			
+			rs = st.executeQuery("SELECT * FROM Note WHERE title='" + c.getNote().getTitle() + "' AND content='" + c.getNote().getTextContent() + "' AND postedDate='" + df.format(c.getNote().getDateCreated()) + "'");
+			int noteID = -1;
+			while (rs.next()) {
+				noteID = rs.getInt("noteID");
+			}
+			updateString += noteID + ", ";
+			
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + c.getUser().getUsername() + "'");
+			int userID = -1;
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+			updateString += userID + ")";
+			
+			st.executeUpdate(updateString);
 			
 			
 		} catch (SQLException sqle) {

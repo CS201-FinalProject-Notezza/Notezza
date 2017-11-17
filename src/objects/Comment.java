@@ -14,7 +14,7 @@ public class Comment implements Serializable {
     private Set<User> dislikeUsers;
     private Note note;
     
-    public Comment(User user, String content, Date date,Note note) {
+    public Comment(User user, String content, Date date, Note note) {
         this.user = user;
         this.content = content;
         this.dateCreated = date;
@@ -45,6 +45,10 @@ public class Comment implements Serializable {
     
     public int getScore() {
         return likeUsers.size() - dislikeUsers.size();
+    }
+    
+    public Note getNote() {
+    	return note;
     }
     
     public boolean hasLiked(User user) {
