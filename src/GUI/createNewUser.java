@@ -1,5 +1,7 @@
 package GUI;
 
+import objects.User;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -23,6 +25,8 @@ public class createNewUser extends JFrame {
 
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtnStudent;
+	private JRadioButton rdbtnInstructor;
 	private JTextField UserNameField;
 	private JTextField FirstNameField;
 	private JTextField LastNameField;
@@ -71,13 +75,13 @@ public class createNewUser extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JRadioButton rdbtnStudent = new JRadioButton("Student");
+		rdbtnStudent = new JRadioButton("Student");
 		rdbtnStudent.setAction(action_1);
 		buttonGroup.add(rdbtnStudent);
 		rdbtnStudent.setBounds(55, 25, 90, 23);
 		contentPane.add(rdbtnStudent);
 		
-		JRadioButton rdbtnInstructor = new JRadioButton("Instructor");
+		rdbtnInstructor = new JRadioButton("Instructor");
 		rdbtnInstructor.setAction(action);
 		buttonGroup.add(rdbtnInstructor);
 		rdbtnInstructor.setBounds(235, 25, 99, 23);
@@ -152,12 +156,23 @@ public class createNewUser extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			if(UserNameField.getText().equals("")
+			if (UserNameField.getText().equals("")
 				|| FirstNameField.getText().equals("") 
 				|| LastNameField.getText().equals("")
 				|| EmailField.getText().equals("")) 
 			{
 				//have an error message pop out
+			} else {
+				// A new User got created
+				String fname = FirstNameField.getText();
+				String lname = LastNameField.getText();
+				String userName = UserNameField.getText();
+				String email = EmailField.getText();
+				User user;
+				if (rdbtnStudent.isSelected()) {
+					//user = new User(fname,lname,);
+				};
+
 			}
 		}
 	}
