@@ -197,7 +197,8 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			InstructorProfile profile = new InstructorProfile();
+		    User user = client.getUser();
+			InstructorProfile profile = new InstructorProfile(user);
 			profile.setVisible(true);
 		}
 	}
