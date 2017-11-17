@@ -1,8 +1,10 @@
 package GUI;
 
-import objects.User;
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.UserCredential;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,7 +15,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -41,6 +42,8 @@ public class createNewUser extends JFrame {
 	private JLabel lblPassword;
 	private JPasswordField passwordField;
 
+	private NotezzaClient client;
+
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +51,7 @@ public class createNewUser extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					createNewUser frame = new createNewUser();
+					createNewUser frame = new createNewUser(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,8 +63,8 @@ public class createNewUser extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public createNewUser() {
-		
+	public createNewUser(NotezzaClient client) {
+		this.client = client;
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -174,7 +177,7 @@ public class createNewUser extends JFrame {
 				|| FirstNameField.getText().equals("") 
 				|| LastNameField.getText().equals("")
 				|| EmailField.getText().equals("")
-				|| passwordField.getText().length()==0) 
+				|| passwordField.getPassword().length == 0)
 			{
 				JOptionPane.showMessageDialog(contentPane, "ERROR: One or more of these fields are empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
 			
@@ -186,25 +189,19 @@ public class createNewUser extends JFrame {
 				String lname = LastNameField.getText();
 				String userName = UserNameField.getText();
 				String email = EmailField.getText();
-				User user;
+				String passWord = String.copyValueOf(passwordField.getPassword());
+
+				UserCredential user;
 				if (rdbtnStudent.isSelected()) { //first, check to see if the User wishes to be a student
-					//user = new User(fname,lname,);
 					//User(String fname, String lname, String username, String email, long password, boolean isInstructor, boolean isVisible)
-					if(chckbxVisible.isSelected()) //if the user wants to be visible
-					{
-						user = new User(fname, lname, userName, email, /*hashed password goes here */ , false, true);
-					}
-					
-					else
-					{
-						user = new User(fname, lname, userName, email, /*hashed password goes here */ , false, false);
-					}
+					user = new UserCredential(fname, lname, userName, email, passWord , false, chckbxVisible.isSelected());
 				}
 				else //if the user wants to be an instructor
 				{
-					user = new User(fname, lname, userName, email, /*hashed password goes here */, true, true);
+					user = new UserCredential(fname, lname, userName, email, passWord, true, true);
 				}
 
+				client.sendCommand(new Command(CommandType.REGISTER,user));
 			}
 		}
 	}

@@ -121,7 +121,7 @@ public class LoginScreen {
 		btnCreateAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				createNewUser newWindow = new createNewUser(); 
+				createNewUser newWindow = new createNewUser(client);
 				newWindow.setVisible(true);
 			}
 		});

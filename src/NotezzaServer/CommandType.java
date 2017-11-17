@@ -6,6 +6,7 @@ public enum CommandType {
     LOGIN, // Check with the server if already registered
     LOGIN_FAIL,
     REGISTER,
+    REGISTER_DONE,
     CREATE_CLASS,
     VIEW_CLASS_INFORMATION,
     CREATE_PRESENTATION,

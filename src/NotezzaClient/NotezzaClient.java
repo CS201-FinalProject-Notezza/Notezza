@@ -92,6 +92,17 @@ public class NotezzaClient extends Thread {
                 // Need to display login failure message on login window
                 // Wait for GUI to finish
                 break;
+            case REGISTER_DONE:
+                user = (User) obj;
+                // A new user should not see anything, just pop up a window
+                if (!user.isInstructor()) {
+                    userWindow = new UserWindow(this, courseList);
+                    userWindow.setVisible(true);
+                } else {
+                    instructorWindow = new InstructorWindow(this, courseList);
+                    instructorWindow.setVisible(true);
+                }
+                break;
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList) obj;
                 // pop up userWindow
