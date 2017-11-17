@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package notezzagui;
+package NewGUI;
 
 import java.awt.BorderLayout;
 import javax.swing.*;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 
 /**
