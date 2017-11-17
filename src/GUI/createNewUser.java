@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -20,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import javax.swing.JPasswordField;
 
 public class createNewUser extends JFrame {
 
@@ -35,6 +38,8 @@ public class createNewUser extends JFrame {
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
 	private final Action Register = new SwingAction_2();
+	private JLabel lblPassword;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -76,6 +81,7 @@ public class createNewUser extends JFrame {
 		contentPane.setLayout(null);
 		
 		rdbtnStudent = new JRadioButton("Student");
+		rdbtnStudent.setSelected(true);
 		rdbtnStudent.setAction(action_1);
 		buttonGroup.add(rdbtnStudent);
 		rdbtnStudent.setBounds(55, 25, 90, 23);
@@ -129,8 +135,16 @@ public class createNewUser extends JFrame {
 		contentPane.add(btnRegister);
 		
 		chckbxVisible = new JCheckBox("Visible");
-		chckbxVisible.setBounds(139, 207, 128, 23);
+		chckbxVisible.setBounds(139, 246, 128, 23);
 		contentPane.add(chckbxVisible);
+		
+		lblPassword = new JLabel("Password");
+		lblPassword.setBounds(112, 211, 80, 16);
+		contentPane.add(lblPassword);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(204, 208, 130, 26);
+		contentPane.add(passwordField);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -159,8 +173,12 @@ public class createNewUser extends JFrame {
 			if (UserNameField.getText().equals("")
 				|| FirstNameField.getText().equals("") 
 				|| LastNameField.getText().equals("")
-				|| EmailField.getText().equals("")) 
+				|| EmailField.getText().equals("")
+				|| passwordField.getText().length()==0) 
 			{
+				JOptionPane.showMessageDialog(contentPane, "ERROR: One or more of these fields are empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			
 				//have an error message pop out
 			} else {
 				// A new User got created
