@@ -159,7 +159,6 @@ public class InstructorWindow extends JFrame {
 		btnAddPresentation.setAction(action_1);
 		btnAddPresentation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 			}
 		});
 		btnAddPresentation.setBounds(377, 6, 158, 29);
