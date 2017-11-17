@@ -1,10 +1,13 @@
 package NotezzaClient;
 
 import GUI.*;
+import NewGUI.Login;
 import objects.*;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,9 +22,12 @@ public class NotezzaClient extends Thread {
     private ObjectOutputStream oos;
     
     // Windows
-    private LoginScreen loginWindow;
+    //private LoginScreen loginWindow;
     private UserWindow userWindow;
     private InstructorWindow instructorWindow;
+
+    // New GUI
+    private JFrame loginWindow;
     
 
     NotezzaClient(String hostname, int port) {
@@ -32,8 +38,11 @@ public class NotezzaClient extends Thread {
             System.out.println("Connected to " + hostname + ":" + port);
             ois = new ObjectInputStream(s.getInputStream());
             oos = new ObjectOutputStream(s.getOutputStream());
+            /* Below is the Old GUI
             LoginScreen loginScreen = new LoginScreen(this);
             loginScreen.frame.setVisible(true);
+            */
+            popUpLogin();
             System.out.println("Window opened");
             this.start();
         } catch (IOException e) {
@@ -96,7 +105,19 @@ public class NotezzaClient extends Thread {
                 break;
         }
     }
-    
+
+    public void popUpLogin() {
+        loginWindow = new JFrame();
+        Login lg = new Login(this);
+        loginWindow.setLayout(new BorderLayout());
+        loginWindow.add(lg, BorderLayout.CENTER);
+        loginWindow.setSize(630, 400);
+        loginWindow.setLocationRelativeTo(null);
+        loginWindow.setResizable(false);
+        loginWindow.setVisible(true);
+        loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
     public static void main(String[] args) {
         NotezzaClient client = new NotezzaClient("localhost",1234);
     }

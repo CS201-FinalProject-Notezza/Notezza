@@ -6,17 +6,27 @@
 package NewGUI;
 
 
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import objects.LoginCredential;
+import objects.Note;
+
+import static NotezzaServer.CommandType.LOGIN;
+
 /**
  *
  * @author user
  */
 public class Login extends javax.swing.JPanel {
 
+    private NotezzaClient client;
+
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login(NotezzaClient client) {
         initComponents();
+        this.client = client;
     }
 
     /**
@@ -47,7 +57,7 @@ public class Login extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user100.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/user100.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
         jLabel3.setBackground(new java.awt.Color(52, 61, 70));
@@ -113,7 +123,7 @@ public class Login extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 310, 400));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/label400.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/label400.png"))); // NOI18N
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,7 +150,12 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_jPasswordField1FocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        System.out.println(jPasswordField1.getPassword());
+        System.out.println(jTextField1.getText());
+        String password = String.copyValueOf(jPasswordField1.getPassword());
+        LoginCredential loginCredential = new LoginCredential(jTextField1.getText(),password);
+        Command login = new Command(LOGIN,loginCredential);
+        client.sendCommand(login);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
