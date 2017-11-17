@@ -27,6 +27,7 @@ public class DatabaseManager {
 	private DataContainer dc;
 	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 	private Map<Integer, User> userIDToObject;
+	private Map<Integer, Course> courseIDToObject;
 	
 	public DatabaseManager() {
 		dc = new DataContainer();
@@ -51,7 +52,7 @@ public class DatabaseManager {
 			Vector<Course> courseObjects = new Vector<Course>();
 						
 			/*HashMap<Integer, User>*/ userIDToObject = new HashMap<Integer, User>();
-			HashMap<Integer, Course> courseIDToObject = new HashMap<Integer, Course>();
+			/*HashMap<Integer, Course>*/ courseIDToObject = new HashMap<Integer, Course>();
 			HashMap<Integer, Vector<User>> courseIDToUsers = new HashMap<Integer, Vector<User>>();
 			
 			rs = st.executeQuery("SELECT * FROM UserTable");
@@ -224,7 +225,7 @@ public class DatabaseManager {
 				if (!courseIDToNoteObjects.containsKey(courseID)) {
 					Vector<Note> newNoteVector = new Vector<Note>();
 					newNoteVector.add(newNote);
-					courseIDToNoteObjects.put(noteID, newNoteVector);
+					courseIDToNoteObjects.put(courseID, newNoteVector);
 				} else {
 					courseIDToNoteObjects.get(courseID).add(newNote);
 				}
@@ -564,8 +565,94 @@ public class DatabaseManager {
 		}
 	}
 	
+	public void addNote(Note n, Course c) {
+		
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			String updateNoteString = "INSERT INTO Note (title, content, postedDate, courseID, userID) VALUES (";
+			updateNoteString += "'" + n.getTitle() + "', '" + n.getTextContent() + "', '" + df.format(n.getDateCreated()) + "', "; 
+			
+			// Get the courseID of the course by first getting the id of the instructor
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + c.getInstructor().getUsername() + "'");
+			int instructorID = -1;
+			while (rs.next()) {
+				instructorID = rs.getInt("userID");
+			}
+			rs = st.executeQuery("SELECT * FROM Course WHERE courseName='" + c.getCourseName() + "' AND instructorID=" + instructorID);
+			int courseID = -1;
+			while (rs.next()) {
+				courseID = rs.getInt("courseID");
+			}
+			updateNoteString += courseID + ", ";
+			
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + n.getUser().getUsername() + "'");
+			int userID = -1;
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+			updateNoteString += userID + ")";
+			
+			st.executeUpdate(updateNoteString);
+			
+			// Get the noteID of the newly added note
+			rs = st.executeQuery("SELECT * FROM Note WHERE title='" + n.getTitle() + "' AND content='" + n.getTextContent() + "' AND postedDate='" + df.format(n.getDateCreated()) + "' AND courseID=" + courseID + " AND userID=" + userID);
+			int noteID = -1;
+			while (rs.next()) {
+				noteID = rs.getInt("noteID");
+			}
+			
+			Vector<String> tagsToAdd = n.getTags();
+			String updateTagString = "INSERT INTO Tag (tag, noteID) VALUES ";
+			Boolean first = true;
+			
+			for (String t : tagsToAdd) {
+				
+					if (!first) { updateTagString += ", "; }
+					updateTagString += "('" + t + "', " + noteID + ")";
+					first = false;
+			}
+			
+			st.executeUpdate(updateTagString);
+			
+			
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	
 	public static void main(String [] args) {
 		DatabaseManager dm = new DatabaseManager();
-		
 	}
 }
