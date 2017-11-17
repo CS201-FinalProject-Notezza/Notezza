@@ -130,7 +130,7 @@ public class Note implements Comparable<Note>, Serializable {
         return sb.toString();
     }
     
-    public boolean search(String[] keywords) {
+    public boolean containKeywords(String[] keywords) {
         for (String keyword : keywords) {
             String noteContent = this.toString();
             if (noteContent.contains(keyword.replaceAll("[^A-Za-z0-9]", "").toLowerCase())) {

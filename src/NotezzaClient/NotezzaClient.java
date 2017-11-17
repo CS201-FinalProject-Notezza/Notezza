@@ -78,7 +78,7 @@ public class NotezzaClient extends Thread {
                 }
                 break;
             case LOGIN_FAIL:
-                // Need to displaye login failure message on login window
+                // Need to display login failure message on login window
                 // Wait for GUI to finish
                 break;
             case INITIALIZATION_STUDENT:
@@ -92,7 +92,6 @@ public class NotezzaClient extends Thread {
                 instructorWindow = new InstructorWindow(this);
                 instructorWindow.setVisible(true);
                 break;
-                
             default:
                 break;
         }
