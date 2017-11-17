@@ -225,7 +225,7 @@ public class UserWindow extends JFrame {
 		
 		contentPane.add(commentList);
 		
-		TextArea noteArea = new TextArea();
+		noteArea = new TextArea();
 		noteArea.setEditable(false);
 		if(courseList!=null)
 		{

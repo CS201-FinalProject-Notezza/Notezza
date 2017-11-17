@@ -26,7 +26,8 @@ import java.awt.event.ActionListener;
 import java.awt.List;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Set;
+import java.util.Vector;
+
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -55,7 +56,8 @@ public class InstructorWindow extends JFrame {
 	private NotezzaClient client;
 	private Course currentCourse;
 	private Note currentNote;
-	private Set<User> userSet;
+
+	private TextArea noteArea;
 
 
 	/**
@@ -66,7 +68,7 @@ public class InstructorWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InstructorWindow frame = new InstructorWindow(null,null,null);
+					InstructorWindow frame = new InstructorWindow(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,7 +81,7 @@ public class InstructorWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InstructorWindow(NotezzaClient client, CourseList courseList, Set<User> userSet) {
+	public InstructorWindow(NotezzaClient client, CourseList courseList) {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -95,7 +97,6 @@ public class InstructorWindow extends JFrame {
 		
 		this.client = client;
 		this.courseList = courseList;
-		this.userSet = userSet;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
@@ -115,9 +116,26 @@ public class InstructorWindow extends JFrame {
 		});
 		button.setBounds(772, 627, 117, 29);
 		contentPane.add(button);*/
-		
 		noteList = new List();
 		noteList.setBounds(46, 156, 290, 500);
+		
+		//first, get all Notes for the current Class. before you do, make sure courseList is not null
+		if(courseList!=null)
+		{
+			currentCourse = courseList.getCourse().get(0);
+			
+			Vector<Note> allNotes = currentCourse.getAllNotes();
+			
+			//update the list
+			
+			for(int i = 0; i<allNotes.size(); i++)
+			{
+				noteList.add(allNotes.get(i).getTitle());
+			}
+			
+		}
+		
+		//noteList.add(String)
 		contentPane.add(noteList);
 
 		searchField = new JTextField();
@@ -131,7 +149,29 @@ public class InstructorWindow extends JFrame {
 		commentText.setColumns(10);
 		
 		
-		allClasses = new JComboBox<String>(); //for the Classes
+		if(courseList!=null)
+		{
+			java.util.List<Course> allCourses = courseList.getCourse();
+			
+			java.util.List<String> allCourseNames = (java.util.List<String>) new List();
+			
+			for(int i = 0; i<allCourses.size(); i++)
+			{
+				allCourseNames.add(allCourses.get(i).getCourseName());
+			}
+			
+			if(allCourses.size()!=0)
+			{
+				allClasses = new JComboBox<String>(new DefaultComboBoxModel(allCourseNames.toArray())); //for the Classes
+			}
+		}
+		
+		
+		else
+		{
+			allClasses = new JComboBox<String>(); //for the Classes
+		}
+		
 		allClasses.setBounds(24, 7, 141, 27);
 		contentPane.add(allClasses);
 		
@@ -175,13 +215,34 @@ public class InstructorWindow extends JFrame {
 		//and when submitted, a function is called to update the listing
 		
 		commentList = new List();
+		
+		if(courseList!=null)
+		{
+			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
+			
+			for(int i = 0; i<currentNote.getComments().size(); i++)
+			{
+				commentList.add(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
+			}
+		}
 		commentList.setBounds(389, 407, 579, 188);
+		
+		
 		contentPane.add(commentList);
 		
-		TextArea textArea = new TextArea();
-		textArea.setEditable(false);
-		textArea.setBounds(369, 123, 625, 231);
-		contentPane.add(textArea);
+		noteArea = new TextArea();
+		noteArea.setEditable(false);
+		if(courseList!=null)
+		{
+			currentCourse = courseList.getCourse().get(0);
+			currentNote = currentCourse.getAllNotes().get(0);
+			
+			noteArea.setText(currentNote.getTextContent());
+			
+			
+		}
+		noteArea.setBounds(369, 123, 625, 231);
+		contentPane.add(noteArea);
 		
 		JTextField textField_1 = new JTextField();
 		textField_1.setBounds(437, 617, 361, 26);
@@ -240,7 +301,7 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			NewClass newClass = new NewClass(client,userSet);
+			NewClass newClass = new NewClass();
 			newClass.setVisible(true);
 		}
 	}
