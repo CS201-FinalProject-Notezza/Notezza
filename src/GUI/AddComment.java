@@ -9,6 +9,7 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -18,7 +19,8 @@ public class AddComment extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
-
+	private TextArea commentText;
+	private final Action action_1 = new SwingAction_1();
 	/**
 	 * Launch the application.
 	 */
@@ -63,6 +65,7 @@ public class AddComment extends JFrame {
 		contentPane.add(lblComment);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setAction(action_1);
 		btnSubmit.setBounds(47, 222, 117, 29);
 		contentPane.add(btnSubmit);
 		
@@ -71,9 +74,9 @@ public class AddComment extends JFrame {
 		btnCancel.setBounds(194, 222, 117, 29);
 		contentPane.add(btnCancel);
 		
-		TextArea textArea = new TextArea();
-		textArea.setBounds(57, 57, 354, 157);
-		contentPane.add(textArea);
+		commentText = new TextArea();
+		commentText.setBounds(57, 57, 354, 157);
+		contentPane.add(commentText);
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -83,6 +86,20 @@ public class AddComment extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		public SwingAction_1() {
+			putValue(NAME, "Comment");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(commentText.getText().equals("")) 
+				{
+					//open a dialogue to warn the user
+					JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+				
+				}
 		}
 	}
 }

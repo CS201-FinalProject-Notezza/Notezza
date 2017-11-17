@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -25,17 +26,19 @@ public class UserWindow extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
-	private JTextField textField;
+	private JTextField searchField;
 	private final Action action_1 = new SwingAction_1();
 	private final Action action_2 = new SwingAction_2();
 	private final Action action_3 = new SwingAction_3();
 	private final Action action_4 = new SwingAction_4();
 	private NotezzaClient client;
-	private JTextField textField_1;
+	private JTextField commentText;
 	private List noteList;
 	private List commentList;
 	
 	private JComboBox<String> allClasses;
+	private final Action action_5 = new SwingAction_5();
+	private final Action action_6 = new SwingAction_6();
 
 	/**
 	 * Launch the application.
@@ -97,16 +100,17 @@ public class UserWindow extends JFrame {
 		noteList.setBounds(46, 156, 290, 500);
 		contentPane.add(noteList);
 		
-		textField = new JTextField();
-		textField.setBounds(34, 61, 130, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		searchField = new JTextField();
+		searchField.setBounds(34, 61, 130, 26);
+		contentPane.add(searchField);
+		searchField.setColumns(10);
 		
 		allClasses = new JComboBox<String>(); //for the Classes
 		allClasses.setBounds(24, 7, 141, 27);
 		contentPane.add(allClasses);
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setAction(action_6);
 		btnSearch.setBounds(177, 61, 117, 29);
 		contentPane.add(btnSearch);
 		
@@ -146,12 +150,13 @@ public class UserWindow extends JFrame {
 		textArea.setBounds(369, 123, 625, 231);
 		contentPane.add(textArea);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(437, 617, 361, 26);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		commentText = new JTextField();
+		commentText.setBounds(437, 617, 361, 26);
+		contentPane.add(commentText);
+		commentText.setColumns(10);
 		
 		JButton btnComment = new JButton("Comment");
+		btnComment.setAction(action_5);
 		btnComment.setBounds(824, 617, 117, 29);
 		contentPane.add(btnComment);
 		
@@ -162,6 +167,8 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			
+		
 			UserProfile profile = new UserProfile();
 			profile.setVisible(true);
 		}
@@ -206,6 +213,34 @@ public class UserWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			ViewStudentsInClass viewMembers = new ViewStudentsInClass();
 			viewMembers.setVisible(true);
+		}
+	}
+	private class SwingAction_5 extends AbstractAction {
+		public SwingAction_5() {
+			putValue(NAME, "Comment");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(commentText.getText().equals("")) 
+			{
+				//open a dialogue to warn the user
+				JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			}
+		}
+	}
+	private class SwingAction_6 extends AbstractAction {
+		public SwingAction_6() {
+			putValue(NAME, "Search");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(searchField.getText().equals("")) 
+			{
+				//open a dialogue to warn the user
+				JOptionPane.showMessageDialog(contentPane, "ERROR: Search Field Cannot be Empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			}
 		}
 	}
 }

@@ -10,6 +10,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
@@ -27,10 +28,11 @@ public class GuestWindow extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
-	private JTextField textField;
+	private JTextField searchField;
 
 	private List noteList; 
 	private List commentList;
+	private final Action action_1 = new SwingAction_1();
 	/**
 	 * Launch the application.
 	 */
@@ -89,10 +91,10 @@ public class GuestWindow extends JFrame {
 		noteList.setBounds(46, 156, 290, 500);
 		contentPane.add(noteList);
 		
-		textField = new JTextField();
-		textField.setBounds(34, 61, 130, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		searchField = new JTextField();
+		searchField.setBounds(34, 61, 130, 26);
+		contentPane.add(searchField);
+		searchField.setColumns(10);
 		
 		JComboBox<String> allClasses = new JComboBox<String>(); //for the Classes
 		allClasses.setEnabled(false);
@@ -100,6 +102,7 @@ public class GuestWindow extends JFrame {
 		contentPane.add(allClasses);
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setAction(action_1);
 		btnSearch.setBounds(177, 61, 117, 29);
 		contentPane.add(btnSearch);
 		
@@ -159,6 +162,20 @@ public class GuestWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			GuestProfile profile = new GuestProfile();
 			profile.setVisible(true);
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		public SwingAction_1() {
+			putValue(NAME, "Search");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			if(searchField.getText().equals("")) 
+			{
+				//open a dialogue to warn the user
+				JOptionPane.showMessageDialog(contentPane, "ERROR: Search Field Cannot be Empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+			
+			}
 		}
 	}
 }
