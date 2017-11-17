@@ -26,8 +26,7 @@ public class DatabaseManager {
 	
 	private DataContainer dc;
 	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
-	private HashMap<Integer, User> userIDToObject;
-	private HashMap<Integer, Note> noteIDToObject;
+	private Map<Integer, User> userIDToObject;
 	
 	public DatabaseManager() {
 		dc = new DataContainer();
@@ -51,7 +50,7 @@ public class DatabaseManager {
 			Vector<User> userObjects = new Vector<User>();
 			Vector<Course> courseObjects = new Vector<Course>();
 						
-			userIDToObject = new HashMap<Integer, User>();
+			/*HashMap<Integer, User>*/ userIDToObject = new HashMap<Integer, User>();
 			HashMap<Integer, Course> courseIDToObject = new HashMap<Integer, Course>();
 			HashMap<Integer, Vector<User>> courseIDToUsers = new HashMap<Integer, Vector<User>>();
 			
@@ -203,7 +202,7 @@ public class DatabaseManager {
 			}
 			
 			HashMap<Integer, Vector<Note>> courseIDToNoteObjects = new HashMap<Integer, Vector<Note>>();
-			noteIDToObject = new HashMap<Integer, Note>();
+			HashMap<Integer, Note> noteIDToObject = new HashMap<Integer, Note>();
 			
 			rs = st.executeQuery("SELECT * FROM Note");
 			while (rs.next()) {
@@ -315,17 +314,19 @@ public class DatabaseManager {
 				
 				Presentation p = c.getCurrentLecture();
 				System.out.println("\t\tPresentation:");
-				for (String link : p.getLinks()) {
-					System.out.println("\t\t\tLink: " + link);
-				}
-				for (Quiz qu : p.getQuizzes()) {
-					System.out.println("\t\t\tQuestion: " + qu.getQuestion());
-					Vector<String> choices = qu.getChoices();
-					Set<Integer> answers = qu.getAnswers();
-					for (int i = 0; i < choices.size(); i++) {
-						System.out.print("\t\t\t\tChoice: " + choices.get(i));
-						if (answers.contains(i)) { System.out.print(" CORRECT"); }
-						System.out.println("");
+				if (p != null) {
+					for (String link : p.getLinks()) {
+						System.out.println("\t\t\tLink: " + link);
+					}
+					for (Quiz qu : p.getQuizzes()) {
+						System.out.println("\t\t\tQuestion: " + qu.getQuestion());
+						Vector<String> choices = qu.getChoices();
+						Set<Integer> answers = qu.getAnswers();
+						for (int i = 0; i < choices.size(); i++) {
+							System.out.print("\t\t\t\tChoice: " + choices.get(i));
+							if (answers.contains(i)) { System.out.print(" CORRECT"); }
+							System.out.println("");
+						}
 					}
 				}
 			}
@@ -420,6 +421,7 @@ public class DatabaseManager {
 	}
 	
 	public void addComment(Comment c) {
+						
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -447,6 +449,89 @@ public class DatabaseManager {
 			updateString += userID + ")";
 			
 			st.executeUpdate(updateString);
+			
+			
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	
+	public void addCourse(Course c) {
+						
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			String updateCourseString = "INSERT INTO Course (courseName, instructorID) VALUES (";
+			updateCourseString += "'" + c.getCourseName() + "', "; 
+			
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + c.getInstructor().getUsername() + "'");
+			int instructorID = -1;
+			while (rs.next()) {
+				instructorID = rs.getInt("userID");
+			}
+			updateCourseString += instructorID + ")";
+			
+			st.executeUpdate(updateCourseString);
+			
+			// Get the courseID of the newly added course
+			rs = st.executeQuery("SELECT * FROM Course WHERE courseName='" + c.getCourseName() + "' AND instructorID=" + instructorID);
+			int courseID = -1;
+			while (rs.next()) {
+				courseID = rs.getInt("courseID");
+			}
+			
+			Vector<User> usersToAdd = c.getStudents();
+			usersToAdd.add(c.getInstructor());
+			String updateUserCourseString = "INSERT INTO UserCourse (userID, courseID) VALUES ";
+			Boolean first = true;
+			
+			for (User u : usersToAdd) {
+				
+				rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + u.getUsername() + "'");
+				int userID = -1;
+				while (rs.next()) {
+					userID = rs.getInt("userID");
+				}
+				
+				if (userID != -1) {
+					if (!first) { updateUserCourseString += ", "; }
+					updateUserCourseString += "(" + userID + ", " + courseID + ")";
+					first = false;
+				}
+			}
+			
+			st.executeUpdate(updateUserCourseString);
 			
 			
 		} catch (SQLException sqle) {
