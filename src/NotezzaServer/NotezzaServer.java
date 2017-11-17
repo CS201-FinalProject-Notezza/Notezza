@@ -71,14 +71,17 @@ public class NotezzaServer {
             case INITIALIZATION_STUDENT:
                 System.out.println("Send out initialization (Student) ...");
                 String userName = (String) obj;
-                CourseList courseList = new CourseList(data.findUserCourses(userName));
+                CourseList courseList = new CourseList(dm.getDataContainer().findUserCourses(userName));
                 thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseList));
                 break;
             case INITIALIZATION_INSTRUCTOR:
                 System.out.println("Send out initialization (Instructor) ...");
                 String instructorName = (String) obj;
-                CourseList instructorCourseList = new CourseList(data.findInstructorCourses(instructorName));
-                thread.sendCommand(new Command(INITIALIZATION_STUDENT,instructorCourseList));
+                List<Course> courses = dm.getDataContainer().findInstructorCourses(instructorName);
+                Map<String, User> userMap = dm.getDataContainer().getAllUsers();
+                Set<User> users = (Set<User>) userMap.values();
+                InstructorIntialization instructorInit = new InstructorIntialization(courses,users);
+                thread.sendCommand(new Command(INITIALIZATION_STUDENT,instructorInit));
                 break;
             case LOGIN:
                 System.out.println("Received login request...");
@@ -87,7 +90,7 @@ public class NotezzaServer {
                 String password = loginCredential.getPassword();
                 int hashedPassword = passwordHasher(password);
 
-                Map<String,User> allUsers = data.getAllUsers();
+                Map<String,User> allUsers = dm.getDataContainer().getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
                     System.out.println("LOGIN SUCCESS");
@@ -111,7 +114,10 @@ public class NotezzaServer {
                 thread.sendCommand(new Command(REGISTER_DONE,user));
                 break;
             case CREATE_CLASS:
-                
+                System.out.println("Receive request to create class...");
+                Course course = (Course) obj;
+                dm.addCourse(course);
+                broadcast(new Command(UPDATE_CLASS,course));
                 break;
             case VIEW_PRESENTATION:
                 
@@ -133,10 +139,10 @@ public class NotezzaServer {
             case ADD_NOTE:
                 System.out.println("Received request to add note...");
                 CourseANDNote cn = (CourseANDNote) obj;
-                Course course = cn.getCourse();
+                Course courseForNote = cn.getCourse();
                 Note note = cn.getNote();
                 // Add to the database
-                //..........dm.addNote(note,course);
+                //..........dm.addNote(note,courseForNote);
                 broadcast(new Command(UPDATE_NOTE,note));
                 break;
         }

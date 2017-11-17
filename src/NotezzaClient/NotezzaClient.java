@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Set;
 
 import static NotezzaServer.CommandType.*;
 
@@ -20,6 +21,7 @@ public class NotezzaClient extends Thread {
     private CourseList courseList;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+    private InstructorIntialization instInit = null;
 
     public User getUser() { return user; }
 
@@ -99,7 +101,7 @@ public class NotezzaClient extends Thread {
                     userWindow = new UserWindow(this, courseList);
                     userWindow.setVisible(true);
                 } else {
-                    instructorWindow = new InstructorWindow(this, courseList);
+                    instructorWindow = new InstructorWindow(this, courseList, null);
                     instructorWindow.setVisible(true);
                 }
                 break;
@@ -111,9 +113,11 @@ public class NotezzaClient extends Thread {
                 userWindow.setVisible(true);
                 break;
             case INITIALIZATION_INSTRUCTOR:
-                courseList = (CourseList) obj;
+                instInit = (InstructorIntialization) obj;
+                courseList = new CourseList(instInit.getCourse());
+                Set<User> userSet = instInit.getAllUsers();
                 // pop up instructor window
-                instructorWindow = new InstructorWindow(this, courseList);
+                instructorWindow = new InstructorWindow(this, courseList,userSet);
                 instructorWindow.setVisible(true);
                 break;
             case UPDATE_COMMENT:

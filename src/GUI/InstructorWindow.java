@@ -26,6 +26,7 @@ import java.awt.event.ActionListener;
 import java.awt.List;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Set;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -54,6 +55,7 @@ public class InstructorWindow extends JFrame {
 	private NotezzaClient client;
 	private Course currentCourse;
 	private Note currentNote;
+	private Set<User> userSet;
 
 
 	/**
@@ -64,7 +66,7 @@ public class InstructorWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InstructorWindow frame = new InstructorWindow(null,null);
+					InstructorWindow frame = new InstructorWindow(null,null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,7 +79,7 @@ public class InstructorWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InstructorWindow(NotezzaClient client, CourseList courseList) {
+	public InstructorWindow(NotezzaClient client, CourseList courseList, Set<User> userSet) {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -93,6 +95,7 @@ public class InstructorWindow extends JFrame {
 		
 		this.client = client;
 		this.courseList = courseList;
+		this.userSet = userSet;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
@@ -238,7 +241,7 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			NewClass newClass = new NewClass();
+			NewClass newClass = new NewClass(client,userSet);
 			newClass.setVisible(true);
 		}
 	}
