@@ -20,7 +20,9 @@ public class NotezzaClient extends Thread {
     private CourseList courseList;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    
+
+    public User getUser() { return user; }
+
     // Windows
     //private LoginScreen loginWindow;
     private UserWindow userWindow;
@@ -91,16 +93,20 @@ public class NotezzaClient extends Thread {
                 // Wait for GUI to finish
                 break;
             case INITIALIZATION_STUDENT:
-                courseList = (CourseList)obj;
+                courseList = (CourseList) obj;
                 // pop up userWindow
-                userWindow = new UserWindow(this);
+                userWindow = new UserWindow(this, courseList);
                 userWindow.setVisible(true);
                 break;
             case INITIALIZATION_INSTRUCTOR:
+                courseList = (CourseList) obj;
                 // pop up instructor window
-                instructorWindow = new InstructorWindow(this);
+                instructorWindow = new InstructorWindow(this, courseList);
                 instructorWindow.setVisible(true);
                 break;
+            case UPDATE_COMMENT:
+                // Update the comment
+                
             default:
                 break;
         }

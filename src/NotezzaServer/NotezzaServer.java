@@ -14,6 +14,7 @@ public class NotezzaServer {
     
     private Vector<ServerThread> serverThreads;
     private DataContainer data;
+    private DatabaseManager dm;
     
     private NotezzaServer(int port) {
         try {
@@ -21,7 +22,7 @@ public class NotezzaServer {
             ServerSocket ss = new ServerSocket(port);
             System.out.println("Notezza server has started. Bind to port " + port);
             serverThreads = new Vector<>();
-            DatabaseManager dm = new DatabaseManager();
+            dm = new DatabaseManager();
             data = dm.getDataContainer();
 
             System.out.println("Printing database...");
@@ -109,6 +110,15 @@ public class NotezzaServer {
             case VIEW_CLASS_INFORMATION:
                 
                 break;
+
+            case ADD_COMMENT:
+                Comment comment = (Comment) obj;
+                // Add to the database
+                dm.addComment(comment);
+                //Broadcast the comment
+                Command updateComment = new Command(UPDATE_COMMENT, comment);
+                broadcast(updateComment);
+                break;
         }
     }
     
@@ -131,6 +141,12 @@ public class NotezzaServer {
                          + 65169*passArr[2] + 4625*passArr[3]) % 65521;
         
         return encryptedCode;
+    }
+
+    private void broadcast(Command command) {
+        for (ServerThread thread : serverThreads) {
+            thread.sendCommand(command);
+        }
     }
     
     

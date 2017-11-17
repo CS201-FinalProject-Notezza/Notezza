@@ -5,6 +5,8 @@ import java.awt.List;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -21,6 +23,9 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 
 import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.*;
 
 public class UserWindow extends JFrame {
 
@@ -31,7 +36,6 @@ public class UserWindow extends JFrame {
 	private final Action action_2 = new SwingAction_2();
 	private final Action action_3 = new SwingAction_3();
 	private final Action action_4 = new SwingAction_4();
-	private NotezzaClient client;
 	private JTextField commentText;
 	private List noteList;
 	private List commentList;
@@ -39,6 +43,13 @@ public class UserWindow extends JFrame {
 	private JComboBox<String> allClasses;
 	private final Action action_5 = new SwingAction_5();
 	private final Action action_6 = new SwingAction_6();
+
+	private NotezzaClient client;
+	// Need to populate later
+	private CourseList courseList;
+	private Course currentCourse;
+	private Note currentNote;
+
 
 	/**
 	 * Launch the application.
@@ -48,7 +59,7 @@ public class UserWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserWindow frame = new UserWindow(null);
+					UserWindow frame = new UserWindow(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +71,7 @@ public class UserWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserWindow(NotezzaClient client) {
+	public UserWindow(NotezzaClient client, CourseList courseList) {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -76,6 +87,7 @@ public class UserWindow extends JFrame {
 		
 		setTitle("Notezza");
 		this.client = client;
+		this.courseList = courseList;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
@@ -201,8 +213,10 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			//AddComment addComment = new AddComment();
-			//addComment.setVisible(true);
+			AddComment addComment = new AddComment();
+			addComment.setVisible(true);
+
+
 		}
 	}
 	private class SwingAction_4 extends AbstractAction {
@@ -225,8 +239,16 @@ public class UserWindow extends JFrame {
 			{
 				//open a dialogue to warn the user
 				JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
-			
-			}
+			} else {
+                // LINK
+			    String commentContent = commentText.getText();
+                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+                Date d = new Date();
+                df.format(d);
+                User user = client.getUser();
+                Comment comment = new Comment(user,commentContent,d,currentNote);
+                client.sendCommand(new Command(CommandType.ADD_COMMENT,comment));
+            }
 		}
 	}
 	private class SwingAction_6 extends AbstractAction {

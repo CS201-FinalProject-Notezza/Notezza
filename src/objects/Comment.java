@@ -12,13 +12,15 @@ public class Comment implements Serializable {
     private final Date dateCreated;
     private Set<User> likeUsers;
     private Set<User> dislikeUsers;
+    private Note note;
     
-    public Comment(User user, String content, Date date) {
+    public Comment(User user, String content, Date date,Note note) {
         this.user = user;
         this.content = content;
         this.dateCreated = date;
         this.likeUsers = new HashSet<>();
         this.dislikeUsers = new HashSet<>();
+        this.note = note;
     }
     
     public User getUser() {
