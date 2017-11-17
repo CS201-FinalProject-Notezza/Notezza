@@ -1,7 +1,17 @@
 package GUI;
 
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.Note;
+import objects.User;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,6 +34,7 @@ public class AddNote extends JFrame {
 	private JTextArea descriptionText;
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
+	private NotezzaClient client;
 
 	/**
 	 * Launch the application.
@@ -32,7 +43,7 @@ public class AddNote extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddNote frame = new AddNote();
+					AddNote frame = new AddNote(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,8 +55,9 @@ public class AddNote extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddNote() {
-		
+	public AddNote(NotezzaClient client) {
+		this.client = client;
+
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -123,8 +135,24 @@ public class AddNote extends JFrame {
 				{
 					//open a dialogue to warn the user
 					JOptionPane.showMessageDialog(contentPane, "ERROR: One of more of these fields cannot be empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
-				
-				}
+				} else {
+			    // Add the note
+                //Note(User user, String title, Vector<String> tags, Date date, String textContent)
+                User user = client.getUser();
+                String title = titleField.getText();
+                String tagsString = tagsField.getText();
+                String[] tagsArray = tagsString.split(",");
+                String textContent = descriptionText.getText();
+
+                Vector<String> tags = new Vector<>(Arrays.asList(tagsArray));
+
+                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+                Date d = new Date();
+                df.format(d);
+
+                Note note = new Note(user,title,tags,d,textContent);
+                client.sendCommand(new Command(CommandType.ADD_NOTE,note));
+            }
 		}
 	}
 }

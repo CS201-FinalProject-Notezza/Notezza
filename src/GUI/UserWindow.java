@@ -202,9 +202,9 @@ public class UserWindow extends JFrame {
 		}
 		public void actionPerformed(ActionEvent e) {
 			//open up the AddNote Window
-			AddNote newNote = new AddNote(); //want to pass in a constructor of the user window to update the list of posts
+			AddNote newNote = new AddNote(client); //want to pass in a constructor of the user window to update the list of posts
 			newNote.setVisible(true);
-			
+
 		}
 	}
 	private class SwingAction_3 extends AbstractAction { //This function is for adding comments

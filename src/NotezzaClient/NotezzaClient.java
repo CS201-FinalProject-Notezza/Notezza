@@ -106,7 +106,10 @@ public class NotezzaClient extends Thread {
                 break;
             case UPDATE_COMMENT:
                 // Update the comment
-
+                break;
+            case UPDATE_NOTE:
+                // Update the note
+                break;
             default:
                 break;
         }

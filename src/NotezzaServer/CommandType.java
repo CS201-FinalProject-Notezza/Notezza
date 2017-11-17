@@ -11,5 +11,7 @@ public enum CommandType {
     CREATE_PRESENTATION,
     VIEW_PRESENTATION,
     ADD_COMMENT,
-    UPDATE_COMMENT;
+    UPDATE_COMMENT,
+    ADD_NOTE,
+    UPDATE_NOTE;
 }

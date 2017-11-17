@@ -110,14 +110,18 @@ public class NotezzaServer {
             case VIEW_CLASS_INFORMATION:
                 
                 break;
-
             case ADD_COMMENT:
                 Comment comment = (Comment) obj;
                 // Add to the database
-                dm.addComment(comment);
+                //...................dm.addComment(comment);
                 //Broadcast the comment
-                Command updateComment = new Command(UPDATE_COMMENT, comment);
-                broadcast(updateComment);
+                broadcast(new Command(UPDATE_COMMENT, comment));
+                break;
+            case ADD_NOTE:
+                Note note = (Note) obj;
+                // Add to the database
+                //...................dm.addNote(note);
+                broadcast(new Command(UPDATE_NOTE,note));
                 break;
         }
     }
