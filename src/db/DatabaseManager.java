@@ -1,5 +1,3 @@
-package db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,6 +22,7 @@ import objects.User;
 public class DatabaseManager {
 	
 	private DataContainer dc;
+	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 	
 	public DatabaseManager() {
 		dc = new DataContainer();
@@ -38,7 +37,6 @@ public class DatabaseManager {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
-		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			// Connect to RDS database!
@@ -264,7 +262,7 @@ public class DatabaseManager {
 					System.out.println("Exception parsing date: " + pe.getMessage());
 				}
 				
-				Comment newComment = new Comment(userIDToObject.get(userID), content, created);
+				Comment newComment = new Comment(userIDToObject.get(userID), content, created, noteIDToObject.get(noteID));
 				commentIDToObject.put(commentID, newComment);
 				noteIDToObject.get(noteID).addComment(newComment);
 			}
@@ -368,7 +366,50 @@ public class DatabaseManager {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
 		}
-		
+	}
+	
+	public void addUser(User u) {
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			
+			
+			
+			
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
 	}
 	
 	public static void main(String [] args) {
