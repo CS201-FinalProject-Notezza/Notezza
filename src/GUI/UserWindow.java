@@ -460,4 +460,46 @@ public class UserWindow extends JFrame {
 			}
 		}
 	}
+	
+	public void updateNotes(CourseList updated) //TODO: need to change constructors
+	{
+		//clear everything on the notes list, comments, and the note text area
+		 noteArea.setText("");
+		 noteDefaultListModel.clear();
+		 commentDefaultListModel.clear();
+		 
+		 //get all the Notes
+		 //TODO: write the code to get all of the notes
+		 
+		 //loop through all of the notes and print out their titles
+		 	for(int i = 0; i <allNotes.size(); i++)
+			{
+				noteDefaultListModel.addElement(allNotes.get(i).getTitle()); //print all the note titles onto the list
+			}
+		 
+	}
+	
+	public void updateComments(CourseList updated, Note updatedNoteComment) //TODO: need to change constructors. Likely Need to possibly pass in note object
+	{
+		
+		//check to see if current note is selected
+		//if so, update the comment list
+		if(currentNote == updatedNoteComment)
+		{
+			//clear the commentSection
+			commentDefaultListModel.clear();
+			for(int i = 0; i<currentNote.getComments().size(); i++)
+			{
+				commentDefaultListModel.addElement("Score: " + currentNote.getComments().get(i).getScore() + ". "+ 
+						currentNote.getComments().get(i).getUser().getUsername() + 
+						" commented \"" + currentNote.getComments().get(i).getContent() + "\" on " + df.format(currentNote.getComments().get(i).getDateCreated()));
+			}
+		}
+		
+		
+		
+		
+		//if not, we prob just need to update the database
+		
+	}
 }

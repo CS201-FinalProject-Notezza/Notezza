@@ -75,13 +75,13 @@ public class Course implements Serializable {
         return false;
     }
     
-    public Vector<Note> sortNotes(SortType type){
-		Vector<Note> tempNotes = new Vector<Note>(allNotes);
-		for (Note note : tempNotes) {
+    public Vector<Note> getSortedNotes(SortType type){
+		//Vector<Note> tempNotes = new Vector<Note>(allNotes);
+		for (Note note : allNotes) {
 			note.setSortBy(type);
 		}
-		Collections.sort(tempNotes);
-		return tempNotes;
+		Collections.sort(allNotes);
+		return allNotes;
     }
     
     
