@@ -1,6 +1,9 @@
 package GUI;
 
 import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.ChatMessage;
 import objects.Course;
 
 import java.awt.EventQueue;
@@ -29,8 +32,10 @@ public class UserPresentation extends JFrame {
 
 	private JButton slideBackwardsButton;
 	private JButton slideForwardButton;
+	private JButton sendChatButton;
 	private final Action slideForwards = new SlideForwards();
 	private final Action slideBackwards = new SlideBackwards();
+	private final Action sendChatMessage = new SendChatMessage();
 	private int lectureIndex;
 	private Vector<String> urls;
 	//private final Action slideBackwards;
@@ -88,8 +93,9 @@ public class UserPresentation extends JFrame {
 		contentPane.add(chatTextBox);
 		chatTextBox.setColumns(10);
 
-		JButton sendChatButton = new JButton("Send");
+		sendChatButton = new JButton("Send");
 		sendChatButton.setBounds(707, 473, 68, 29);
+		sendChatButton.setAction(sendChatMessage);
 		contentPane.add(sendChatButton);
 
 		slidePanel = new JPanel();
@@ -244,6 +250,22 @@ public class UserPresentation extends JFrame {
 				lectureIndex--;
 				displayImage();
 			}
+		}
+	}
+
+	private class SendChatMessage extends AbstractAction {
+		public SendChatMessage() {
+			putValue(NAME, "Send");
+			putValue(SHORT_DESCRIPTION, "Sends chat message");
+		}
+		public void actionPerformed(ActionEvent e) {
+			String chatContent = chatTextBox.getText();
+			String username = client.getUser().getUsername();
+			ChatMessage chatMessage = new ChatMessage(chatContent, username, course);
+			System.out.println("Sending the chat message...");
+			System.out.println(username + ": " + chatContent);
+			System.out.println("Chat has been sent");
+			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
 		}
 	}
 

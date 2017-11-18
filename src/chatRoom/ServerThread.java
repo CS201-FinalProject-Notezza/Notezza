@@ -1,5 +1,7 @@
 package chatRoom;
 
+import objects.ChatMessage;
+
 import java.io.*;
 import java.net.Socket;
 
