@@ -103,6 +103,8 @@ public class UserWindow extends JFrame {
 		
 		allNotes = new Vector<Note>();
 		
+		
+		
 		setTitle("Notezza");
 		this.client = client;
 		this.courseList = courseList;
@@ -250,6 +252,7 @@ public class UserWindow extends JFrame {
 		btnAddPresentation.setBounds(377, 6, 158, 29);
 		contentPane.add(btnAddPresentation);
 		
+		
 		commentDefaultListModel = new DefaultListModel();
 		
 		if(courseList!=null && courseList.getCourse().size()!=0)
@@ -258,7 +261,9 @@ public class UserWindow extends JFrame {
 			
 			for(int i = 0; i<currentNote.getComments().size(); i++)
 			{
-				commentDefaultListModel.addElement(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
+				commentDefaultListModel.addElement("Score: " + currentNote.getComments().get(i).getScore() + ". "+ 
+				currentNote.getComments().get(i).getUser().getUsername() + 
+				" commented \"" + currentNote.getComments().get(i).getContent() + "\" on " + df.format(currentNote.getComments().get(i).getDateCreated()));
 			}
 		}
 		
@@ -271,6 +276,8 @@ public class UserWindow extends JFrame {
 		{
 			commentList = new JList();
 		}
+		
+		//commentList.setFixedCellHeight(2);
 		
 		commentList.setBounds(389, 407, 579, 188);
 		contentPane.add(commentList);
@@ -327,7 +334,9 @@ public class UserWindow extends JFrame {
 		commentDefaultListModel.clear();
 		for(int i = 0; i<currentNote.getComments().size(); i++)
 		{
-			commentDefaultListModel.addElement(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
+			commentDefaultListModel.addElement("Score: " + currentNote.getComments().get(i).getScore() + ". "+ 
+					currentNote.getComments().get(i).getUser().getUsername() + 
+					" commented \"" + currentNote.getComments().get(i).getContent() + "\" on " + df.format(currentNote.getComments().get(i).getDateCreated()));
 		}
 	
 
