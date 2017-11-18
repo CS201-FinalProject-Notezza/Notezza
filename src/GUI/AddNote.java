@@ -27,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
+import java.awt.Font;
+import javax.swing.JSeparator;
 
 public class AddNote extends JFrame {
 
@@ -60,60 +62,80 @@ public class AddNote extends JFrame {
 	public AddNote(NotezzaClient client, Course course) {
 		this.client = client;
 		this.course = course;
-
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
-		
 		
 		setTitle("New Note");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 569, 407);
+		setBounds(100, 100, 500, 425);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(52, 61, 70));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		titleField = new JTextField();
-		titleField.setBounds(153, 45, 270, 26);
-		contentPane.add(titleField);
-		titleField.setColumns(10);
+		JLabel titleLabel = new JLabel("Title:");
+		titleLabel.setBounds(21, 22, 65, 16);
+		titleLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		titleLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(titleLabel);
 		
-		JLabel lblTitle = new JLabel("Title:");
-		lblTitle.setBounds(107, 50, 61, 16);
-		contentPane.add(lblTitle);
+		JLabel tagsLabel = new JLabel("Tags:");
+		tagsLabel.setBounds(21, 47, 49, 21);
+		tagsLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		tagsLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(tagsLabel);
 		
-		JLabel lblTags = new JLabel("Tags:");
-		lblTags.setBounds(107, 83, 61, 16);
-		contentPane.add(lblTags);
-		
-		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setBounds(107, 119, 94, 16);
-		contentPane.add(lblDescription);
+		JLabel noteLabel = new JLabel("Note Content:");
+		noteLabel.setBounds(21, 78, 139, 16);
+		noteLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		noteLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(noteLabel);
 		
 		descriptionText = new JTextArea();
-		descriptionText.setBounds(107, 147, 425, 173);
+		descriptionText.setTabSize(4);
+		descriptionText.setBackground(new java.awt.Color(204, 204, 204));
+		descriptionText.setForeground(new java.awt.Color(52, 61, 70));
+		descriptionText.setBorder(null);
+		descriptionText.setCaretColor(new java.awt.Color(52, 61, 70));
+		descriptionText.setBounds(21, 106, 458, 233);
 		contentPane.add(descriptionText);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		btnSubmit.setAction(action_1);
-		btnSubmit.setBounds(21, 340, 94, 26);
+		btnSubmit.setBounds(100, 351, 100, 34);
+		btnSubmit.setForeground(new java.awt.Color(52, 61, 70));
 		contentPane.add(btnSubmit);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		btnCancel.setAction(action);
-		btnCancel.setBounds(117, 339, 117, 29);
+		btnCancel.setBounds(300, 351, 100, 34);
+		btnCancel.setForeground(new java.awt.Color(52, 61, 70));
 		contentPane.add(btnCancel);
 		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(68, 34, 411, 16);
+		contentPane.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(68, 62, 411, 16);
+		contentPane.add(separator_1);
+		
+		titleField = new JTextField();
+		titleField.setBounds(68, 17, 411, 26);
+		titleField.setBackground(new java.awt.Color(52, 61, 70));
+		titleField.setForeground(new java.awt.Color(204, 204, 204));
+		titleField.setBorder(null);
+		titleField.setCaretColor(new java.awt.Color(204, 204, 204));
+		contentPane.add(titleField);
+		titleField.setColumns(10);
+		
 		tagsField = new JTextField();
-		tagsField.setBounds(153, 83, 270, 26);
+		tagsField.setBounds(68, 45, 411, 26);
+		tagsField.setBackground(new java.awt.Color(52, 61, 70));
+		tagsField.setForeground(new java.awt.Color(204, 204, 204));
+		tagsField.setBorder(null);
+		tagsField.setCaretColor(new java.awt.Color(204, 204, 204));
 		contentPane.add(tagsField);
 		tagsField.setColumns(10);
 	}
