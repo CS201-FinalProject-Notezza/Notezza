@@ -126,7 +126,7 @@ public class UserWindow extends JFrame {
 		//when click on the note list, print out the description
 		noteDefaultListModel = new DefaultListModel();
 		
-		if(courseList!=null)
+		if(courseList!=null && courseList.getCourse().size()!=0)
 		{
 			currentCourse = courseList.getCourse().get(0);
 			
@@ -171,7 +171,7 @@ public class UserWindow extends JFrame {
 		//fill an arraylist with the String names of the classes
 		//and then add it to the comboBox
 		
-		if(courseList!=null)
+		if(courseList!=null && courseList.getCourse().size()!=0)
 		{
 			Vector<Course> allCourses = new Vector<Course>();
 			
@@ -214,6 +214,12 @@ public class UserWindow extends JFrame {
 		
 		//String[] sortOptions = {"Date Uploaded", "Number of Comments", "Number of Likes", "Number of Ratings"};
 		JComboBox<String> sortComboBox = new JComboBox<String>(); //this is for the search options for the List
+		sortComboBox.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//sort the notes here
+			}
+		});
 		sortComboBox.setModel(new DefaultComboBoxModel(new String[] {"Date Uploaded", "Most Likes", "Highest Rating", "Number of Comments"}));
 		sortComboBox.setBounds(34, 91, 212, 27);
 		contentPane.add(sortComboBox);
@@ -241,7 +247,7 @@ public class UserWindow extends JFrame {
 		
 		commentDefaultListModel = new DefaultListModel();
 		
-		if(courseList!=null)
+		if(courseList!=null && courseList.getCourse().size()!=0)
 		{
 			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
 			
@@ -266,7 +272,7 @@ public class UserWindow extends JFrame {
 		
 		noteArea = new TextArea();
 		noteArea.setEditable(false);
-		if(courseList!=null)
+		if(courseList!=null && courseList.getCourse().size()!=0)
 		{
 			currentCourse = courseList.getCourse().get(0);
 			currentNote = currentCourse.getAllNotes().get(0);
@@ -415,6 +421,36 @@ public class UserWindow extends JFrame {
 				//open a dialogue to warn the user
 				JOptionPane.showMessageDialog(contentPane, "ERROR: Search Field Cannot be Empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
 			
+			}
+			
+			else
+			{
+				Vector<Note> searchedNotes = currentCourse.searchNote(searchField.getText());
+				//clear the notes window
+				noteDefaultListModel.clear();
+				
+				//if searchedNotes is not empty
+				if(searchedNotes!=null || searchedNotes.size()!=0)
+				{
+					for(int i = 0; i <searchedNotes.size(); i++)
+					{
+						noteDefaultListModel.addElement(searchedNotes.get(i).getTitle()); //print all the note titles onto the list
+					}
+					
+				}
+				
+				noteArea.setText("");
+				commentDefaultListModel.clear(); //clear the comments List
+				
+					//currentNote is the first item over here
+					//print the Note onto the note text area
+						//clear the Notes text area
+							//noteArea.setText("");
+							//commentDefaultListModel.clear();
+						
+					
+					
+					
 			}
 		}
 	}

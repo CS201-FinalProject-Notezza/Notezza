@@ -52,7 +52,7 @@ public class Course implements Serializable {
     
     // Returns a vector of notes that contains certain keywords.
     public Vector<Note> searchNote(String keyword) {
-        Vector<Note> notes = new Vector<>();
+        Vector<Note> notes = new Vector<Note>();
         // split keywords
         String[] keywords = keyword.split("\\s+");
         // substring search
