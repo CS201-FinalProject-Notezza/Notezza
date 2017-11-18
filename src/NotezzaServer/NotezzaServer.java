@@ -71,6 +71,7 @@ public class NotezzaServer {
             case INITIALIZATION_STUDENT:
                 System.out.println("Send out initialization (Student) ...");
                 String userName = (String) obj;
+                //TODO CHANGE DATA CONTAINER
                 CourseList courseList = new CourseList(dm.getDataContainer().findUserCourses(userName));
                 thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseList));
                 break;
@@ -89,7 +90,7 @@ public class NotezzaServer {
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
                 int hashedPassword = passwordHasher(password);
-
+                // TODO CHANGE DATA CONTAINER
                 Map<String,User> allUsers = dm.getDataContainer().getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
@@ -141,8 +142,8 @@ public class NotezzaServer {
                 CourseANDNote cn = (CourseANDNote) obj;
                 Course courseForNote = cn.getCourse();
                 Note note = cn.getNote();
-                // Add to the database
-                //..........dm.addNote(note,courseForNote);
+                // TODO Add to the database
+                dm.addNote(note,courseForNote);
                 broadcast(new Command(UPDATE_NOTE,note));
                 break;
         }

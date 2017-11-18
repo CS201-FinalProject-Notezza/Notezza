@@ -1,26 +1,23 @@
 package GUI;
 
+import NotezzaClient.NotezzaClient;
+import objects.Course;
+import objects.Quiz;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextArea;
 import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.JScrollPane;
-import javax.swing.JCheckBox;
 import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Vector;
 
 public class NewPresentation extends JFrame {
 
@@ -80,6 +77,8 @@ public class NewPresentation extends JFrame {
 	private JCheckBox q3c5Check;
 	private JButton createPresentationButton;
 
+
+	private final Action addNewClass = new AddNewClass();
 	/**
 	 * Launch the application.
 	 */
@@ -87,7 +86,7 @@ public class NewPresentation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewPresentation frame = new NewPresentation();
+					NewPresentation frame = new NewPresentation(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -99,7 +98,7 @@ public class NewPresentation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewPresentation() {
+	public NewPresentation(NotezzaClient client, Course course) {
 		setTitle("New Presentation");
 		setResizable(false);
 		
@@ -374,4 +373,43 @@ public class NewPresentation extends JFrame {
 		createPresentationButton.setBounds(117, 574, 166, 29);
 		contentPane.add(createPresentationButton);
 	}
+
+	private class AddNewClass extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			// Get all the text value;
+			String allLinksStr = linkText.getText();
+			String [] linksArray =allLinksStr.split(",");
+			//Vector links = new Vector(Arrays.asList(linksArray);
+
+			String q1Name = q1Text.getText();
+			String q2Name = q2Text.getText();
+			String q3Name = q3Text.getText();
+
+			Quiz quiz1;
+
+			if (!q1Name.isEmpty()) {
+				int numOfQuiz = 0;
+				String [] quizArrays = {q1Choice1Text.getText(),q1Choice2Text.getText(),q1Choice3Text.getText(),
+						q1Choice4Text.getText(),q1Choice5Text.getText()};
+				for (String quiz : quizArrays) {
+					if (!quiz.isEmpty()){numOfQuiz++;}
+				}
+
+				if (numOfQuiz >= 1) {
+
+				}
+			}
+
+			if (!q2Name.isEmpty()) {
+
+			}
+
+			if (!q3Name.isEmpty()) {
+
+			}
+
+		}
+	}
+
+
 }

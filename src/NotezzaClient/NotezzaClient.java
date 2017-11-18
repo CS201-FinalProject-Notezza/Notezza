@@ -93,8 +93,7 @@ public class NotezzaClient extends Thread {
                 }
                 break;
             case LOGIN_FAIL:
-                // Need to display login failure message on login window
-                // Wait for GUI to finish
+                // TODO Need to display login failure message on login windW\; Wait for GUI to finish
                 break;
             case REGISTER_DONE:
                 user = (User) obj;
