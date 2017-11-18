@@ -17,6 +17,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 public class NewPresentation extends JFrame {
@@ -379,24 +381,37 @@ public class NewPresentation extends JFrame {
 			// Get all the text value;
 			String allLinksStr = linkText.getText();
 			String [] linksArray =allLinksStr.split(",");
-			//Vector links = new Vector(Arrays.asList(linksArray);
+			Vector<String> links = new Vector<String>(Arrays.asList(linksArray));
 
 			String q1Name = q1Text.getText();
 			String q2Name = q2Text.getText();
 			String q3Name = q3Text.getText();
 
-			Quiz quiz1;
+			Quiz quiz1,quiz2,quiz3;
+
 
 			if (!q1Name.isEmpty()) {
 				int numOfQuiz = 0;
 				String [] quizArrays = {q1Choice1Text.getText(),q1Choice2Text.getText(),q1Choice3Text.getText(),
 						q1Choice4Text.getText(),q1Choice5Text.getText()};
-				for (String quiz : quizArrays) {
-					if (!quiz.isEmpty()){numOfQuiz++;}
+				Vector<String> choices = new Vector<>();
+				Set<Integer> correctAnswer = new HashSet<>();
+				for (int i = 0; i < quizArrays.length; i++) {
+					if (!quizArrays[i].isEmpty()){
+						numOfQuiz++;
+						choices.add(quizArrays[i]);
+						// TODO if have time check if user are idiot and put empty stuff and check them as correct answer
+						// TODO for now just put the index
+						correctAnswer.add(i);
+					}
 				}
 
-				if (numOfQuiz >= 1) {
 
+				if (choices.size() >= 1) {
+					// create the quiz otherwise set to null;
+					quiz1 = new Quiz(q1Name,choices,correctAnswer);
+				} else {
+					quiz1 = null;
 				}
 			}
 

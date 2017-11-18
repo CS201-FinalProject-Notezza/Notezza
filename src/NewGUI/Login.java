@@ -7,6 +7,7 @@ package NewGUI;
 
 import java.awt.Color;
 
+import GUI.CreateNewUser;
 import GUI.GuestWindow;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
@@ -194,6 +195,8 @@ public class Login extends javax.swing.JPanel {
 
     private void signupLabelMouseEntered(java.awt.event.MouseEvent evt) {
         signupLabel.setForeground(new Color(153, 204, 255));
+        CreateNewUser createNewUser = new CreateNewUser(client);
+        createNewUser.setVisible(true);
     }
 
     private void signupLabelMouseExited(java.awt.event.MouseEvent evt) {
