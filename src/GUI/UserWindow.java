@@ -239,6 +239,8 @@ public class UserWindow extends JFrame {
 		btnAddPresentation.setBounds(377, 6, 158, 29);
 		contentPane.add(btnAddPresentation);
 		
+		commentDefaultListModel = new DefaultListModel();
+		
 		if(courseList!=null)
 		{
 			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
@@ -295,32 +297,31 @@ public class UserWindow extends JFrame {
 		//When we click on a certain note
 
 		//First update the note
+		
 		currentNote = currentCourse.getAllNotes().get(noteList.getSelectedIndex());
 		
 		noteArea.setText(currentNote.getTextContent());
 		
 		//Then update the CommentList list. First, clear all the items on there 
 		
-		commentList.removeAll();
+		//commentList.removeAll();
 		
-		
-		
-
+		commentDefaultListModel.clear();
 		for(int i = 0; i<currentNote.getComments().size(); i++)
 		{
 			commentDefaultListModel.addElement(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
 		}
 	
 	
-	if(commentDefaultListModel!=null)
-	{
-		commentList = new JList(commentDefaultListModel);
-	}
+	//if(commentDefaultListModel!=null)
+	//{
+	//	commentList = new JList(commentDefaultListModel);
+	//}
 	
-	else
-	{
-		commentList = new JList();
-	}
+	//else
+	//{
+	//	commentList = new JList();
+	//}
 	}
 	
 	
