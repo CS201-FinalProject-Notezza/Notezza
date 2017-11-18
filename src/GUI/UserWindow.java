@@ -65,6 +65,7 @@ public class UserWindow extends JFrame {
 	private TextArea noteArea;
 	
 	private Vector<Note> allNotes;
+	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
 
 	/**
@@ -281,9 +282,10 @@ public class UserWindow extends JFrame {
 			currentCourse = courseList.getCourse().get(0);
 			currentNote = currentCourse.getAllNotes().get(0);
 			
-			noteArea.setText(currentNote.getTextContent());
-			
-			
+			noteArea.setText(currentNote.getTitle() + "\n"
+					+currentNote.getUser().getUsername() + " posted on " + df.format(currentNote.getDateCreated()).toString()  + "\n"
+					+ "Score: " + currentNote.getRating() + "\n \n" 
+					+ currentNote.getTextContent());	
 		}
 		noteArea.setBounds(369, 123, 625, 231);
 		contentPane.add(noteArea);
@@ -308,9 +310,15 @@ public class UserWindow extends JFrame {
 
 		//First update the note
 		
-		currentNote = currentCourse.getAllNotes().get(noteList.getSelectedIndex());
+		currentNote = allNotes.get(noteList.getSelectedIndex());
 		
-		noteArea.setText(currentNote.getTextContent());
+
+		noteArea.setText(currentNote.getTitle() + "\n"
+				+currentNote.getUser().getUsername() + " posted on " + df.format(currentNote.getDateCreated()).toString()  + "\n"
+				+ "Score: " + currentNote.getRating() + "\n \n" 
+				+ currentNote.getTextContent());	
+		
+		//noteArea.setText(currentNote.getTextContent());
 		
 		//Then update the CommentList list. First, clear all the items on there 
 		
@@ -322,16 +330,7 @@ public class UserWindow extends JFrame {
 			commentDefaultListModel.addElement(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
 		}
 	
-	
-	//if(commentDefaultListModel!=null)
-	//{
-	//	commentList = new JList(commentDefaultListModel);
-	//}
-	
-	//else
-	//{
-	//	commentList = new JList();
-	//}
+
 	}
 	
 	
@@ -447,13 +446,6 @@ public class UserWindow extends JFrame {
 					
 				}
 				
-				
-				
-					//currentNote is the first item over here
-					//print the Note onto the note text area
-						//clear the Notes text area
-							//noteArea.setText("");
-							//commentDefaultListModel.clear();		
 					
 					
 			}
