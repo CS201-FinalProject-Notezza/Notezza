@@ -31,6 +31,7 @@ import objects.Comment;
 import objects.Course;
 import objects.CourseList;
 import objects.Note;
+import objects.SortType;
 import objects.User;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -62,6 +63,8 @@ public class UserWindow extends JFrame {
 	private Note currentNote;
 	
 	private TextArea noteArea;
+	
+	private Vector<Note> allNotes;
 
 
 	/**
@@ -97,6 +100,7 @@ public class UserWindow extends JFrame {
 			// If Nimbus is not available, you can set the GUI to another look and feel.
 		}
 		
+		allNotes = new Vector<Note>();
 		
 		setTitle("Notezza");
 		this.client = client;
@@ -130,7 +134,7 @@ public class UserWindow extends JFrame {
 		{
 			currentCourse = courseList.getCourse().get(0);
 			
-			Vector<Note> allNotes = currentCourse.getAllNotes();
+			allNotes = currentCourse.getAllNotes();
 			
 			//update the list
 			
@@ -425,30 +429,31 @@ public class UserWindow extends JFrame {
 			
 			else
 			{
-				Vector<Note> searchedNotes = currentCourse.searchNote(searchField.getText());
+			
+				allNotes = currentCourse.searchNote(searchField.getText());
+				
 				//clear the notes window
 				noteDefaultListModel.clear();
+				noteArea.setText("");
+				commentDefaultListModel.clear(); //clear the comments List
 				
 				//if searchedNotes is not empty
-				if(searchedNotes!=null || searchedNotes.size()!=0)
+				if(allNotes!=null || allNotes.size()!=0)
 				{
-					for(int i = 0; i <searchedNotes.size(); i++)
+					for(int i = 0; i <allNotes.size(); i++)
 					{
-						noteDefaultListModel.addElement(searchedNotes.get(i).getTitle()); //print all the note titles onto the list
+						noteDefaultListModel.addElement(allNotes.get(i).getTitle()); //print all the note titles onto the list
 					}
 					
 				}
 				
-				noteArea.setText("");
-				commentDefaultListModel.clear(); //clear the comments List
+				
 				
 					//currentNote is the first item over here
 					//print the Note onto the note text area
 						//clear the Notes text area
 							//noteArea.setText("");
-							//commentDefaultListModel.clear();
-						
-					
+							//commentDefaultListModel.clear();		
 					
 					
 			}
