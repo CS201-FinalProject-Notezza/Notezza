@@ -32,6 +32,8 @@ import objects.Course;
 import objects.CourseList;
 import objects.Note;
 import objects.User;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserWindow extends JFrame {
 
@@ -141,6 +143,14 @@ public class UserWindow extends JFrame {
 		
 		
 		noteList = new JList(noteDefaultListModel);
+		noteList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				noteSelectionChanged();
+			}
+		});
+		noteList.setSelectedIndex(0);
+		
 		noteList.setBounds(46, 156, 290, 500);
 		
 		//probably need to have an inner class for the clicking. when you click on the list
@@ -277,6 +287,44 @@ public class UserWindow extends JFrame {
 		contentPane.add(btnComment);
 		
 	}
+	
+	
+	
+	private void noteSelectionChanged() //weChangedtheNoteSelection
+	{
+		//When we click on a certain note
+
+		//First update the note
+		currentNote = currentCourse.getAllNotes().get(noteList.getSelectedIndex());
+		
+		noteArea.setText(currentNote.getTextContent());
+		
+		//Then update the CommentList list. First, clear all the items on there 
+		
+		commentList.removeAll();
+		
+		
+		
+
+		for(int i = 0; i<currentNote.getComments().size(); i++)
+		{
+			commentDefaultListModel.addElement(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
+		}
+	
+	
+	if(commentDefaultListModel!=null)
+	{
+		commentList = new JList(commentDefaultListModel);
+	}
+	
+	else
+	{
+		commentList = new JList();
+	}
+	}
+	
+	
+	
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "User Profile");
@@ -287,6 +335,8 @@ public class UserWindow extends JFrame {
 			profile.setVisible(true);
 		}
 	}
+	
+	
 	private class SwingAction_1 extends AbstractAction {
 		public SwingAction_1() {
 			putValue(NAME, "View Presentation");
