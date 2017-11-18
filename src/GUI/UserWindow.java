@@ -165,7 +165,11 @@ public class UserWindow extends JFrame {
 		{
 			Vector<Course> allCourses = new Vector<Course>();
 			
-			Collections.copy(allCourses, courseList.getCourse());
+			//Collections.copy(allCourses, courseList.getCourse());
+			for(int i = 0; i<courseList.getCourse().size(); i++)
+			{
+				allCourses.add(courseList.getCourse().get(i));
+			}
 			
 			Vector<String> allCourseNames = new Vector<String>();
 			
