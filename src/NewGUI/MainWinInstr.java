@@ -11,6 +11,10 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
+
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+
 import javax.swing.*;
 
 /**
@@ -35,7 +39,9 @@ public class MainWinInstr extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
+    		browser = new Browser();
+        browserView = new BrowserView(browser);
+    		
         MainPanel = new javax.swing.JPanel();
         functionBar = new javax.swing.JPanel();
         sortChoiceBox = new javax.swing.JComboBox<>();
@@ -365,7 +371,9 @@ public class MainWinInstr extends javax.swing.JFrame {
         PostContent.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane4.setViewportView(PostContent);
 
-        jPanel6.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+        //jPanel6.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+        jPanel6.add(browserView, java.awt.BorderLayout.CENTER);
+        browser.loadURL("https://piazza.com");
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
@@ -563,5 +571,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     private javax.swing.JTextField searchNote;
     private javax.swing.JComboBox<String> sortChoiceBox;
     private javax.swing.JLabel viewMember;
+    private Browser browser;
+    private BrowserView browserView;
     // End of variables declaration                   
 }
