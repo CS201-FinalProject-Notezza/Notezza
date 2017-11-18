@@ -17,11 +17,14 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
 import javax.swing.Action;
+import javax.swing.DefaultListModel;
 
 public class ViewStudentsInClass extends JFrame {
 
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
+	private JList studentList;
+	private DefaultListModel studentDefaultListModel;
 
 	private Vector<User> students;
 	/**
@@ -68,9 +71,17 @@ public class ViewStudentsInClass extends JFrame {
 		lblStudents.setBounds(70, 26, 92, 16);
 		contentPane.add(lblStudents);
 		
-		JList list = new JList();
-		list.setBounds(70, 69, 289, 163);
-		contentPane.add(list);
+		studentDefaultListModel = new DefaultListModel();
+		
+		for(int i = 0; i<students.size(); i++)
+		{
+			studentDefaultListModel.addElement(students.get(i).getUsername());
+		}
+		studentList = new JList(studentDefaultListModel);
+		
+		
+		studentList.setBounds(70, 69, 289, 163);
+		contentPane.add(studentList);
 		
 		JButton btnClose = new JButton("Close");
 		btnClose.setAction(action);
