@@ -60,6 +60,7 @@ public class AddNote extends JFrame {
 	 * Create the frame.
 	 */
 	public AddNote(NotezzaClient client, Course course) {
+		setResizable(false);
 		this.client = client;
 		this.course = course;
 		
@@ -100,16 +101,16 @@ public class AddNote extends JFrame {
 		contentPane.add(descriptionText);
 		
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		btnSubmit.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnSubmit.setAction(action_1);
 		btnSubmit.setBounds(100, 351, 100, 34);
 		btnSubmit.setForeground(new java.awt.Color(52, 61, 70));
 		contentPane.add(btnSubmit);
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
 		btnCancel.setAction(action);
 		btnCancel.setBounds(300, 351, 100, 34);
+		btnCancel.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnCancel.setForeground(new java.awt.Color(52, 61, 70));
 		contentPane.add(btnCancel);
 		

@@ -6,6 +6,7 @@ import NotezzaServer.CommandType;
 import objects.UserCredential;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,6 +25,8 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
 
 public class CreateNewUser extends JFrame {
 
@@ -31,18 +34,23 @@ public class CreateNewUser extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JRadioButton rdbtnStudent;
 	private JRadioButton rdbtnInstructor;
-	private JTextField UserNameField;
-	private JTextField FirstNameField;
-	private JTextField LastNameField;
-	private JTextField EmailField;
-	private JCheckBox chckbxVisible;
+	private JTextField usernameField;
+	private JTextField firstNameField;
+	private JTextField lastNameField;
+	private JTextField emailField;
+	private JCheckBox privateCheck;
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
 	private final Action Register = new SwingAction_2();
-	private JLabel lblPassword;
+	private JLabel passwordLabel;
 	private JPasswordField passwordField;
 
 	private NotezzaClient client;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JSeparator separator_3;
+	private JSeparator separator_4;
 
 	/**
 	 * Launch the application.
@@ -64,90 +72,143 @@ public class CreateNewUser extends JFrame {
 	 * Create the frame.
 	 */
 	public CreateNewUser(NotezzaClient client) {
+		setResizable(false);
+		setTitle("Register");
 		this.client = client;
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
 		
 		
-		setBounds(100, 100, 575, 397);
+		setBounds(100, 100, 320, 310);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(52, 61, 70));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		rdbtnStudent = new JRadioButton("Student");
+		rdbtnStudent.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnStudent.setFont(new Font("Dialog", Font.BOLD, 15));
+		rdbtnStudent.setForeground(new java.awt.Color(204, 204, 204));
 		rdbtnStudent.setSelected(true);
 		rdbtnStudent.setAction(action_1);
 		buttonGroup.add(rdbtnStudent);
-		rdbtnStudent.setBounds(55, 25, 90, 23);
+		rdbtnStudent.setBounds(175, 169, 99, 23);
 		contentPane.add(rdbtnStudent);
 		
 		rdbtnInstructor = new JRadioButton("Instructor");
+		rdbtnInstructor.setHorizontalAlignment(SwingConstants.LEFT);
+		rdbtnInstructor.setFont(new Font("Dialog", Font.BOLD, 15));
+		rdbtnInstructor.setForeground(new java.awt.Color(204, 204, 204));
 		rdbtnInstructor.setAction(action);
 		buttonGroup.add(rdbtnInstructor);
-		rdbtnInstructor.setBounds(235, 25, 99, 23);
+		rdbtnInstructor.setBounds(175, 192, 120, 23);
 		contentPane.add(rdbtnInstructor);
 		
-		JLabel lblNewLabel = new JLabel("Username");
-		lblNewLabel.setBounds(112, 65, 80, 16);
-		contentPane.add(lblNewLabel);
+		JLabel usernameLabel = new JLabel("Username:");
+		usernameLabel.setBounds(20, 20, 99, 16);
+		usernameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		usernameLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(usernameLabel);
 		
-		UserNameField = new JTextField();
-		UserNameField.setBounds(204, 60, 130, 26);
-		contentPane.add(UserNameField);
-		UserNameField.setColumns(10);
+		JLabel firstNameLabel = new JLabel("First Name:");
+		firstNameLabel.setBounds(20, 75, 99, 16);
+		firstNameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		firstNameLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(firstNameLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("First Name");
-		lblNewLabel_1.setBounds(111, 98, 81, 16);
-		contentPane.add(lblNewLabel_1);
+		JLabel lastNameLabel = new JLabel("Last Name:");
+		lastNameLabel.setBounds(20, 103, 99, 16);
+		lastNameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		lastNameLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(lastNameLabel);
 		
-		FirstNameField = new JTextField();
-		FirstNameField.setBounds(204, 93, 130, 26);
-		contentPane.add(FirstNameField);
-		FirstNameField.setColumns(10);
+		JLabel emailLabel = new JLabel("Email:");
+		emailLabel.setBounds(20, 131, 80, 16);
+		emailLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		emailLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(emailLabel);
 		
-		JLabel lblLastName = new JLabel("Last Name");
-		lblLastName.setBounds(112, 136, 66, 16);
-		contentPane.add(lblLastName);
+		JButton registerButton = new JButton("Register");
+		registerButton.setAction(Register);
+		registerButton.setBounds(101, 236, 117, 34);
+		registerButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		registerButton.setForeground(new java.awt.Color(52, 61, 70));
+		contentPane.add(registerButton);
 		
-		LastNameField = new JTextField();
-		LastNameField.setBounds(204, 131, 130, 26);
-		contentPane.add(LastNameField);
-		LastNameField.setColumns(10);
+		privateCheck = new JCheckBox("Private");
+		privateCheck.setBounds(45, 182, 128, 23);
+		privateCheck.setFont(new Font("Dialog", Font.BOLD, 15));
+		privateCheck.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(privateCheck);
 		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(112, 171, 61, 16);
-		contentPane.add(lblEmail);
+		passwordLabel = new JLabel("Password:");
+		passwordLabel.setBounds(20, 47, 80, 16);
+		passwordLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		passwordLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(passwordLabel);
 		
-		EmailField = new JTextField();
-		EmailField.setBounds(204, 169, 130, 26);
-		contentPane.add(EmailField);
-		EmailField.setColumns(10);
+		separator = new JSeparator();
+		separator.setBounds(116, 32, 184, 16);
+		contentPane.add(separator);
 		
-		JButton btnRegister = new JButton("Register");
-		btnRegister.setAction(Register);
-		btnRegister.setBounds(150, 281, 117, 29);
-		contentPane.add(btnRegister);
+		separator_1 = new JSeparator();
+		separator_1.setBounds(116, 59, 184, 16);
+		contentPane.add(separator_1);
 		
-		chckbxVisible = new JCheckBox("Visible");
-		chckbxVisible.setBounds(139, 246, 128, 23);
-		contentPane.add(chckbxVisible);
+		separator_2 = new JSeparator();
+		separator_2.setBounds(116, 87, 184, 16);
+		contentPane.add(separator_2);
 		
-		lblPassword = new JLabel("Password");
-		lblPassword.setBounds(112, 211, 80, 16);
-		contentPane.add(lblPassword);
+		separator_3 = new JSeparator();
+		separator_3.setBounds(116, 115, 184, 16);
+		contentPane.add(separator_3);
+		
+		separator_4 = new JSeparator();
+		separator_4.setBounds(116, 143, 184, 16);
+		contentPane.add(separator_4);
+		
+		usernameField = new JTextField();
+		usernameField.setBounds(116, 15, 184, 26);
+		usernameField.setBackground(new java.awt.Color(52, 61, 70));
+		usernameField.setForeground(new java.awt.Color(204, 204, 204));
+		usernameField.setBorder(null);
+		usernameField.setCaretColor(new java.awt.Color(204, 204, 204));
+		contentPane.add(usernameField);
+		usernameField.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(204, 208, 130, 26);
+		passwordField.setBounds(116, 42, 184, 26);
+		passwordField.setBackground(new java.awt.Color(52, 61, 70));
+		passwordField.setForeground(new java.awt.Color(204, 204, 204));
+		passwordField.setBorder(null);
+		passwordField.setCaretColor(new java.awt.Color(204, 204, 204));
 		contentPane.add(passwordField);
+		
+		firstNameField = new JTextField();
+		firstNameField.setBounds(116, 70, 184, 26);
+		firstNameField.setBackground(new java.awt.Color(52, 61, 70));
+		firstNameField.setForeground(new java.awt.Color(204, 204, 204));
+		firstNameField.setBorder(null);
+		firstNameField.setCaretColor(new java.awt.Color(204, 204, 204));
+		contentPane.add(firstNameField);
+		firstNameField.setColumns(10);
+		
+		lastNameField = new JTextField();
+		lastNameField.setBounds(116, 98, 184, 26);
+		lastNameField.setBackground(new java.awt.Color(52, 61, 70));
+		lastNameField.setForeground(new java.awt.Color(204, 204, 204));
+		lastNameField.setBorder(null);
+		lastNameField.setCaretColor(new java.awt.Color(204, 204, 204));
+		contentPane.add(lastNameField);
+		lastNameField.setColumns(10);
+		
+		emailField = new JTextField();
+		emailField.setBounds(116, 126, 184, 26);
+		emailField.setBackground(new java.awt.Color(52, 61, 70));
+		emailField.setForeground(new java.awt.Color(204, 204, 204));
+		emailField.setBorder(null);
+		emailField.setCaretColor(new java.awt.Color(204, 204, 204));
+		contentPane.add(emailField);
+		emailField.setColumns(10);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -155,7 +216,8 @@ public class CreateNewUser extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			chckbxVisible.setEnabled(false);
+			privateCheck.setSelected(false);
+			privateCheck.setEnabled(false);
 		}
 	}
 	private class SwingAction_1 extends AbstractAction {
@@ -164,7 +226,7 @@ public class CreateNewUser extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			chckbxVisible.setEnabled(true);
+			privateCheck.setEnabled(true);
 		}
 	}
 	private class SwingAction_2 extends AbstractAction {
@@ -173,10 +235,10 @@ public class CreateNewUser extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			if (UserNameField.getText().equals("")
-				|| FirstNameField.getText().equals("") 
-				|| LastNameField.getText().equals("")
-				|| EmailField.getText().equals("")
+			if (usernameField.getText().equals("")
+				|| firstNameField.getText().equals("") 
+				|| lastNameField.getText().equals("")
+				|| emailField.getText().equals("")
 				|| passwordField.getPassword().length == 0)
 			{
 				JOptionPane.showMessageDialog(contentPane, "ERROR: One or more of these fields are empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
@@ -185,16 +247,16 @@ public class CreateNewUser extends JFrame {
 				//have an error message pop out
 			} else {
 				// A new User got created
-				String fname = FirstNameField.getText();
-				String lname = LastNameField.getText();
-				String userName = UserNameField.getText();
-				String email = EmailField.getText();
+				String fname = firstNameField.getText();
+				String lname = lastNameField.getText();
+				String userName = usernameField.getText();
+				String email = emailField.getText();
 				String passWord = String.copyValueOf(passwordField.getPassword());
 
 				UserCredential user;
 				if (rdbtnStudent.isSelected()) { //first, check to see if the User wishes to be a student
 					//User(String fname, String lname, String username, String email, long password, boolean isInstructor, boolean isVisible)
-					user = new UserCredential(fname, lname, userName, email, passWord , false, chckbxVisible.isSelected());
+					user = new UserCredential(fname, lname, userName, email, passWord , false, privateCheck.isSelected());
 				}
 				else //if the user wants to be an instructor
 				{
