@@ -1,5 +1,7 @@
 package GUI;
 
+import objects.User;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -13,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 import javax.swing.Action;
 
 public class ViewStudentsInClass extends JFrame {
@@ -20,6 +23,7 @@ public class ViewStudentsInClass extends JFrame {
 	private JPanel contentPane;
 	private final Action action = new SwingAction();
 
+	private Vector<User> students;
 	/**
 	 * Launch the application.
 	 */
@@ -27,7 +31,7 @@ public class ViewStudentsInClass extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewStudentsInClass frame = new ViewStudentsInClass();
+					ViewStudentsInClass frame = new ViewStudentsInClass(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +43,7 @@ public class ViewStudentsInClass extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ViewStudentsInClass() {
+	public ViewStudentsInClass(Vector<User> students) {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -51,7 +55,8 @@ public class ViewStudentsInClass extends JFrame {
 		} catch (Exception e) {
 			// If Nimbus is not available, you can set the GUI to another look and feel.
 		}
-		
+
+		this.students = students;
 		
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

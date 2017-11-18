@@ -6,6 +6,10 @@ package NewGUI;
  * and open the template in the editor.
  */
 
+import GUI.UserProfile;
+import NotezzaClient.NotezzaClient;
+import objects.CourseList;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
@@ -26,10 +30,16 @@ public class MainWin extends javax.swing.JFrame {
     /**
      * Creates new form MainWin
      */
-    public MainWin() {
-    		path = Paths.get("");
-    		currentRelativePath = path.toAbsolutePath().toString();	
-    		System.out.println(currentRelativePath);
+
+    private NotezzaClient client;
+    private CourseList courseList;
+
+    public MainWin(NotezzaClient client, CourseList courseList) {
+        this.client = client;
+        this.courseList = courseList;
+        path = Paths.get("");
+        currentRelativePath = path.toAbsolutePath().toString();
+        System.out.println(currentRelativePath);
         initComponents();
         //OverviewList.setCellRender(getCellRenderer());
     }
@@ -471,8 +481,11 @@ public class MainWin extends javax.swing.JFrame {
         
     }                                              
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
-        
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
+        System.out.println("Profile popping up!");
+        // TODO change this back to new GUI after it's done:
+        UserProfile profile = new UserProfile(client.getUser());
+        profile.setVisible(true);
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -525,7 +538,7 @@ public class MainWin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWin().setVisible(true);
+                new MainWin(null,null).setVisible(true);
             }
         });
     }
