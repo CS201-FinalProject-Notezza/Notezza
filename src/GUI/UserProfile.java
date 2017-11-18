@@ -50,6 +50,7 @@ public class UserProfile extends JFrame {
 		setBounds(100, 100, 320, 162);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(52, 61, 70));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -125,6 +126,8 @@ public class UserProfile extends JFrame {
 			fnameText.setVisible(false);
 			lnameLabel.setVisible(false);
 			lnameText.setVisible(false);
+			emailLabel.setVisible(false);
+			emailText.setVisible(false);
 		}
 	}
 
