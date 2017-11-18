@@ -195,8 +195,7 @@ public class Login extends javax.swing.JPanel {
 
     private void signupLabelMouseEntered(java.awt.event.MouseEvent evt) {
         signupLabel.setForeground(new Color(153, 204, 255));
-        CreateNewUser createNewUser = new CreateNewUser(client);
-        createNewUser.setVisible(true);
+       
     }
 
     private void signupLabelMouseExited(java.awt.event.MouseEvent evt) {
@@ -209,16 +208,17 @@ public class Login extends javax.swing.JPanel {
 
     private void guestLabelMouseExited(java.awt.event.MouseEvent evt) {
         guestLabel.setForeground(new Color(204,204,204));
-        GuestWindow guest = new GuestWindow();
-        guest.setVisible(true);
+        
     }
 
     private void guestLabelMouseClicked(java.awt.event.MouseEvent evt) {
-
+    	GuestWindow guest = new GuestWindow();
+        guest.setVisible(true);
     }
 
     private void signupLabelMouseClicked(java.awt.event.MouseEvent evt) {
-
+    	 CreateNewUser createNewUser = new CreateNewUser(client);
+         createNewUser.setVisible(true);
     }
 
 

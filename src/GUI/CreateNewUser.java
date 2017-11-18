@@ -110,19 +110,19 @@ public class CreateNewUser extends JFrame {
 		contentPane.add(usernameLabel);
 		
 		JLabel firstNameLabel = new JLabel("First Name:");
-		firstNameLabel.setBounds(20, 75, 99, 16);
+		firstNameLabel.setBounds(20, 74, 99, 16);
 		firstNameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
 		firstNameLabel.setForeground(new java.awt.Color(204, 204, 204));
 		contentPane.add(firstNameLabel);
 		
 		JLabel lastNameLabel = new JLabel("Last Name:");
-		lastNameLabel.setBounds(20, 103, 99, 16);
+		lastNameLabel.setBounds(20, 101, 99, 16);
 		lastNameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
 		lastNameLabel.setForeground(new java.awt.Color(204, 204, 204));
 		contentPane.add(lastNameLabel);
 		
 		JLabel emailLabel = new JLabel("Email:");
-		emailLabel.setBounds(20, 131, 80, 16);
+		emailLabel.setBounds(20, 128, 80, 16);
 		emailLabel.setFont(new Font("Dialog", Font.BOLD, 15));
 		emailLabel.setForeground(new java.awt.Color(204, 204, 204));
 		contentPane.add(emailLabel);
@@ -155,15 +155,15 @@ public class CreateNewUser extends JFrame {
 		contentPane.add(separator_1);
 		
 		separator_2 = new JSeparator();
-		separator_2.setBounds(116, 87, 184, 16);
+		separator_2.setBounds(116, 86, 184, 16);
 		contentPane.add(separator_2);
 		
 		separator_3 = new JSeparator();
-		separator_3.setBounds(116, 115, 184, 16);
+		separator_3.setBounds(116, 113, 184, 16);
 		contentPane.add(separator_3);
 		
 		separator_4 = new JSeparator();
-		separator_4.setBounds(116, 143, 184, 16);
+		separator_4.setBounds(116, 140, 184, 16);
 		contentPane.add(separator_4);
 		
 		usernameField = new JTextField();
@@ -184,7 +184,7 @@ public class CreateNewUser extends JFrame {
 		contentPane.add(passwordField);
 		
 		firstNameField = new JTextField();
-		firstNameField.setBounds(116, 70, 184, 26);
+		firstNameField.setBounds(116, 69, 184, 26);
 		firstNameField.setBackground(new java.awt.Color(52, 61, 70));
 		firstNameField.setForeground(new java.awt.Color(204, 204, 204));
 		firstNameField.setBorder(null);
@@ -193,7 +193,7 @@ public class CreateNewUser extends JFrame {
 		firstNameField.setColumns(10);
 		
 		lastNameField = new JTextField();
-		lastNameField.setBounds(116, 98, 184, 26);
+		lastNameField.setBounds(116, 96, 184, 26);
 		lastNameField.setBackground(new java.awt.Color(52, 61, 70));
 		lastNameField.setForeground(new java.awt.Color(204, 204, 204));
 		lastNameField.setBorder(null);
@@ -202,7 +202,7 @@ public class CreateNewUser extends JFrame {
 		lastNameField.setColumns(10);
 		
 		emailField = new JTextField();
-		emailField.setBounds(116, 126, 184, 26);
+		emailField.setBounds(116, 123, 184, 26);
 		emailField.setBackground(new java.awt.Color(52, 61, 70));
 		emailField.setForeground(new java.awt.Color(204, 204, 204));
 		emailField.setBorder(null);

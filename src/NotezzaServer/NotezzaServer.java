@@ -162,6 +162,10 @@ public class NotezzaServer {
                 dm.addNote(note,courseForNote);
                 broadcast(new Command(UPDATE_NOTE,note));
                 break;
+            case SEND_CHAT_MESSAGE:
+                System.out.println("Received a chat message...");
+                ChatMessage cm = (ChatMessage) obj;
+                broadcast(new Command(UPDATE_CHAT, cm));
         }
     }
     

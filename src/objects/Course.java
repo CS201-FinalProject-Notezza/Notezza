@@ -75,6 +75,7 @@ public class Course implements Serializable {
         return false;
     }
     
+    //TODO: change this so we could work with the displayed Note vectors
     public Vector<Note> getSortedNotes(SortType type){
 		//Vector<Note> tempNotes = new Vector<Note>(allNotes);
 		for (Note note : allNotes) {

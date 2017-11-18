@@ -127,10 +127,19 @@ public class NotezzaClient extends Thread {
                 instructorWindow.setVisible(true);
                 break;
             case UPDATE_COMMENT:
-                // Update the comment
+                // TODO update COMMENT
                 break;
             case UPDATE_NOTE:
-                // Update the note
+                // TODO Update NOTE
+                break;
+            case UPDATE_CLASS:
+                // TODO UPDATE CLASS
+                break;
+            case UPDATE_PRESENTATION:
+                // TODO UPDATE PRESENTATION
+                break;
+            case UPDATE_CHAT:
+                // TODO UPDATE CHAT
                 break;
             default:
                 break;
