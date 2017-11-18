@@ -1,25 +1,30 @@
 package GUI;
 
-import NotezzaClient.NotezzaClient;
-import objects.Course;
-import objects.Quiz;
-
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.UIManager.LookAndFeelInfo;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.border.EmptyBorder;
+
+import NotezzaClient.NotezzaClient;
+import objects.Course;
+import objects.Presentation;
+import objects.Quiz;
 
 public class NewPresentation extends JFrame {
 
@@ -80,7 +85,7 @@ public class NewPresentation extends JFrame {
 	private JButton createPresentationButton;
 
 
-	private final Action addNewClass = new AddNewClass();
+	private final Action AddNewPresentation = new AddNewPresentation();
 	/**
 	 * Launch the application.
 	 */
@@ -376,7 +381,7 @@ public class NewPresentation extends JFrame {
 		contentPane.add(createPresentationButton);
 	}
 
-	private class AddNewClass extends AbstractAction {
+	private class AddNewPresentation extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			// Get all the text value;
 			String allLinksStr = linkText.getText();
@@ -387,22 +392,25 @@ public class NewPresentation extends JFrame {
 			String q2Name = q2Text.getText();
 			String q3Name = q3Text.getText();
 
-			Quiz quiz1,quiz2,quiz3;
+			Quiz quiz1 = null;
+			Quiz quiz2 = null;
+			Quiz quiz3 = null;
 
 
 			if (!q1Name.isEmpty()) {
 				int numOfQuiz = 0;
 				String [] quizArrays = {q1Choice1Text.getText(),q1Choice2Text.getText(),q1Choice3Text.getText(),
 						q1Choice4Text.getText(),q1Choice5Text.getText()};
+				JCheckBox [] checkboxes = {q1c1Check, q1c2Check, q1c3Check, q1c4Check, q1c5Check};
 				Vector<String> choices = new Vector<>();
 				Set<Integer> correctAnswer = new HashSet<>();
 				for (int i = 0; i < quizArrays.length; i++) {
 					if (!quizArrays[i].isEmpty()){
 						numOfQuiz++;
 						choices.add(quizArrays[i]);
-						// TODO if have time check if user are idiot and put empty stuff and check them as correct answer
-						// TODO for now just put the index
-						correctAnswer.add(i);
+						if (checkboxes[i].isSelected()) {
+							correctAnswer.add(choices.indexOf(quizArrays[i]));
+						}
 					}
 				}
 
@@ -416,13 +424,65 @@ public class NewPresentation extends JFrame {
 			}
 
 			if (!q2Name.isEmpty()) {
-
+				int numOfQuiz = 0;
+				String [] quizArrays = {q2Choice1Text.getText(),q2Choice2Text.getText(),q2Choice3Text.getText(),
+						q2Choice4Text.getText(),q2Choice5Text.getText()};
+				JCheckBox [] checkboxes = {q2c1Check, q2c2Check, q2c3Check, q2c4Check, q2c5Check};
+				Vector<String> choices = new Vector<>();
+				Set<Integer> correctAnswer = new HashSet<>();
+				for (int i = 0; i < quizArrays.length; i++) {
+					if (!quizArrays[i].isEmpty()){
+						numOfQuiz++;
+						choices.add(quizArrays[i]);
+						if (checkboxes[i].isSelected()) {
+							correctAnswer.add(choices.indexOf(quizArrays[i]));
+						}
+					}
+				}
+				if (choices.size() >= 1) {
+					// create the quiz otherwise set to null;
+					quiz2 = new Quiz(q2Name,choices,correctAnswer);
+				} else {
+					quiz2 = null;
+				}
 			}
 
 			if (!q3Name.isEmpty()) {
-
+				int numOfQuiz = 0;
+				String [] quizArrays = {q3Choice1Text.getText(),q3Choice2Text.getText(),q3Choice3Text.getText(),
+						q3Choice4Text.getText(),q3Choice5Text.getText()};
+				JCheckBox [] checkboxes = {q3c1Check, q3c2Check, q3c3Check, q3c4Check, q3c5Check};
+				Vector<String> choices = new Vector<>();
+				Set<Integer> correctAnswer = new HashSet<>();
+				for (int i = 0; i < quizArrays.length; i++) {
+					if (!quizArrays[i].isEmpty()){
+						numOfQuiz++;
+						choices.add(quizArrays[i]);
+						if (checkboxes[i].isSelected()) {
+							correctAnswer.add(choices.indexOf(quizArrays[i]));
+						}
+					}
+				}
+				if (choices.size() >= 1) {
+					// create the quiz otherwise set to null;
+					quiz3 = new Quiz(q3Name,choices,correctAnswer);
+				} else {
+					quiz3 = null;
+				}
 			}
-
+			
+			if (quiz1 == null && quiz2 == null && quiz3 == null || links.size() == 0) {
+				//TODO display error message if all 3 quizzes were left blank or no links were inputted
+				
+				return;
+			}
+			
+			Vector<Quiz> quizzes = new Vector<Quiz>();
+			if (quiz1 != null) { quizzes.add(quiz1); }
+			if (quiz2 != null) { quizzes.add(quiz2); }
+			if (quiz3 != null) { quizzes.add(quiz3); }
+			
+			Presentation p = new Presentation(links, quizzes);
 		}
 	}
 
