@@ -83,6 +83,4 @@ public class Course implements Serializable {
 		Collections.sort(allNotes);
 		return allNotes;
     }
-    
-    
 }
