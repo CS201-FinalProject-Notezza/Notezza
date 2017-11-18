@@ -2,6 +2,7 @@ package NotezzaClient;
 
 import GUI.*;
 import NewGUI.Login;
+import NewGUI.MainWin;
 import objects.*;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
@@ -32,6 +33,7 @@ public class NotezzaClient extends Thread {
 
     // New GUI
     private JFrame loginWindow;
+    private JFrame mainWindow;
     
 
     NotezzaClient(String hostname, int port) {
@@ -108,9 +110,14 @@ public class NotezzaClient extends Thread {
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList) obj;
                 System.out.println("WE GOT EVERYTHING! POPING UP THE WINDOW!");
-                // pop up userWindow
+                loginWindow.setVisible(false);
+                /* pop up userWindow OLD GUI
                 userWindow = new UserWindow(this, courseList);
                 userWindow.setVisible(true);
+                */
+                // new GUI
+                mainWindow = new MainWin(this,courseList);
+                mainWindow.setVisible(true);
                 break;
             case INITIALIZATION_INSTRUCTOR:
                 instInit = (InstructorIntialization) obj;
@@ -131,7 +138,7 @@ public class NotezzaClient extends Thread {
         }
     }
 
-    public void popUpLogin() {
+    private void popUpLogin() {
         loginWindow = new JFrame();
         Login lg = new Login(this);
         loginWindow.setLayout(new BorderLayout());

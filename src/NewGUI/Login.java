@@ -6,6 +6,8 @@
 package NewGUI;
 
 import java.awt.Color;
+
+import GUI.GuestWindow;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
@@ -204,6 +206,8 @@ public class Login extends javax.swing.JPanel {
 
     private void guestLabelMouseExited(java.awt.event.MouseEvent evt) {
         guestLabel.setForeground(new Color(204,204,204));
+        GuestWindow guest = new GuestWindow();
+        guest.setVisible(true);
     }
 
     private void guestLabelMouseClicked(java.awt.event.MouseEvent evt) {

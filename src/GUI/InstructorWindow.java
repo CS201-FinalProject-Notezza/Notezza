@@ -292,7 +292,7 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			ViewStudentsInClass viewMembers = new ViewStudentsInClass();
+			ViewStudentsInClass viewMembers = new ViewStudentsInClass(currentCourse.getStudents());
 			viewMembers.setVisible(true);
 		}
 	}
