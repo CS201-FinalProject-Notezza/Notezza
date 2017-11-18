@@ -284,7 +284,7 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			UserPresentation presentation = new UserPresentation();
+			UserPresentation presentation = new UserPresentation(client,currentCourse);
 			presentation.setVisible(true);
 		}
 	}

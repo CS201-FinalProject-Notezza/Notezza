@@ -1,22 +1,19 @@
 package GUI;
 
+import NotezzaClient.NotezzaClient;
+import objects.Course;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Vector;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +23,14 @@ public class UserPresentation extends JFrame {
 	private JPanel contentPane;
 	private JTextField chatTextBox;
 
+	private NotezzaClient client;
+	private Course course;
+
+	private JButton slideBackwardsButton;
+	private JButton slideForwardButton;
+	private final Action slideForward = new SlideForwards();
+	//private final Action slideBackwards;
+
 	/**
 	 * Launch the application.
 	 */
@@ -33,7 +38,7 @@ public class UserPresentation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserPresentation frame = new UserPresentation();
+					UserPresentation frame = new UserPresentation(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +50,7 @@ public class UserPresentation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserPresentation() {
+	public UserPresentation(NotezzaClient client, Course course) {
 		setTitle("Presentation");
 		setResizable(false);
 		try {
@@ -58,6 +63,10 @@ public class UserPresentation extends JFrame {
 		} catch (Exception e) {
 		    // If Nimbus is not available, you can set the GUI to another look and feel.
 		}
+
+		this.client = client;
+		this.course = course;
+
 		setBounds(100, 100, 791, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -82,9 +91,11 @@ public class UserPresentation extends JFrame {
 		slidePanel.setBorder(null);
 		slidePanel.setBounds(20, 37, 468, 409);
 		contentPane.add(slidePanel);
-		
+
+		Vector<String> urls = course.getCurrentLecture().getLinks();
+		// Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		try {
-			URL temp = new URL("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif");
+			URL temp = new URL(urls.get(0));
 			ImageIcon slideImage = new ImageIcon(temp);
 			JLabel slideImageLabel = new JLabel("");
 			slideImageLabel.setIcon(slideImage);
@@ -180,17 +191,27 @@ public class UserPresentation extends JFrame {
 		gbl_slideButtonPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		slideButtonPanel.setLayout(gbl_slideButtonPanel);
 		
-		JButton slideBackwardsButton = new JButton("<");
+		slideBackwardsButton = new JButton("<");
 		GridBagConstraints gbc_slideBackwardsButton = new GridBagConstraints();
 		gbc_slideBackwardsButton.insets = new Insets(0, 0, 0, 5);
 		gbc_slideBackwardsButton.gridx = 0;
 		gbc_slideBackwardsButton.gridy = 0;
 		slideButtonPanel.add(slideBackwardsButton, gbc_slideBackwardsButton);
 		
-		JButton slideForwardButton = new JButton(">");
+		slideForwardButton = new JButton(">");
 		GridBagConstraints gbc_slideForwardButton = new GridBagConstraints();
 		gbc_slideForwardButton.gridx = 2;
 		gbc_slideForwardButton.gridy = 0;
 		slideButtonPanel.add(slideForwardButton, gbc_slideForwardButton);
+	}
+
+	private class SlideForwards extends AbstractAction {
+		public SlideForwards() {
+			putValue(NAME, "OK");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+		}
 	}
 }

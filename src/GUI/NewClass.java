@@ -6,7 +6,6 @@ import NotezzaServer.CommandType;
 import objects.Course;
 import objects.User;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -28,9 +27,7 @@ public class NewClass extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private final Action action = new SwingAction();
 	private JTextPane textPane;
-	private final Action addClass = new SwingAction();
 
 	private NotezzaClient client;
 	private Set<User> userSet;
@@ -95,11 +92,13 @@ public class NewClass extends JFrame {
 		contentPane.add(textPane);
 		
 		JButton btnOk = new JButton("OK");
+		Action addClass = new AddClass();
 		btnOk.setAction(addClass);
 		btnOk.setBounds(47, 230, 117, 29);
 		contentPane.add(btnOk);
 		
 		JButton btnCancel = new JButton("Cancel");
+		Action action = new SwingAction();
 		btnCancel.setAction(action);
 		btnCancel.setBounds(207, 230, 117, 29);
 		contentPane.add(btnCancel);
