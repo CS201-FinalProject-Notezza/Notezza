@@ -14,27 +14,36 @@ public class NotezzaServer {
     
     private Vector<ServerThread> serverThreads;
     private DatabaseManager dm;
+    private ServerSocket ss;
     
     private NotezzaServer(int port) {
         try {
             // Bind to port
-            ServerSocket ss = new ServerSocket(port);
+            ss = new ServerSocket(port);
             System.out.println("Notezza server has started. Bind to port " + port);
-            serverThreads = new Vector<>();
+            serverThreads = new Vector<ServerThread>();
             dm = new DatabaseManager();
 
             System.out.println("Printing database...");
             System.out.println(dm.toString());
 
-            while (true) {
-                Socket socket = ss.accept(); // blocking
-                System.out.println("Connection from: " + socket.getInetAddress());
-                ServerThread st = new ServerThread(socket, this);
-                serverThreads.add(st);
-            }
+            
         } catch (IOException ioe) {
             System.out.println("IOException in server constructor: " + ioe.getMessage());
             System.out.println("Failed to start server.");
+        }
+    }
+    
+    public void runServer() {
+    	while (true) {
+    		try {
+	            Socket socket = ss.accept(); // blocking
+	            System.out.println("Connection from: " + socket.getInetAddress());
+	            ServerThread st = new ServerThread(socket, this);
+	            serverThreads.add(st);
+    		} catch (IOException ioe) {
+    			System.out.println("IOException in run server: " + ioe.getMessage());
+    		}
         }
     }
     
@@ -60,6 +69,13 @@ public class NotezzaServer {
         }
         
         NotezzaServer server = new NotezzaServer(port);
+        server.runServer();
+    }
+    
+    void removeServerThread(ServerThread st) {
+    	if (serverThreads.contains(st)) {
+    		serverThreads.remove(serverThreads.indexOf(st));
+    	}
     }
     
     void processCommand(Command command, ServerThread thread) {

@@ -20,9 +20,10 @@ public class ServerThread extends Thread {
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
             this.start();
-            while (true) {
+            // @Stan this while true was causing the server to stall cus control never returned to server
+            /*while (true) {
             	
-            }
+            }*/
         } catch (IOException ioe) {
             System.out.println("ioe in Server.ServerThread constructor: " + ioe.getMessage());
         }
@@ -38,6 +39,7 @@ public class ServerThread extends Thread {
             }
         } catch (EOFException e) {
             System.out.println("A client quits.");
+            server.removeServerThread(this);
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
