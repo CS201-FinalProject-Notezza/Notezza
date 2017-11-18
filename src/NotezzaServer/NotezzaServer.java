@@ -13,7 +13,6 @@ import static NotezzaServer.CommandType.*;
 public class NotezzaServer {
     
     private Vector<ServerThread> serverThreads;
-    private DataContainer data;
     private DatabaseManager dm;
     
     private NotezzaServer(int port) {
@@ -23,10 +22,9 @@ public class NotezzaServer {
             System.out.println("Notezza server has started. Bind to port " + port);
             serverThreads = new Vector<>();
             dm = new DatabaseManager();
-            data = dm.getDataContainer();
 
             System.out.println("Printing database...");
-            System.out.println(data.toString());
+            System.out.println(dm.toString());
 
             while (true) {
                 Socket socket = ss.accept(); // blocking
@@ -71,16 +69,14 @@ public class NotezzaServer {
             case INITIALIZATION_STUDENT:
                 System.out.println("Send out initialization (Student) ...");
                 String userName = (String) obj;
-                //TODO CHANGE DATA CONTAINER
-                CourseList courseList = new CourseList(dm.getDataContainer().findUserCourses(userName));
+                CourseList courseList = new CourseList(dm.findUserCourses(userName));
                 thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseList));
                 break;
             case INITIALIZATION_INSTRUCTOR:
                 System.out.println("Send out initialization (Instructor) ...");
                 String instructorName = (String) obj;
-                // TODO CHANGE DATA CONTAINER
-                List<Course> courses = dm.getDataContainer().findInstructorCourses(instructorName);
-                Map<String, User> userMap = dm.getDataContainer().getAllUsers();
+                List<Course> courses = dm.findInstructorCourses(instructorName);
+                Map<String, User> userMap = dm.getAllUsers();
                 Set<User> users = (Set<User>) userMap.values();
                 InstructorIntialization instructorInit = new InstructorIntialization(courses,users);
                 thread.sendCommand(new Command(INITIALIZATION_STUDENT,instructorInit));
@@ -91,8 +87,7 @@ public class NotezzaServer {
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
                 int hashedPassword = passwordHasher(password);
-                // TODO CHANGE DATA CONTAINER
-                Map<String,User> allUsers = dm.getDataContainer().getAllUsers();
+                Map<String,User> allUsers = dm.getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
                     System.out.println("LOGIN SUCCESS");
@@ -143,7 +138,6 @@ public class NotezzaServer {
                 CourseANDNote cn = (CourseANDNote) obj;
                 Course courseForNote = cn.getCourse();
                 Note note = cn.getNote();
-                // TODO Add to the database
                 dm.addNote(note,courseForNote);
                 broadcast(new Command(UPDATE_NOTE,note));
                 break;
