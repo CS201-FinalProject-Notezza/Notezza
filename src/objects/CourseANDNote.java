@@ -1,6 +1,9 @@
 package objects;
 
-public class CourseANDNote {
+import java.io.Serializable;
+
+public class CourseANDNote implements Serializable {
+    public static final long serialVersionUID = 101;
     private Course course;
     private Note note;
 

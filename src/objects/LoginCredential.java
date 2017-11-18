@@ -3,6 +3,7 @@ package objects;
 import java.io.Serializable;
 
 public class LoginCredential implements Serializable {
+    public static final long serialVersionUID = 123;
     private String password;
     private String username;
 

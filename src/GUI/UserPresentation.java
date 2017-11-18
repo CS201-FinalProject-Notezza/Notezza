@@ -22,6 +22,7 @@ public class UserPresentation extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField chatTextBox;
+	private JPanel slidePanel;
 
 	private NotezzaClient client;
 	private Course course;
@@ -29,6 +30,8 @@ public class UserPresentation extends JFrame {
 	private JButton slideBackwardsButton;
 	private JButton slideForwardButton;
 	private final Action slideForward = new SlideForwards();
+	private int lectureIndex;
+	private Vector<String> urls;
 	//private final Action slideBackwards;
 
 	/**
@@ -66,6 +69,7 @@ public class UserPresentation extends JFrame {
 
 		this.client = client;
 		this.course = course;
+		this.lectureIndex = 0;
 
 		setBounds(100, 100, 791, 545);
 		contentPane = new JPanel();
@@ -92,10 +96,10 @@ public class UserPresentation extends JFrame {
 		slidePanel.setBounds(20, 37, 468, 409);
 		contentPane.add(slidePanel);
 
-		Vector<String> urls = course.getCurrentLecture().getLinks();
+		this.urls = course.getCurrentLecture().getLinks();
 		// Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		try {
-			URL temp = new URL(urls.get(0));
+			URL temp = new URL(urls.get(lectureIndex));
 			ImageIcon slideImage = new ImageIcon(temp);
 			JLabel slideImageLabel = new JLabel("");
 			slideImageLabel.setIcon(slideImage);
@@ -211,7 +215,16 @@ public class UserPresentation extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-
+			if (lectureIndex < course.getCurrentLecture().getLinks().size()) {
+				lectureIndex++;
+				try {
+					URL temp = new URL(urls.get(lectureIndex));
+					ImageIcon slideImage = new ImageIcon(temp);
+					JLabel slideImageLabel = new JLabel("");
+					slideImageLabel.setIcon(slideImage);
+					slidePanel.add(slideImageLabel);
+				} catch (MalformedURLException murle) { }
+			}
 		}
 	}
 }

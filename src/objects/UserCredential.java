@@ -1,6 +1,9 @@
 package objects;
 
-public class UserCredential {
+import java.io.Serializable;
+
+public class UserCredential implements Serializable {
+    public static final long serialVersionUID = 98;
     private final String fname;
     private final String lname;
     private final String username;
@@ -9,7 +12,8 @@ public class UserCredential {
     private final boolean isInstructor;
     private boolean isVisible;
 
-    public UserCredential(String fname, String lname, String username, String email, String password, boolean isInstructor, boolean isVisible) {
+    public UserCredential(String fname, String lname, String username, String email, String password,
+                          boolean isInstructor, boolean isVisible){
         this.fname = fname;
         this.lname = lname;
         this.username = username;
