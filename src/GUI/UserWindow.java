@@ -5,15 +5,18 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -40,8 +43,11 @@ public class UserWindow extends JFrame {
 	private final Action action_3 = new SwingAction_3();
 	private final Action action_4 = new SwingAction_4();
 	private JTextField commentText;
-	private List noteList;
-	private List commentList;
+	private JList noteList;
+	private DefaultListModel noteDefaultListModel;
+	
+	private JList commentList;
+	private DefaultListModel commentDefaultListModel;
 	
 	private JComboBox<String> allClasses;
 	private final Action action_5 = new SwingAction_5();
@@ -116,11 +122,8 @@ public class UserWindow extends JFrame {
 		//get the list of the notes
 		//Print out the Title of the notes
 		//when click on the note list, print out the description
+		noteDefaultListModel = new DefaultListModel();
 		
-		noteList = new List();
-		noteList.setBounds(46, 156, 290, 500);
-		
-		//first, get all Notes for the current Class. before you do, make sure courseList is not null
 		if(courseList!=null)
 		{
 			currentCourse = courseList.getCourse().get(0);
@@ -131,10 +134,21 @@ public class UserWindow extends JFrame {
 			
 			for(int i = 0; i<allNotes.size(); i++)
 			{
-				noteList.add(allNotes.get(i).getTitle());
+				noteDefaultListModel.addElement(allNotes.get(i).getTitle());
 			}
 			
 		}
+		
+		
+		noteList = new JList(noteDefaultListModel);
+		noteList.setBounds(46, 156, 290, 500);
+		
+		//probably need to have an inner class for the clicking. when you click on the list
+		//call a function below that updates the note screen and comments
+		
+		
+		//first, get all Notes for the current Class. before you do, make sure courseList is not null
+		
 		
 		//noteList.add(String)
 		contentPane.add(noteList);
@@ -149,9 +163,11 @@ public class UserWindow extends JFrame {
 		
 		if(courseList!=null)
 		{
-			java.util.List<Course> allCourses = courseList.getCourse();
+			Vector<Course> allCourses = new Vector<Course>();
 			
-			java.util.List<String> allCourseNames = (java.util.List<String>) new List();
+			Collections.copy(allCourses, courseList.getCourse());
+			
+			Vector<String> allCourseNames = new Vector<String>();
 			
 			for(int i = 0; i<allCourses.size(); i++)
 			{
@@ -209,20 +225,20 @@ public class UserWindow extends JFrame {
 		btnAddPresentation.setBounds(377, 6, 158, 29);
 		contentPane.add(btnAddPresentation);
 		
-		commentList = new List();
-		
 		if(courseList!=null)
 		{
 			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
 			
 			for(int i = 0; i<currentNote.getComments().size(); i++)
 			{
-				commentList.add(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
+				commentDefaultListModel.addElement(currentNote.getComments().get(i).getUser().getUsername() + ": " + currentNote.getComments().get(i).getContent());
 			}
 		}
+		
+		commentList = new JList(commentDefaultListModel);
+		
+		
 		commentList.setBounds(389, 407, 579, 188);
-		
-		
 		contentPane.add(commentList);
 		
 		noteArea = new TextArea();
