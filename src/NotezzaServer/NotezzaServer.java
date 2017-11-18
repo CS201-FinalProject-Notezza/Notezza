@@ -127,7 +127,7 @@ public class NotezzaServer {
                 thread.sendCommand(new Command(REGISTER_DONE,user));
                 break;
             case CREATE_CLASS:
-                System.out.println("Receive request to create class...");
+                System.out.println("Received request to create class...");
                 Course course = (Course) obj;
                 dm.addCourse(course);
                 broadcast(new Command(UPDATE_CLASS,course));
@@ -136,7 +136,12 @@ public class NotezzaServer {
                 
                 break;
             case CREATE_PRESENTATION:
-                
+                System.out.println("Received request to create new presentation...");
+                PresentationANDCourse pc = (PresentationANDCourse) obj;
+                Presentation presentation = pc.getPresentation();
+                Course courseForPresentation = pc.getCourse();
+                dm.addPresentation(presentation,courseForPresentation);
+                broadcast(new Command(UPDATE_PRESENTATION, presentation));
                 break;
             case VIEW_CLASS_INFORMATION:
                 
