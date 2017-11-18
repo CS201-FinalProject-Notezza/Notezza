@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -83,9 +84,9 @@ public class NewPresentation extends JFrame {
 	private JLabel q3Choice5Label;
 	private JCheckBox q3c5Check;
 	private JButton createPresentationButton;
-
-
+	
 	private final Action AddNewPresentation = new AddNewPresentation();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -379,14 +380,21 @@ public class NewPresentation extends JFrame {
 		createPresentationButton = new JButton("Create Presentation");
 		createPresentationButton.setBounds(117, 574, 166, 29);
 		contentPane.add(createPresentationButton);
+		createPresentationButton.setAction(AddNewPresentation);
+		createPresentationButton.setText("Create Presentation");
 	}
 
 	private class AddNewPresentation extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			// Get all the text value;
 			String allLinksStr = linkText.getText();
-			String [] linksArray =allLinksStr.split(",");
+			String [] linksArray = allLinksStr.split(",");
 			Vector<String> links = new Vector<String>(Arrays.asList(linksArray));
+			// Show error if no links entered
+			if (links.size() == 1 && links.get(0).equals("")) {
+				JOptionPane.showMessageDialog(contentPane, "ERROR: There must be at least one slide link!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			String q1Name = q1Text.getText();
 			String q2Name = q2Text.getText();
@@ -469,12 +477,6 @@ public class NewPresentation extends JFrame {
 				} else {
 					quiz3 = null;
 				}
-			}
-			
-			if (quiz1 == null && quiz2 == null && quiz3 == null || links.size() == 0) {
-				//TODO display error message if all 3 quizzes were left blank or no links were inputted
-				
-				return;
 			}
 			
 			Vector<Quiz> quizzes = new Vector<Quiz>();
