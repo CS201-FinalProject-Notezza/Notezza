@@ -16,7 +16,6 @@ import java.util.Vector;
 
 import objects.Comment;
 import objects.Course;
-import objects.DataContainer;
 import objects.Note;
 import objects.Presentation;
 import objects.Quiz;
@@ -24,18 +23,22 @@ import objects.User;
 
 public class DatabaseManager {
 	
-	private DataContainer dc;
+	private Map<String, User> allUsers;
+	private Map<String, Course> allCourses;
 	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
-	private Map<Integer, User> userIDToObject;
-	private Map<Integer, Course> courseIDToObject;
 	
 	public DatabaseManager() {
-		dc = new DataContainer();
+		allUsers = new HashMap<String, User>();
+		allCourses = new HashMap<String, Course>();
 		initializeObjectTree();
 	}
 	
-	public DataContainer getDataContainer() {
-		return dc;
+	public Map<String, User> getAllUsers() {
+		return allUsers;
+	}
+	
+	public Map<String, Course> getAllCourses() {
+		return allCourses;
 	}
 	
 	public void initializeObjectTree() {
@@ -51,8 +54,8 @@ public class DatabaseManager {
 			Vector<User> userObjects = new Vector<User>();
 			Vector<Course> courseObjects = new Vector<Course>();
 						
-			/*HashMap<Integer, User>*/ userIDToObject = new HashMap<Integer, User>();
-			/*HashMap<Integer, Course>*/ courseIDToObject = new HashMap<Integer, Course>();
+			HashMap<Integer, User> userIDToObject = new HashMap<Integer, User>();
+			HashMap<Integer, Course> courseIDToObject = new HashMap<Integer, Course>();
 			HashMap<Integer, Vector<User>> courseIDToUsers = new HashMap<Integer, Vector<User>>();
 			
 			rs = st.executeQuery("SELECT * FROM UserTable");
@@ -332,18 +335,12 @@ public class DatabaseManager {
 				}
 			}
 			
-			HashMap<String, User> usernameToUserObject = new HashMap<String, User>();
-			HashMap<String, Course> courseNameToCourseObject = new HashMap<String, Course>();
-			
 			for (User u : userObjects) {
-				usernameToUserObject.put(u.getUsername(), u);
+				allUsers.put(u.getUsername(), u);
 			}
 			for (Course c : courseObjects) {
-				courseNameToCourseObject.put(c.getCourseName(), c);
+				allCourses.put(c.getCourseName(), c);
 			}
-			
-			dc.setAllUsers(usernameToUserObject);
-			dc.setAllCourses(courseNameToCourseObject);
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
@@ -390,6 +387,7 @@ public class DatabaseManager {
 			
 			st.executeUpdate(updateString);
 			
+			allUsers.put(u.getUsername(), u);
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
@@ -437,8 +435,10 @@ public class DatabaseManager {
 			
 			rs = st.executeQuery("SELECT * FROM Note WHERE title='" + c.getNote().getTitle() + "' AND content='" + c.getNote().getTextContent() + "' AND postedDate='" + df.format(c.getNote().getDateCreated()) + "'");
 			int noteID = -1;
+			int courseID = -1;
 			while (rs.next()) {
 				noteID = rs.getInt("noteID");
+				courseID = rs.getInt("courseID");
 			}
 			updateString += noteID + ", ";
 			
@@ -451,6 +451,18 @@ public class DatabaseManager {
 			
 			st.executeUpdate(updateString);
 			
+			// Get the course name of the note associated with the comment the note is posted on
+			rs = st.executeQuery("SELECT * FROM Course WHERE courseID=" + courseID);
+			String courseName = "";
+			while (rs.next()) {
+				courseName = rs.getString("courseName");
+			}
+			
+			for (Note n : allCourses.get(courseName).getAllNotes()) {
+				if (n.equals(c.getNote())) {
+					n.addComment(c);
+				}
+			}
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
@@ -534,6 +546,18 @@ public class DatabaseManager {
 			
 			st.executeUpdate(updateUserCourseString);
 			
+			allCourses.put(c.getCourseName(), c);
+			Vector<User> usersInCourse = c.getStudents();
+			usersInCourse.add(c.getInstructor());
+			
+			for (User u : usersInCourse) {
+				if (!u.getCourses().contains(c)) {
+					u.addCourse(c);
+				}
+				if (!allUsers.get(u.getUsername()).getCourses().contains(c)) {
+					allUsers.get(u.getUsername()).addCourse(c);
+				}
+			}
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
@@ -614,12 +638,14 @@ public class DatabaseManager {
 			
 			for (String t : tagsToAdd) {
 				
-					if (!first) { updateTagString += ", "; }
-					updateTagString += "('" + t + "', " + noteID + ")";
-					first = false;
+				if (!first) { updateTagString += ", "; }
+				updateTagString += "('" + t + "', " + noteID + ")";
+				first = false;
 			}
 			
 			st.executeUpdate(updateTagString);
+			
+			allCourses.get(c.getCourseName()).addNote(n);
 			
 			
 		} catch (SQLException sqle) {
@@ -740,7 +766,195 @@ public class DatabaseManager {
 				
 				st.executeUpdate(updateQuestionChoiceString);
 				
+				allCourses.get(c.getCourseName()).setCurrentLecture(p);
+				
 			}
+			
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	
+	public void addNoteVote(Note n, User u, Boolean isLike) {
+		
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			// Get the userID of the course by first getting the id of the instructor
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + u.getUsername() + "'");
+			int userID = -1;
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+			
+			// Get the noteID and courseID of the note
+			rs = st.executeQuery("SELECT * FROM Note WHERE title='" + n.getTitle() + "' AND content='" + n.getTextContent() + "' AND postedDate='" + df.format(n.getDateCreated()) + "'");
+			int noteID = -1;
+			int courseID = -1;
+			while (rs.next()) {
+				noteID = rs.getInt("noteID");
+				courseID = rs.getInt("courseID");
+			}
+			
+			rs = st.executeQuery("SELECT * From NoteVote WHERE userID=" + userID + " AND noteID=" + noteID);
+			Boolean exists = false;
+			while (rs.next()) {
+				exists = true;
+			}
+			
+			// If the user has already voted on the post, update their vote
+			if (exists) {
+				st.executeUpdate("UPDATE NoteVote SET likeBool='" + Boolean.toString(isLike) + "' WHERE userID=" + userID + " AND noteID=" + noteID);
+			}
+			
+			// If they haven't already voted on the post, add a row with their vote
+			else {
+				st.executeUpdate("INSERT INTO NoteVote (likeBool, userID, noteID) VALUES ('" + Boolean.toString(isLike) + "', " + userID + ", " + noteID + ")");
+			}
+			
+			// Get the course name of the note associated with the vote we are adding
+			rs = st.executeQuery("SELECT * FROM Course WHERE courseID=" + courseID);
+			String courseName = "";
+			while (rs.next()) {
+				courseName = rs.getString("courseName");
+			}
+			
+			for (Note no : allCourses.get(courseName).getAllNotes()) {
+				if (no.equals(n)) {
+					if (isLike) { no.addLike(u); }
+					else { no.addDislike(u); }
+				}
+			}
+		
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	
+	public void addCommentVote(Comment c, User u, Boolean isLike) {
+		
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			// Get the userID of the course by first getting the id of the instructor
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + u.getUsername() + "'");
+			int userID = -1;
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+			
+			// Get the commentID of the comment by first getting the noteID of the note it is posted on and the userID of the user who posted it
+			rs = st.executeQuery("SELECT * FROM Note WHERE title='" + c.getNote().getTitle() + "' AND content='" + c.getNote().getTextContent() + "' AND postedDate='" + df.format(c.getNote().getDateCreated()) + "'");
+			int noteID = -1;
+			int courseID = -1;
+			while (rs.next()) {
+				noteID = rs.getInt("noteID");
+				courseID = rs.getInt("courseID");
+			}
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + c.getUser().getUsername() + "'");
+			int posterID = -1;
+			while (rs.next()) {
+				posterID = rs.getInt("userID");
+			}
+			rs = st.executeQuery("SELECT * FROM NoteComment WHERE content='" + c.getContent() + "' AND postedDate='" + df.format(c.getDateCreated()) + "' AND noteID=" + noteID + " AND userID=" + posterID);
+			int commentID = -1;
+			while (rs.next()) {
+				commentID = rs.getInt("commentID");
+			}
+			
+			rs = st.executeQuery("SELECT * From CommentVote WHERE userID=" + userID + " AND commentID=" + commentID);
+			Boolean exists = false;
+			while (rs.next()) {
+				exists = true;
+			}
+			
+			// If the user has already voted on the comment, update their vote
+			if (exists) {
+				st.executeUpdate("UPDATE CommentVote SET likeBool='" + Boolean.toString(isLike) + "' WHERE userID=" + userID + " AND commentID=" + commentID);
+			}
+			
+			// If they haven't already voted on the comment, add a row with their vote
+			else {
+				st.executeUpdate("INSERT INTO CommentVote (likeBool, userID, commentID) VALUES ('" + Boolean.toString(isLike) + "', " + userID + ", " + commentID + ")");
+			}
+			
+			// Get the course name of the note the comment is attached to
+			rs = st.executeQuery("SELECT * FROM Course WHERE courseID=" + courseID);
+			String courseName = "";
+			while (rs.next()) {
+				courseName = rs.getString("courseName");
+			}
+			
+			//TODO This loop doesn't do anything yet
+			/*for (Note no : allCourses.get(courseName).getAllNotes()) {
+				if (no.equals(n)) {
+					if (isLike) { no.addLike(u); }
+					else { no.addDislike(u); }
+				}
+			}*/
+		
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
@@ -774,5 +988,6 @@ public class DatabaseManager {
 	
 	public static void main(String [] args) {
 		DatabaseManager dm = new DatabaseManager();
+		
 	}
 }
