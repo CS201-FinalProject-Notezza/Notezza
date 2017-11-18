@@ -235,8 +235,15 @@ public class UserWindow extends JFrame {
 			}
 		}
 		
-		commentList = new JList(commentDefaultListModel);
+		if(commentDefaultListModel!=null)
+		{
+			commentList = new JList(commentDefaultListModel);
+		}
 		
+		else
+		{
+			commentList = new JList();
+		}
 		
 		commentList.setBounds(389, 407, 579, 188);
 		contentPane.add(commentList);
