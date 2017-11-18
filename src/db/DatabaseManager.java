@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -947,13 +949,15 @@ public class DatabaseManager {
 				courseName = rs.getString("courseName");
 			}
 			
-			//TODO This loop doesn't do anything yet
-			/*for (Note no : allCourses.get(courseName).getAllNotes()) {
-				if (no.equals(n)) {
-					if (isLike) { no.addLike(u); }
-					else { no.addDislike(u); }
+			// Loop through all the notes to find the right comment, then add like or dislike to that comment
+			for (Note no : allCourses.get(courseName).getAllNotes()) {
+				for (Comment co : no.getComments()) {
+					if (co.equals(c)) {
+						if (isLike) { co.addLike(u); }
+						else { co.addDislike(u); }
+					}
 				}
-			}*/
+			}
 		
 			
 		} catch (SQLException sqle) {
@@ -985,6 +989,37 @@ public class DatabaseManager {
 			}
 		}
 	}
+	
+	public List<Course> findUserCourses(String name){
+        List<Course> courses= new ArrayList<>();
+        for(Course course : allCourses.values()) {
+            if(course.containStudent(name)){
+                courses.add(course);
+            }
+        }
+        return courses;
+    }
+	
+	public List<Course> findInstructorCourses(String name) {
+        List<Course> courses= new ArrayList<>();
+        for(Course course : allCourses.values()) {
+            if(course.getInstructor().getUsername().equals(name)){
+                courses.add(course);
+            }
+        }
+        return courses;
+    }
+	
+	public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Course course : allCourses.values()) {
+            sb.append(course.getCourseName()).append("\n");
+        }
+        for(User user : allUsers.values()) {
+            sb.append(user.getUsername()).append("\n");
+        }
+        return sb.toString();
+    }
 	
 	public static void main(String [] args) {
 		DatabaseManager dm = new DatabaseManager();

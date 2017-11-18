@@ -89,9 +89,23 @@ public class Note implements Comparable<Note>, Serializable {
     
     public void addComment(Comment comment) { comments.add(comment); }
     
-    public void addLike(User user) { likeUsers.add(user);}
+    public void addLike(User user) {
+    	if (!likeUsers.contains(user)) {
+    		likeUsers.add(user); 
+    	}
+    	if (dislikeUsers.contains(user)) {
+    		dislikeUsers.remove(user);
+    	}
+    }
     
-    public void addDislike(User user) { dislikeUsers.add(user);}
+    public void addDislike(User user) {
+    	if (!dislikeUsers.contains(user)) {
+    		dislikeUsers.add(user); 
+    	}
+    	if (likeUsers.contains(user)) {
+    		likeUsers.remove(user);
+    	}
+    }
     
     public void setSortBy(SortType SortType){ this.sortType = SortType; }
     

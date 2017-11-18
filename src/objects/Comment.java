@@ -59,7 +59,21 @@ public class Comment implements Serializable {
         return dislikeUsers.contains(user);
     }
     
-    public void addLike(User user) { likeUsers.add(user); }
+    public void addLike(User user) {
+    	if (!likeUsers.contains(user)) {
+    		likeUsers.add(user); 
+    	}
+    	if (dislikeUsers.contains(user)) {
+    		dislikeUsers.remove(user);
+    	}
+    }
     
-    public void addDislike(User user) { dislikeUsers.add(user); }
+    public void addDislike(User user) {
+    	if (!dislikeUsers.contains(user)) {
+    		dislikeUsers.add(user); 
+    	}
+    	if (likeUsers.contains(user)) {
+    		likeUsers.remove(user);
+    	}
+    }
 }
