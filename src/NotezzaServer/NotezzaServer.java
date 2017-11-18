@@ -78,6 +78,7 @@ public class NotezzaServer {
             case INITIALIZATION_INSTRUCTOR:
                 System.out.println("Send out initialization (Instructor) ...");
                 String instructorName = (String) obj;
+                // TODO CHANGE DATA CONTAINER
                 List<Course> courses = dm.getDataContainer().findInstructorCourses(instructorName);
                 Map<String, User> userMap = dm.getDataContainer().getAllUsers();
                 Set<User> users = (Set<User>) userMap.values();

@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.JPasswordField;
 
-public class createNewUser extends JFrame {
+public class CreateNewUser extends JFrame {
 
 	private JPanel contentPane;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -51,7 +51,7 @@ public class createNewUser extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					createNewUser frame = new createNewUser(null);
+					CreateNewUser frame = new CreateNewUser(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +63,7 @@ public class createNewUser extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public createNewUser(NotezzaClient client) {
+	public CreateNewUser(NotezzaClient client) {
 		this.client = client;
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {

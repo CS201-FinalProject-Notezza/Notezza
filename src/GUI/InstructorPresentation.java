@@ -51,6 +51,7 @@ public class InstructorPresentation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	// TODO add constructor
 	public InstructorPresentation() {
 		setTitle("Presentation");
 		setResizable(false);
@@ -133,8 +134,9 @@ public class InstructorPresentation extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			NewPresentation newPresentation = new NewPresentation();
-			newPresentation.setVisible(true);
+			//TODO uncomment
+			//NewPresentation newPresentation = new NewPresentation(c);
+			//newPresentation.setVisible(true);
 		}
 	}
 }
