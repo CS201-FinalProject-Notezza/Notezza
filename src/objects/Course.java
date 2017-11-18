@@ -1,6 +1,7 @@
 package objects;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Vector;
 
 public class Course implements Serializable {
@@ -73,4 +74,16 @@ public class Course implements Serializable {
         }
         return false;
     }
+    
+    
+    public Vector<Note> sortNotes(SortType type){
+		Vector<Note> tempNotes = new Vector(allNotes);
+		for (Note note : tempNotes) {
+			note.setSortBy(type);
+		}
+		Collections.sort(tempNotes);
+		return tempNotes;
+    }
+    
+    
 }
