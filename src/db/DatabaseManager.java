@@ -652,6 +652,126 @@ public class DatabaseManager {
 		}
 	}
 	
+	public void addPresentation(Presentation p, Course c) {
+		
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			// Connect to RDS database!
+			conn = DriverManager.getConnection("jdbc:mysql://notezzadb.cieln92o8pbt.us-east-2.rds.amazonaws.com:3306/Notezza?user=notezza&password=professormiller&useSSL=false");
+			st = conn.createStatement();
+			
+			// Get the courseID of the course by first getting the id of the instructor
+			rs = st.executeQuery("SELECT * FROM UserTable WHERE username='" + c.getInstructor().getUsername() + "'");
+			int instructorID = -1;
+			while (rs.next()) {
+				instructorID = rs.getInt("userID");
+			}
+			rs = st.executeQuery("SELECT * FROM Course WHERE courseName='" + c.getCourseName() + "' AND instructorID=" + instructorID);
+			int courseID = -1;
+			while (rs.next()) {
+				courseID = rs.getInt("courseID");
+			}
+			
+			// Delete old links from PresentationLink table
+			st.executeUpdate("DELETE FROM PresentationLink WHERE courseID=" + courseID);
+			
+			// Add new links to PresentationLink
+			Vector<String> linksToAdd = p.getLinks();
+			String updatePresentationLinkString = "INSERT INTO PresentationLink (link, courseID) VALUES ";
+			Boolean first = true;
+			
+			for (String l : linksToAdd) {
+				
+					if (!first) { updatePresentationLinkString += ", "; }
+					updatePresentationLinkString += "('" + l + "', " + courseID + ")";
+					first = false;
+			}
+			
+			st.executeUpdate(updatePresentationLinkString);
+			
+			// Get questionIDs to be deleted, delete choices first then delete all questionIDs corresponding to given course
+			String deleteQuestionChoiceString = "DELETE FROM QuestionChoice WHERE ";
+			
+			// Iterate over questions associated with courseID and add their ID to deletion statement for QuestionChoice table
+			rs = st.executeQuery("SELECT * FROM PresentationQuestion WHERE courseID=" + courseID);
+			Boolean first1 = true;
+			while (rs.next()) {
+				int questionID = rs.getInt("questionID");
+				
+				if (!first1) { deleteQuestionChoiceString += " OR "; }
+				deleteQuestionChoiceString += "questionID=" + questionID;
+				first1 = false;
+			}
+			
+			// Delete all the choices associated with questions in this course then delete all questions associated with course
+			st.executeUpdate(deleteQuestionChoiceString);
+			st.executeUpdate("DELETE FROM PresentationQuestion WHERE courseID=" + courseID);
+			
+			Vector<Quiz> quizzes = p.getQuizzes();
+			for (Quiz q : quizzes) {
+				
+				String updatePresentationQuestionString = "INSERT INTO PresentationQuestion (content, courseID) VALUES ('" + q.getQuestion() + "', " + courseID + ")";
+				st.executeUpdate(updatePresentationQuestionString);
+				
+				// Get questionID of the question just added
+				rs = st.executeQuery("SELECT * FROM PresentationQuestion WHERE content='" + q.getQuestion() + "' AND courseID=" + courseID);
+				int questionID = -1;
+				while (rs.next()) {
+					questionID = rs.getInt("questionID");
+				}
+				
+				Vector<String> choices = q.getChoices();
+				Set<Integer> correctIndices = q.getAnswers();
+				String updateQuestionChoiceString = "INSERT INTO QuestionChoice (content, correctBool, questionID) VALUES ";
+				Boolean first2 = true;
+				
+				for (String ch : choices) {
+					
+					if (!first2) { updateQuestionChoiceString += ", "; }
+					updateQuestionChoiceString += "('" + ch + "', '";
+					updateQuestionChoiceString += Boolean.toString(correctIndices.contains(choices.indexOf(ch)));
+					updateQuestionChoiceString += "', " + questionID + ")";
+					first2 = false;
+
+				}
+				
+				st.executeUpdate(updateQuestionChoiceString);
+				
+			}
+			
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} catch (ClassNotFoundException cnfe) {
+			System.out.println("cnfe: " + cnfe.getMessage());
+		} finally {
+			// Close in opposite order as opened
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	
 	public static void main(String [] args) {
 		DatabaseManager dm = new DatabaseManager();
 	}
