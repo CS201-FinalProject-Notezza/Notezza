@@ -18,6 +18,9 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
 public class InstructorPresentation extends JFrame {
 
@@ -28,6 +31,7 @@ public class InstructorPresentation extends JFrame {
 	private JComboBox questionBox;
 	private ImageIcon presentationSlide;
 	private JLabel slideLabel; 
+	private final Action action = new SwingAction();
 	/**
 	 * Launch the application.
 	 */
@@ -106,11 +110,12 @@ public class InstructorPresentation extends JFrame {
 		//JLabel lblNewLabel = new JLabel(logo);
 		
 		
-		JButton btnNewPresentation = new JButton("New Presentation");
-		btnNewPresentation.setBounds(67, 371, 153, 29);
-		contentPane.add(btnNewPresentation);
+		//JButton btnNewPresentation = new JButton("New Presentation");
+		//btnNewPresentation.setBounds(67, 371, 153, 29);
+		//contentPane.add(btnNewPresentation);
 		
 		JButton btnNewPresentation_1 = new JButton("New Presentation");
+		btnNewPresentation_1.setAction(action);
 		btnNewPresentation_1.setBounds(633, 6, 152, 29);
 		contentPane.add(btnNewPresentation_1);
 		
@@ -121,5 +126,15 @@ public class InstructorPresentation extends JFrame {
 		JLabel lblQuestions = new JLabel("Questions:");
 		lblQuestions.setBounds(491, 42, 112, 16);
 		contentPane.add(lblQuestions);
+	}
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "New Presentation");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			NewPresentation newPresentation = new NewPresentation();
+			newPresentation.setVisible(true);
+		}
 	}
 }
