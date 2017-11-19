@@ -3,7 +3,7 @@ package GUI;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.Course;
+import objects.CreateClassInfo;
 import objects.User;
 
 import java.awt.EventQueue;
@@ -20,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.util.Set;
-import java.util.Vector;
 import javax.swing.Action;
 
 public class NewClass extends JFrame {
@@ -30,7 +29,6 @@ public class NewClass extends JFrame {
 	private JTextPane textPane;
 
 	private NotezzaClient client;
-	private Set<User> userSet;
 
 	/**
 	 * Launch the application.
@@ -64,7 +62,6 @@ public class NewClass extends JFrame {
 			// If Nimbus is not available, you can set the GUI to another look and feel.
 		}
 		this.client = client;
-		this.userSet = userSet;
 		
 		setTitle("New Class");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,18 +118,9 @@ public class NewClass extends JFrame {
 			String courseName = textField.getText();
 			String studentEmailStrings = textPane.getText();
 			String[] studentEmailArrays = studentEmailStrings.split(",");
-			Vector<User> studentVector = new Vector<>();
-			for (String email : studentEmailArrays) {
-					for (User user : userSet) {
-							if (user.getEmail().equals(email)) {
-									studentVector.add(user);
-								}
-						}
-				}
 
-					User instructor = client.getUser();
-			Course course = new Course(courseName,instructor,studentVector);
-			client.sendCommand(new Command(CommandType.CREATE_CLASS,course));
+			User instructor = client.getUser();
+			client.sendCommand(new Command(CommandType.CREATE_CLASS,new CreateClassInfo(courseName,studentEmailArrays,instructor)));
 		}
 	}
 }

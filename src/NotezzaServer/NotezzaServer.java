@@ -1,5 +1,6 @@
 package NotezzaServer;
 
+import com.sun.corba.se.spi.servicecontext.UEInfoServiceContext;
 import db.DatabaseManager;
 import objects.*;
 import java.io.IOException;
@@ -92,17 +93,18 @@ public class NotezzaServer {
                 System.out.println("Send out initialization (Instructor) ...");
                 String instructorName = (String) obj;
                 List<Course> courses = dm.findInstructorCourses(instructorName);
-                Map<String, User> userMap = dm.getAllUsers();
-                Set<User> users = (Set<User>) userMap.values();
-                InstructorIntialization instructorInit = new InstructorIntialization(courses,users);
-                thread.sendCommand(new Command(INITIALIZATION_STUDENT,instructorInit));
+                CourseList courseListForInstructor = new CourseList(dm.findUserCourses(instructorName));
+                thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseListForInstructor));
                 break;
             case LOGIN:
                 System.out.println("Received login request...");
                 LoginCredential loginCredential = (LoginCredential) obj;
                 String username = loginCredential.getUsername();
                 String password = loginCredential.getPassword();
+                System.out.println("Username :" + username);
+                System.out.println("Unhashed password: " + password);
                 int hashedPassword = passwordHasher(password);
+                System.out.println("Hashed password: " + hashedPassword);
                 Map<String,User> allUsers = dm.getAllUsers();
                 User tempUser = allUsers.get(username);
                 if (tempUser != null && tempUser.getPassword() == hashedPassword) {
@@ -128,7 +130,12 @@ public class NotezzaServer {
                 break;
             case CREATE_CLASS:
                 System.out.println("Received request to create class...");
-                Course course = (Course) obj;
+                CreateClassInfo classInfo = (CreateClassInfo) obj;
+                String courseName = classInfo.getCourseName();
+                String[] emails = classInfo.getEmails();
+                User instructor = classInfo.getInstructor();
+                Vector<User> students = checkEmails(emails);
+                Course course = new Course(courseName,instructor,students);
                 dm.addCourse(course);
                 broadcast(new Command(UPDATE_CLASS,course));
                 break;
@@ -168,7 +175,23 @@ public class NotezzaServer {
                 broadcast(new Command(UPDATE_CHAT, cm));
         }
     }
-    
+
+    private Vector<User> checkEmails(String[] emails) {
+        System.out.println("Checking emails for creating classes...");
+        Vector<User> students = new Vector<>();
+        Map<String,User> userMap = dm.getAllUsers();
+        Map<String,User> emailToUser = new HashMap<>();
+        for (User user : userMap.values()) {
+            emailToUser.put(user.getEmail(),user);
+        }
+        for (String email : emails) {
+            if (emailToUser.get(email) != null) {
+                students.add(emailToUser.get(email));
+            }
+        }
+        return students;
+    }
+
     private int passwordHasher(String password){
         long passInt = 0;
         int n = password.length();

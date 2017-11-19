@@ -3,6 +3,7 @@ package NotezzaClient;
 import GUI.*;
 import NewGUI.Login;
 import NewGUI.MainWin;
+import NewGUI.MainWinInstr;
 import objects.*;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
@@ -22,7 +23,6 @@ public class NotezzaClient extends Thread {
     private CourseList courseList;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
-    private InstructorIntialization instInit = null;
 
     public User getUser() { return user; }
 
@@ -108,23 +108,32 @@ public class NotezzaClient extends Thread {
                 break;
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList) obj;
-                System.out.println("WE GOT EVERYTHING! POPING UP THE WINDOW!");
+                System.out.println("WE GOT EVERYTHING! POPPING UP THE STUDENT WINDOW!");
                 loginWindow.setVisible(false);
-                /* pop up userWindow OLD GUI
+                //pop up userWindow OLD GUI
+                /*
                 userWindow = new UserWindow(this, courseList);
                 userWindow.setVisible(true);
                 */
+
+                // TODO UPDATE TO NEW GUI WHEN READY
                 // new GUI
                 mainWindow = new MainWin(this,courseList);
                 mainWindow.setVisible(true);
                 break;
             case INITIALIZATION_INSTRUCTOR:
-                instInit = (InstructorIntialization) obj;
-                courseList = new CourseList(instInit.getCourse());
-                Set<User> userSet = instInit.getAllUsers();
-                // pop up instructor window
+                courseList = (CourseList) obj;
+                System.out.println("WE GOT EVERYTHING! POPPING UP THE INSTRUCTOR WINDOW!");
+                // pop up instructor window OLD GUI
+                /*
                 instructorWindow = new InstructorWindow(this, courseList,userSet);
                 instructorWindow.setVisible(true);
+                */
+                // TODO UPDATE TO NEW GUI WHEN READY
+                mainWindow = new MainWinInstr(this,courseList);
+
+
+
                 break;
             case UPDATE_COMMENT:
                 // TODO update COMMENT

@@ -12,8 +12,10 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 
+import NotezzaClient.NotezzaClient;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import objects.CourseList;
 
 import javax.swing.*;
 
@@ -23,12 +25,16 @@ import javax.swing.*;
  */
 public class MainWinInstr extends javax.swing.JFrame {
 
+    private NotezzaClient client;
+    private CourseList courseList;
     /**
      * Creates new form MainWin
      */
-    public MainWinInstr() {
+    public MainWinInstr(NotezzaClient client, CourseList courseList) {
         initComponents();
         //OverviewList.setCellRender(getCellRenderer());
+        this.client = client;
+        this.courseList = courseList;
     }
 
     /**
@@ -524,7 +530,7 @@ public class MainWinInstr extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWinInstr().setVisible(true);
+                new MainWinInstr(null,null).setVisible(true);
             }
         });
     }
