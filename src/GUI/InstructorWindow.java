@@ -295,7 +295,7 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			NewClass newClass = new NewClass(client);
+			NewCourse newClass = new NewCourse(client);
 			newClass.setVisible(true);
 		}
 	}
