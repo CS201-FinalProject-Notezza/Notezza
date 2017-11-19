@@ -31,7 +31,7 @@ public class MainWin extends javax.swing.JFrame {
     public MainWin(NotezzaClient client, CourseList courseList) {
         this.client = client;
         this.courseList = courseList;
-        Vector<Course> courses = courseList.getCourse();
+        Vector<Course> courses = courseList.getCourses();
         if (courses != null && courses.size() > 0) {
             currentCourse = courses.get(0);
             if (currentCourse.getAllNotes().size() > 0) {
@@ -132,16 +132,8 @@ public class MainWin extends javax.swing.JFrame {
         sortChoiceBox.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
         sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of Comments", "Most Number of Likes" }));
-        sortChoiceBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                sortChoiceBoxItemStateChanged(evt);
-            }
-        });
-        sortChoiceBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sortChoiceBoxActionPerformed(evt);
-            }
-        });
+        sortChoiceBox.addItemListener(this::sortChoiceBoxItemStateChanged);
+        sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -163,11 +155,7 @@ public class MainWin extends javax.swing.JFrame {
                 searchNoteMouseClicked(evt);
             }
         });
-        searchNote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchNoteActionPerformed(evt);
-            }
-        });
+        searchNote.addActionListener(this::searchNoteActionPerformed);
 
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -187,11 +175,7 @@ public class MainWin extends javax.swing.JFrame {
         classes.setForeground(new java.awt.Color(42, 77, 105));
         classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         classes.setToolTipText("Change Your Class");
-        classes.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                classesItemStateChanged(evt);
-            }
-        });
+        classes.addItemListener(this::classesItemStateChanged);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
@@ -498,11 +482,7 @@ public class MainWin extends javax.swing.JFrame {
 
         CreateComment.setToolTipText("Add Comment");
         CreateComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        CreateComment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreateCommentActionPerformed(evt);
-            }
-        });
+        CreateComment.addActionListener(this::CreateCommentActionPerformed);
 
         PostComment.setText("Post");
         PostComment.setToolTipText("");

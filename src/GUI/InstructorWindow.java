@@ -1,5 +1,4 @@
 package GUI;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,15 +12,11 @@ import objects.*;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
-import java.awt.TextField;
-import java.awt.Color;
 import java.awt.TextArea;
-import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.List;
 import java.text.DateFormat;
@@ -122,7 +117,7 @@ public class InstructorWindow extends JFrame {
 		//first, get all Notes for the current Class. before you do, make sure courseList is not null
 		if(courseList!=null)
 		{
-			currentCourse = courseList.getCourse().get(0);
+			currentCourse = courseList.getCourses().get(0);
 			
 			Vector<Note> allNotes = currentCourse.getAllNotes();
 			
@@ -151,7 +146,7 @@ public class InstructorWindow extends JFrame {
 		
 		if(courseList!=null)
 		{
-			java.util.List<Course> allCourses = courseList.getCourse();
+			java.util.List<Course> allCourses = courseList.getCourses();
 			
 			java.util.List<String> allCourseNames = (java.util.List<String>) new List();
 			
@@ -218,7 +213,7 @@ public class InstructorWindow extends JFrame {
 		
 		if(courseList!=null)
 		{
-			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
+			currentNote = courseList.getCourses().get(0).getAllNotes().get(0);
 			
 			for(int i = 0; i<currentNote.getComments().size(); i++)
 			{
@@ -234,7 +229,7 @@ public class InstructorWindow extends JFrame {
 		noteArea.setEditable(false);
 		if(courseList!=null)
 		{
-			currentCourse = courseList.getCourse().get(0);
+			currentCourse = courseList.getCourses().get(0);
 			currentNote = currentCourse.getAllNotes().get(0);
 			
 			noteArea.setText(currentNote.getTextContent());

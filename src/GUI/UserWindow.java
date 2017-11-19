@@ -122,9 +122,9 @@ public class UserWindow extends JFrame {
 		//when click on the note list, print out the description
 		noteDefaultListModel = new DefaultListModel();
 		
-		if(courseList!=null && courseList.getCourse().size()!=0)
+		if(courseList!=null && courseList.getCourses().size()!=0)
 		{
-			currentCourse = courseList.getCourse().get(0);
+			currentCourse = courseList.getCourses().get(0);
 			
 			allNotes = currentCourse.getAllNotes();
 			
@@ -167,12 +167,12 @@ public class UserWindow extends JFrame {
 		//fill an arraylist with the String names of the classes
 		//and then add it to the comboBox
 		
-		if(courseList!=null && courseList.getCourse().size()!=0)
+		if(courseList!=null && courseList.getCourses().size()!=0)
 		{
 			Vector<Course> allCourses = new Vector<Course>();
 			
-			//Collections.copy(allCourses, courseList.getCourse());
-            allCourses.addAll(courseList.getCourse());
+			//Collections.copy(allCourses, courseList.getCourses());
+            allCourses.addAll(courseList.getCourses());
 			
 			Vector<String> allCourseNames = new Vector<String>();
 
@@ -240,9 +240,9 @@ public class UserWindow extends JFrame {
 		
 		commentDefaultListModel = new DefaultListModel();
 		
-		if(courseList!=null && courseList.getCourse().size()!=0)
+		if(courseList!=null && courseList.getCourses().size()!=0)
 		{
-			currentNote = courseList.getCourse().get(0).getAllNotes().get(0);
+			currentNote = courseList.getCourses().get(0).getAllNotes().get(0);
 			
 			for(int i = 0; i<currentNote.getComments().size(); i++)
 			{
@@ -269,9 +269,9 @@ public class UserWindow extends JFrame {
 		
 		noteArea = new TextArea();
 		noteArea.setEditable(false);
-		if(courseList!=null && courseList.getCourse().size()!=0)
+		if(courseList!=null && courseList.getCourses().size()!=0)
 		{
-			currentCourse = courseList.getCourse().get(0);
+			currentCourse = courseList.getCourses().get(0);
 			currentNote = currentCourse.getAllNotes().get(0);
 			
 			noteArea.setText(currentNote.getTitle() + "\n"

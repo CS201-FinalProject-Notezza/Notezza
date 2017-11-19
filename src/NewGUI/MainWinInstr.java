@@ -33,7 +33,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     public MainWinInstr(NotezzaClient client, CourseList courseList) {
         this.client = client;
         this.courseList = courseList;
-        Vector<Course> courses = courseList.getCourse();
+        Vector<Course> courses = courseList.getCourses();
         if (courses != null && courses.size() > 0) {
             currentCourse = courses.get(0);
             if (currentCourse.getAllNotes().size() > 0) {
