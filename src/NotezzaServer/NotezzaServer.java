@@ -94,7 +94,7 @@ public class NotezzaServer {
                 String instructorName = (String) obj;
                 List<Course> courses = dm.findInstructorCourses(instructorName);
                 CourseList courseListForInstructor = new CourseList(dm.findUserCourses(instructorName));
-                thread.sendCommand(new Command(INITIALIZATION_STUDENT,courseListForInstructor));
+                thread.sendCommand(new Command(INITIALIZATION_INSTRUCTOR,courseListForInstructor));
                 break;
             case LOGIN:
                 System.out.println("Received login request...");

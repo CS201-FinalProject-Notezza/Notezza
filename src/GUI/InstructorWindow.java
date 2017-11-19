@@ -57,7 +57,6 @@ public class InstructorWindow extends JFrame {
 	private NotezzaClient client;
 	private Course currentCourse;
 	private Note currentNote;
-    private Set<User> userSet;
 	private TextArea noteArea;
 
 
@@ -98,7 +97,6 @@ public class InstructorWindow extends JFrame {
 		
 		this.client = client;
 		this.courseList = courseList;
-		this.userSet = userSet;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		contentPane = new JPanel();
@@ -302,7 +300,7 @@ public class InstructorWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			NewClass newClass = new NewClass(client,userSet);
+			NewClass newClass = new NewClass(client);
 			newClass.setVisible(true);
 		}
 	}
