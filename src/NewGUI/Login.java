@@ -191,6 +191,7 @@ public class Login extends javax.swing.JPanel {
         LoginCredential loginCredential = new LoginCredential(unameField.getText(),password);
         Command login = new Command(CommandType.LOGIN,loginCredential);
         client.sendCommand(login);
+
     }
 
     private void signupLabelMouseEntered(java.awt.event.MouseEvent evt) {

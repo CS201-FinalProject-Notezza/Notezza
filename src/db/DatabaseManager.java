@@ -1000,8 +1000,8 @@ public class DatabaseManager {
         return courses;
     }
 	
-	public List<Course> findInstructorCourses(String name) {
-        List<Course> courses= new ArrayList<>();
+	public Vector<Course> findInstructorCourses(String name) {
+        Vector<Course> courses= new Vector<>();
         for(Course course : allCourses.values()) {
             if(course.getInstructor().getUsername().equals(name)){
                 courses.add(course);

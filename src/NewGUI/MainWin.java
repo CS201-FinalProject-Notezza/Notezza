@@ -37,6 +37,7 @@ public class MainWin extends javax.swing.JFrame {
         this.client = client;
         this.courseList = courseList;
         Vector<Course> course = courseList.getCourse();
+        currentCourse = course.get(0);
 
 
         String title ="I am Title";
@@ -471,11 +472,7 @@ public class MainWin extends javax.swing.JFrame {
 
         CreateComment.setToolTipText("Add Comment");
         CreateComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        CreateComment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreateCommentActionPerformed(evt);
-            }
-        });
+        CreateComment.addActionListener(this::CreateCommentActionPerformed);
 
         PostComment.setText("Post");
         PostComment.setToolTipText("");
@@ -613,7 +610,6 @@ public class MainWin extends javax.swing.JFrame {
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("Profile popping up!");
-        // TODO change this back to new GUI after it's done:
         UserProfile profile = new UserProfile(client.getUser());
         profile.setVisible(true);
     }                                    
@@ -626,9 +622,8 @@ public class MainWin extends javax.swing.JFrame {
         profile.setBackground(new Color(42,77,105));
     }                                    
 
-    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
-        // TODO add your handling code here:
-        ViewStudentsInClass viewClassmates = new ViewStudentsInClass();
+    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
+        ViewStudentsInClass viewClassmates = new ViewStudentsInClass(currentCourse.getStudents());
         viewClassmates.setVisible(true);
     }                                       
 
