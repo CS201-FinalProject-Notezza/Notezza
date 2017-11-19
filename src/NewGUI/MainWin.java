@@ -7,8 +7,10 @@ package NewGUI;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.text.DateFormat;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
@@ -38,53 +40,74 @@ public class MainWin extends javax.swing.JFrame {
         this.client = client;
         this.courseList = courseList;
         Vector<Course> courses;
-        if (courseList != null) {
-            courses = courseList.getCourses();
-        } else courses = null;
-        if (courses != null && courses.size() > 0) {
-            currentCourse = courses.get(0);
-            if (currentCourse.getAllNotes().size() > 0) {
-                currentNote = currentCourse.getAllNotes().get(0);
+//        if (courseList != null) {
+//            courses = courseList.getCourses();
+//        } else courses = null;
+//        if (courses != null && courses.size() > 0) {
+//            currentCourse = courses.get(0);
+//            if (currentCourse.getAllNotes().size() > 0) {
+//                currentNote = currentCourse.getAllNotes().get(0);
+//            } else {
+//                currentNote = null;
+//            }
+//        } else {
+//            currentCourse = null;
+//            currentNote = null;
+//        }
+        initComponents();
+        initContent();
+    }
+
+    private void initContent() {
+        Vector<Course> courses;
+        if (courseList == null || courseList.getCourses() == null || courseList.getCourses().isEmpty()) {
+            // No course available
+            // classes dropdown box
+            classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
+            classes.setToolTipText("Change Class");
+            // Posts
+            return;
+        }
+        courses = courseList.getCourses();
+        // classes dropdown box
+        DefaultComboBoxModel dropDownModel = new DefaultComboBoxModel();
+        for (Course course : courses) {
+            dropDownModel.addElement(course.getCourseName());
+        }
+        classes.setModel(dropDownModel);
+        classes.setToolTipText("Change Class");
+
+        // Posts
+
+        // TODO change this back when done coz hardcoding to the second element
+        currentCourse = courses.get(1);
+        Vector<Note> notes = currentCourse.getAllNotes();
+        DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
+        for (Note note : notes) {
+            String str = "<html><body><h3><b>" + note.getTitle() + "</b></h3><br />";
+            String noteText = note.getTextContent();
+            if(noteText.length() <= 40) {
+                str += noteText;
             } else {
-                currentNote = null;
+                str += noteText.substring(0, 39);
             }
-        } else {
-            currentCourse = null;
-            currentNote = null;
+            str += "</body></html>";
+            notesOverviewModel.addElement(Util.getHTMLforNote(note));
         }
 
-        initComponents();
-        String title ="I am Title";
-        String content = "I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. "
-                + "I am content. I am content. I am content. ";
-        Post.setText("<html><body wrap=\"hard\"><h1><b>" + title + "</b></h1><br />"+ content + "</body></html>");
-        Comments.setText("<html><body wrap=\"hard\">"
-                + "<ul type=\"I\">"
-                + "<li style=\"color:green\" bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment1</li>"
-                + "<li bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment2</li>"
-                + "</ul>"
-                + "</body></html>");
+        OverviewList.setModel(notesOverviewModel);
+
+        //    		OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
+        //    			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        //    			public int getSize() { return strings.length; }
+        //    			public String getElementAt(int i) { return strings[i]; }
+        //    		});
+
+        // Post Area
+
+
+
+
     }
 
     /**
@@ -413,10 +436,21 @@ public class MainWin extends javax.swing.JFrame {
         layer1.setOpaque(false);
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
+        // TODO HARD CODE
         likeButton.setText("63");
+        likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddDisLikeMouseClicked(evt);
+            }
+        });
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
         dislikeButton.setText("63");
+        dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddLikeMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
         layer1.setLayout(layer1Layout);
@@ -559,6 +593,16 @@ public class MainWin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    private void AddDisLikeMouseClicked(MouseEvent evt) {
+        System.out.println("Adding a like");
+        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
+    }
+
+    private void AddLikeMouseClicked(MouseEvent evt) {
+        System.out.println("Adding a dislike...");
+        client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
+    }
+
     private void lectureMouseEntered(java.awt.event.MouseEvent evt) {                                     
         lecture.setBackground(new Color(42,77,105));
     }                                    
@@ -581,7 +625,8 @@ public class MainWin extends javax.swing.JFrame {
         presentation.setVisible(true);
     }                                    
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {                                    
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
+        System.out.println("GOODBYE");
         System.exit(0);
     }                                   
 
@@ -612,6 +657,8 @@ public class MainWin extends javax.swing.JFrame {
         if (currentCourse != null) {
         	ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
         	viewClassMate.setVisible(true);
+        } else {
+            System.out.println("Current course is null");
         }
     }                                       
 
