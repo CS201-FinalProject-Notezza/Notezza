@@ -5,16 +5,8 @@
  */
 package NewGUI;
 
-import GUI.UserProfile;
-import GUI.ViewStudentsInClass;
-import objects.Course;
-import objects.CourseList;
-import NotezzaClient.NotezzaClient;
-import objects.Note;
-
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.*;
@@ -25,31 +17,11 @@ import javax.swing.*;
  */
 public class MainWin extends javax.swing.JFrame {
 
-    private NotezzaClient client;
-    private CourseList courseList;
-    private Course currentCourse;
-    private Note currentNote;
     /**
      * Creates new form MainWin
      */
-    public MainWin(NotezzaClient client,CourseList courseList) {
-        this.client = client;
-        this.courseList = courseList;
-        Vector<Course> courses = courseList.getCourse();
-        if (courses != null && courses.size() > 0) {
-            currentCourse = courses.get(0);
-            if (currentCourse.getAllNotes().size() > 0) {
-                currentNote = currentCourse.getAllNotes().get(0);
-            } else {
-                currentNote = null;
-            }
-        } else {
-            currentCourse = null;
-            currentNote = null;
-        }
+    public MainWin() {
         initComponents();
-
-        /*
         String title ="I am Title";
         String content = "I am content. "
                 + "I am content. I am content. I am content. "
@@ -75,7 +47,12 @@ public class MainWin extends javax.swing.JFrame {
                 + "I am content. I am content. I am content. "
                 + "I am content. I am content. I am content. ";
         Post.setText("<html><body wrap=\"hard\"><h1><b>" + title + "</b></h1><br />"+ content + "</body></html>");
-        */
+        Comments.setText("<html><body wrap=\"hard\">"
+                + "<ul type=\"I\">"
+                + "<li style=\"color:green\" bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment1</li>"
+                + "<li bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment2</li>"
+                + "</ul>"
+                + "</body></html>");
     }
 
     /**
@@ -132,8 +109,16 @@ public class MainWin extends javax.swing.JFrame {
         sortChoiceBox.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
         sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of Comments", "Most Number of Likes" }));
-        sortChoiceBox.addItemListener(this::sortChoiceBoxItemStateChanged);
-        sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
+        sortChoiceBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                sortChoiceBoxItemStateChanged(evt);
+            }
+        });
+        sortChoiceBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortChoiceBoxActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -155,7 +140,11 @@ public class MainWin extends javax.swing.JFrame {
                 searchNoteMouseClicked(evt);
             }
         });
-        searchNote.addActionListener(this::searchNoteActionPerformed);
+        searchNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNoteActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -175,8 +164,11 @@ public class MainWin extends javax.swing.JFrame {
         classes.setForeground(new java.awt.Color(42, 77, 105));
         classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         classes.setToolTipText("Change Your Class");
-        classes.addItemListener(this::classesItemStateChanged);
-        classes.addActionListener(this::classesActionPerformed);
+        classes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                classesItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
@@ -186,7 +178,7 @@ public class MainWin extends javax.swing.JFrame {
         functionBarLayout.setHorizontalGroup(
             functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(functionBarLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(classes, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,11 +194,11 @@ public class MainWin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sortChoiceBox, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addGap(24, 24, 24))
         );
         functionBarLayout.setVerticalGroup(
             functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,7 +362,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addComponent(lecture, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(viewMember, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -483,7 +475,11 @@ public class MainWin extends javax.swing.JFrame {
 
         CreateComment.setToolTipText("Add Comment");
         CreateComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        CreateComment.addActionListener(this::CreateCommentActionPerformed);
+        CreateComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateCommentActionPerformed(evt);
+            }
+        });
 
         PostComment.setText("Post");
         PostComment.setToolTipText("");
@@ -567,9 +563,7 @@ public class MainWin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 13, Short.MAX_VALUE))
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -619,10 +613,8 @@ public class MainWin extends javax.swing.JFrame {
         
     }                                              
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
-        System.out.println("Profile popping up!");
-        UserProfile profile = new UserProfile(client.getUser());
-        profile.setVisible(true);
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
+        
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -633,9 +625,8 @@ public class MainWin extends javax.swing.JFrame {
         profile.setBackground(new Color(42,77,105));
     }                                    
 
-    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
-        ViewStudentsInClass viewClassmates = new ViewStudentsInClass(currentCourse.getStudents());
-        viewClassmates.setVisible(true);
+    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        // TODO add your handling code here:
     }                                       
 
     private void viewMemberMouseExited(java.awt.event.MouseEvent evt) {                                       
@@ -646,10 +637,6 @@ public class MainWin extends javax.swing.JFrame {
         viewMember.setBackground(new Color(42,77,105));
     }                                       
 
-    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        
-    }                                             
-
     private void sortChoiceBoxActionPerformed(java.awt.event.ActionEvent evt) {                                              
         
     }                                             
@@ -658,17 +645,17 @@ public class MainWin extends javax.swing.JFrame {
         
     }                                          
 
-    private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        
-    }                                        
-
     private void classesItemStateChanged(java.awt.event.ItemEvent evt) {                                         
         // TODO add your handling code here:
     }                                        
 
-    private void classesActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        // TODO add your handling code here:
-    }                                       
+    private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
+
+    }                                        
+
+    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
+
+    }                                             
 
     /**
      * @param args the command line arguments
@@ -686,7 +673,13 @@ public class MainWin extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -694,7 +687,7 @@ public class MainWin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWin(null,null).setVisible(true);
+                new MainWin().setVisible(true);
             }
         });
     }
