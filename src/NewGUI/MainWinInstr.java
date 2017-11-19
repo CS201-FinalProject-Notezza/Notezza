@@ -12,9 +12,14 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 
+import GUI.NewClass;
+import GUI.UserPresentation;
+import GUI.UserProfile;
+import GUI.ViewStudentsInClass;
 import NotezzaClient.NotezzaClient;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import objects.Course;
 import objects.CourseList;
 
 import javax.swing.*;
@@ -27,6 +32,7 @@ public class MainWinInstr extends javax.swing.JFrame {
 
     private NotezzaClient client;
     private CourseList courseList;
+    private Course currentCourse;
     /**
      * Creates new form MainWin
      */
@@ -45,7 +51,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-    		browser = new Browser();
+        browser = new Browser();
         browserView = new BrowserView(browser);
     		
         MainPanel = new javax.swing.JPanel();
@@ -456,28 +462,32 @@ public class MainWinInstr extends javax.swing.JFrame {
         logout.setBackground(new Color(59,89,152));
     }                                  
 
-    private void addClassMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        
+    private void addClassMouseClicked(java.awt.event.MouseEvent evt) {
+        NewClass newclass = new NewClass(client);
+        newclass.setVisible(true);
     }                                     
 
-    private void lectureMouseClicked(java.awt.event.MouseEvent evt) {                                     
-        
+    private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
+        UserPresentation presentation = new UserPresentation(client,currentCourse);
+        presentation.setVisible(true);
     }                                    
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {                                    
-        
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
+        System.exit(0);
     }                                   
 
     private void searchNoteMouseClicked(java.awt.event.MouseEvent evt) {                                        
         searchNote.setText("");
+        //TODO IMPLEMENT SEARCH HERE
     }                                       
 
     private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) {                                               
-        
+        //TODO IMPLEMENT SORT HERE
     }                                              
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
-        
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
+        UserProfile profile = new UserProfile(client.getUser());
+        profile.setVisible(true);
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -488,8 +498,9 @@ public class MainWinInstr extends javax.swing.JFrame {
         profile.setBackground(new Color(139,157,195));
     }                                    
 
-    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
-        // TODO add your handling code here:
+    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
+        ViewStudentsInClass viewMembers = new ViewStudentsInClass(currentCourse.getStudents());
+        viewMembers.setVisible(true);
     }                                       
 
     private void viewMemberMouseExited(java.awt.event.MouseEvent evt) {                                       

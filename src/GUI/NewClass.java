@@ -19,7 +19,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import java.util.Set;
 import javax.swing.Action;
 
 public class NewClass extends JFrame {
@@ -37,7 +36,7 @@ public class NewClass extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewClass frame = new NewClass(null,null);
+					NewClass frame = new NewClass(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +48,7 @@ public class NewClass extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewClass(NotezzaClient client, Set<User> userSet) {
+	public NewClass(NotezzaClient client) {
 		
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {

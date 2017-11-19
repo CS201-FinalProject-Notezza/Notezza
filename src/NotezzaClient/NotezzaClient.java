@@ -115,7 +115,6 @@ public class NotezzaClient extends Thread {
                 userWindow = new UserWindow(this, courseList);
                 userWindow.setVisible(true);
                 */
-
                 // TODO UPDATE TO NEW GUI WHEN READY
                 // new GUI
                 mainWindow = new MainWin(this,courseList);
@@ -124,6 +123,7 @@ public class NotezzaClient extends Thread {
             case INITIALIZATION_INSTRUCTOR:
                 courseList = (CourseList) obj;
                 System.out.println("WE GOT EVERYTHING! POPPING UP THE INSTRUCTOR WINDOW!");
+                loginWindow.setVisible(false);
                 // pop up instructor window OLD GUI
                 /*
                 instructorWindow = new InstructorWindow(this, courseList,userSet);
@@ -131,9 +131,7 @@ public class NotezzaClient extends Thread {
                 */
                 // TODO UPDATE TO NEW GUI WHEN READY
                 mainWindow = new MainWinInstr(this,courseList);
-
-
-
+                mainWindow.setVisible(true);
                 break;
             case UPDATE_COMMENT:
                 // TODO update COMMENT
