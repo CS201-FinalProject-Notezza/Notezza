@@ -1,8 +1,15 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -12,11 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 
 import NotezzaClient.NotezzaClient;
@@ -26,12 +31,16 @@ import objects.Course;
 import objects.Presentation;
 import objects.PresentationANDCourse;
 import objects.Quiz;
+import javax.swing.JSeparator;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
 
 public class NewPresentation extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblEnterLinksTo;
-	private JTextArea linkText;
+	private JTextPane linkText;
 	private JLabel q1Label;
 	private JTextField q1Text;
 	private JTextField q1Choice1Text;
@@ -89,6 +98,24 @@ public class NewPresentation extends JFrame {
 
 	private NotezzaClient client;
 	private Course course;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JSeparator separator_3;
+	private JSeparator separator_4;
+	private JSeparator separator_5;
+	private JSeparator separator_6;
+	private JSeparator separator_7;
+	private JSeparator separator_8;
+	private JSeparator separator_9;
+	private JSeparator separator_10;
+	private JSeparator separator_11;
+	private JSeparator separator_12;
+	private JSeparator separator_13;
+	private JSeparator separator_14;
+	private JSeparator separator_15;
+	private JSeparator separator_16;
+	private JSeparator separator_17;
 
 
 	/**
@@ -114,17 +141,6 @@ public class NewPresentation extends JFrame {
 		setTitle("New Presentation");
 		setResizable(false);
 
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
-
 		this.client = client;
 		this.course = course;
 
@@ -132,35 +148,36 @@ public class NewPresentation extends JFrame {
 		setBounds(100, 100, 400, 640);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(52, 61, 70));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		lblEnterLinksTo = new JLabel("Enter links to slides (separated by commas):");
 		lblEnterLinksTo.setBounds(15, 15, 368, 16);
+		lblEnterLinksTo.setFont(new Font("Dialog", Font.BOLD, 15));
+		lblEnterLinksTo.setForeground(new java.awt.Color(204, 204, 204));
 		lblEnterLinksTo.setHorizontalAlignment(SwingConstants.LEFT);
 		contentPane.add(lblEnterLinksTo);
 
-		linkText = new JTextArea();
+		linkText = new JTextPane();
 		linkText.setBounds(15, 43, 368, 85);
+		linkText.setBackground(new java.awt.Color(204, 204, 204));
+		linkText.setForeground(new java.awt.Color(52, 61, 70));
+		linkText.setBorder(null);
+		linkText.setCaretColor(new java.awt.Color(52, 61, 70));
 		contentPane.add(linkText);
 
 		q1Label = new JLabel("Question 1: ");
 		q1Label.setHorizontalAlignment(SwingConstants.RIGHT);
-		q1Label.setBounds(15, 136, 77, 16);
+		q1Label.setFont(new Font("Dialog", Font.BOLD, 13));
+		q1Label.setForeground(new java.awt.Color(204, 204, 204));
+		q1Label.setBounds(6, 136, 86, 16);
 		contentPane.add(q1Label);
-
-		q1Text = new JTextField();
-		q1Text.setBounds(94, 131, 290, 26);
-		contentPane.add(q1Text);
-		q1Text.setColumns(10);
-
-		q1Choice1Text = new JTextField();
-		q1Choice1Text.setColumns(10);
-		q1Choice1Text.setBounds(94, 159, 261, 26);
-		contentPane.add(q1Choice1Text);
 
 		q1Choice1Label = new JLabel("Choice 1: ");
 		q1Choice1Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q1Choice1Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q1Choice1Label.setForeground(new java.awt.Color(204, 204, 204));
 		q1Choice1Label.setBounds(15, 164, 77, 16);
 		contentPane.add(q1Choice1Label);
 
@@ -168,13 +185,10 @@ public class NewPresentation extends JFrame {
 		q1c1Check.setBounds(355, 157, 28, 29);
 		contentPane.add(q1c1Check);
 
-		q1Choice2Text = new JTextField();
-		q1Choice2Text.setColumns(10);
-		q1Choice2Text.setBounds(94, 181, 261, 26);
-		contentPane.add(q1Choice2Text);
-
 		q1Choice2Label = new JLabel("Choice 2: ");
 		q1Choice2Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q1Choice2Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q1Choice2Label.setForeground(new java.awt.Color(204, 204, 204));
 		q1Choice2Label.setBounds(15, 186, 77, 16);
 		contentPane.add(q1Choice2Label);
 
@@ -182,13 +196,10 @@ public class NewPresentation extends JFrame {
 		q1c2Check.setBounds(355, 179, 28, 29);
 		contentPane.add(q1c2Check);
 
-		q1Choice3Text = new JTextField();
-		q1Choice3Text.setColumns(10);
-		q1Choice3Text.setBounds(94, 203, 261, 26);
-		contentPane.add(q1Choice3Text);
-
 		q1Choice3Label = new JLabel("Choice 3: ");
 		q1Choice3Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q1Choice3Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q1Choice3Label.setForeground(new java.awt.Color(204, 204, 204));
 		q1Choice3Label.setBounds(15, 208, 77, 16);
 		contentPane.add(q1Choice3Label);
 
@@ -196,13 +207,10 @@ public class NewPresentation extends JFrame {
 		q1c3Check.setBounds(355, 201, 28, 29);
 		contentPane.add(q1c3Check);
 
-		q1Choice4Text = new JTextField();
-		q1Choice4Text.setColumns(10);
-		q1Choice4Text.setBounds(94, 225, 261, 26);
-		contentPane.add(q1Choice4Text);
-
 		q1Choice4Label = new JLabel("Choice 4: ");
 		q1Choice4Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q1Choice4Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q1Choice4Label.setForeground(new java.awt.Color(204, 204, 204));
 		q1Choice4Label.setBounds(15, 230, 77, 16);
 		contentPane.add(q1Choice4Label);
 
@@ -210,13 +218,10 @@ public class NewPresentation extends JFrame {
 		q1c4Check.setBounds(355, 223, 28, 29);
 		contentPane.add(q1c4Check);
 
-		q1Choice5Text = new JTextField();
-		q1Choice5Text.setColumns(10);
-		q1Choice5Text.setBounds(94, 247, 261, 26);
-		contentPane.add(q1Choice5Text);
-
 		q1Choice5Label = new JLabel("Choice 5: ");
 		q1Choice5Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q1Choice5Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q1Choice5Label.setForeground(new java.awt.Color(204, 204, 204));
 		q1Choice5Label.setBounds(15, 252, 77, 16);
 		contentPane.add(q1Choice5Label);
 
@@ -226,21 +231,15 @@ public class NewPresentation extends JFrame {
 
 		q2Label = new JLabel("Question 2: ");
 		q2Label.setHorizontalAlignment(SwingConstants.RIGHT);
-		q2Label.setBounds(15, 279, 77, 16);
+		q2Label.setFont(new Font("Dialog", Font.BOLD, 13));
+		q2Label.setForeground(new java.awt.Color(204, 204, 204));
+		q2Label.setBounds(6, 279, 86, 16);
 		contentPane.add(q2Label);
-
-		q2Text = new JTextField();
-		q2Text.setColumns(10);
-		q2Text.setBounds(94, 274, 290, 26);
-		contentPane.add(q2Text);
-
-		q2Choice1Text = new JTextField();
-		q2Choice1Text.setColumns(10);
-		q2Choice1Text.setBounds(94, 302, 261, 26);
-		contentPane.add(q2Choice1Text);
 
 		q2Choice1Label = new JLabel("Choice 1: ");
 		q2Choice1Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q2Choice1Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q2Choice1Label.setForeground(new java.awt.Color(204, 204, 204));
 		q2Choice1Label.setBounds(15, 307, 77, 16);
 		contentPane.add(q2Choice1Label);
 
@@ -248,13 +247,10 @@ public class NewPresentation extends JFrame {
 		q2c1Check.setBounds(355, 300, 28, 29);
 		contentPane.add(q2c1Check);
 
-		q2Choice2Text = new JTextField();
-		q2Choice2Text.setColumns(10);
-		q2Choice2Text.setBounds(94, 324, 261, 26);
-		contentPane.add(q2Choice2Text);
-
 		q2Choice2Label = new JLabel("Choice 2: ");
 		q2Choice2Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q2Choice2Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q2Choice2Label.setForeground(new java.awt.Color(204, 204, 204));
 		q2Choice2Label.setBounds(15, 329, 77, 16);
 		contentPane.add(q2Choice2Label);
 
@@ -262,13 +258,10 @@ public class NewPresentation extends JFrame {
 		q2c2Check.setBounds(355, 322, 28, 29);
 		contentPane.add(q2c2Check);
 
-		q2Choice3Text = new JTextField();
-		q2Choice3Text.setColumns(10);
-		q2Choice3Text.setBounds(94, 346, 261, 26);
-		contentPane.add(q2Choice3Text);
-
 		q2Choice3Label = new JLabel("Choice 3: ");
 		q2Choice3Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q2Choice3Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q2Choice3Label.setForeground(new java.awt.Color(204, 204, 204));
 		q2Choice3Label.setBounds(15, 351, 77, 16);
 		contentPane.add(q2Choice3Label);
 
@@ -276,13 +269,10 @@ public class NewPresentation extends JFrame {
 		q2c3Check.setBounds(355, 344, 28, 29);
 		contentPane.add(q2c3Check);
 
-		q2Choice4Text = new JTextField();
-		q2Choice4Text.setColumns(10);
-		q2Choice4Text.setBounds(94, 368, 261, 26);
-		contentPane.add(q2Choice4Text);
-
 		q2Choice4Label = new JLabel("Choice 4: ");
 		q2Choice4Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q2Choice4Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q2Choice4Label.setForeground(new java.awt.Color(204, 204, 204));
 		q2Choice4Label.setBounds(15, 373, 77, 16);
 		contentPane.add(q2Choice4Label);
 
@@ -290,13 +280,10 @@ public class NewPresentation extends JFrame {
 		q2c4Check.setBounds(355, 366, 28, 29);
 		contentPane.add(q2c4Check);
 
-		q2Choice5Text = new JTextField();
-		q2Choice5Text.setColumns(10);
-		q2Choice5Text.setBounds(94, 390, 261, 26);
-		contentPane.add(q2Choice5Text);
-
 		q2Choice5Label = new JLabel("Choice 5: ");
 		q2Choice5Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q2Choice5Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q2Choice5Label.setForeground(new java.awt.Color(204, 204, 204));
 		q2Choice5Label.setBounds(15, 395, 77, 16);
 		contentPane.add(q2Choice5Label);
 
@@ -306,21 +293,15 @@ public class NewPresentation extends JFrame {
 
 		q3Label = new JLabel("Question 3: ");
 		q3Label.setHorizontalAlignment(SwingConstants.RIGHT);
-		q3Label.setBounds(15, 423, 77, 16);
+		q3Label.setFont(new Font("Dialog", Font.BOLD, 13));
+		q3Label.setForeground(new java.awt.Color(204, 204, 204));
+		q3Label.setBounds(6, 423, 86, 16);
 		contentPane.add(q3Label);
-
-		q3Text = new JTextField();
-		q3Text.setColumns(10);
-		q3Text.setBounds(94, 418, 290, 26);
-		contentPane.add(q3Text);
-
-		q3Choice1Text = new JTextField();
-		q3Choice1Text.setColumns(10);
-		q3Choice1Text.setBounds(94, 446, 261, 26);
-		contentPane.add(q3Choice1Text);
 
 		q3Choice1Label = new JLabel("Choice 1: ");
 		q3Choice1Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q3Choice1Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q3Choice1Label.setForeground(new java.awt.Color(204, 204, 204));
 		q3Choice1Label.setBounds(15, 451, 77, 16);
 		contentPane.add(q3Choice1Label);
 
@@ -328,13 +309,10 @@ public class NewPresentation extends JFrame {
 		q3c1Check.setBounds(355, 444, 28, 29);
 		contentPane.add(q3c1Check);
 
-		q3Choice2Text = new JTextField();
-		q3Choice2Text.setColumns(10);
-		q3Choice2Text.setBounds(94, 468, 261, 26);
-		contentPane.add(q3Choice2Text);
-
 		q3Choice2Label = new JLabel("Choice 2: ");
 		q3Choice2Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q3Choice2Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q3Choice2Label.setForeground(new java.awt.Color(204, 204, 204));
 		q3Choice2Label.setBounds(15, 473, 77, 16);
 		contentPane.add(q3Choice2Label);
 
@@ -342,13 +320,10 @@ public class NewPresentation extends JFrame {
 		q3c2Check.setBounds(355, 466, 28, 29);
 		contentPane.add(q3c2Check);
 
-		q3Choice3Text = new JTextField();
-		q3Choice3Text.setColumns(10);
-		q3Choice3Text.setBounds(94, 490, 261, 26);
-		contentPane.add(q3Choice3Text);
-
 		q3Choice3Label = new JLabel("Choice 3: ");
 		q3Choice3Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q3Choice3Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q3Choice3Label.setForeground(new java.awt.Color(204, 204, 204));
 		q3Choice3Label.setBounds(15, 495, 77, 16);
 		contentPane.add(q3Choice3Label);
 
@@ -356,13 +331,10 @@ public class NewPresentation extends JFrame {
 		q3c3Check.setBounds(355, 488, 28, 29);
 		contentPane.add(q3c3Check);
 
-		q3Choice4Text = new JTextField();
-		q3Choice4Text.setColumns(10);
-		q3Choice4Text.setBounds(94, 512, 261, 26);
-		contentPane.add(q3Choice4Text);
-
 		q3Choice4Label = new JLabel("Choice 4: ");
 		q3Choice4Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q3Choice4Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q3Choice4Label.setForeground(new java.awt.Color(204, 204, 204));
 		q3Choice4Label.setBounds(15, 517, 77, 16);
 		contentPane.add(q3Choice4Label);
 
@@ -370,13 +342,10 @@ public class NewPresentation extends JFrame {
 		q3c4Check.setBounds(355, 510, 28, 29);
 		contentPane.add(q3c4Check);
 
-		q3Choice5Text = new JTextField();
-		q3Choice5Text.setColumns(10);
-		q3Choice5Text.setBounds(94, 534, 261, 26);
-		contentPane.add(q3Choice5Text);
-
 		q3Choice5Label = new JLabel("Choice 5: ");
 		q3Choice5Label.setHorizontalAlignment(SwingConstants.RIGHT);
+		q3Choice5Label.setFont(new Font("Dialog", Font.BOLD, 12));
+		q3Choice5Label.setForeground(new java.awt.Color(204, 204, 204));
 		q3Choice5Label.setBounds(15, 539, 77, 16);
 		contentPane.add(q3Choice5Label);
 
@@ -389,6 +358,240 @@ public class NewPresentation extends JFrame {
 		contentPane.add(createPresentationButton);
 		createPresentationButton.setAction(AddNewPresentation);
 		createPresentationButton.setText("Create Presentation");
+		
+		separator = new JSeparator();
+		separator.setBounds(16, 150, 368, 16);
+		contentPane.add(separator);
+		
+				q1Text = new JTextField();
+				q1Text.setBounds(94, 131, 290, 26);
+				q1Text.setForeground(new Color(204, 204, 204));
+				q1Text.setCaretColor(new Color(204, 204, 204));
+				q1Text.setBackground(new Color(52, 61, 70));
+				q1Text.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+				contentPane.add(q1Text);
+				q1Text.setColumns(10);
+																																						
+																																						separator_1 = new JSeparator();
+																																						separator_1.setBounds(16, 293, 368, 16);
+																																						contentPane.add(separator_1);
+																																								
+																																								separator_2 = new JSeparator();
+																																								separator_2.setBounds(16, 437, 368, 16);
+																																								contentPane.add(separator_2);
+																																								
+																																										q3Text = new JTextField();
+																																										q3Text.setColumns(10);
+																																										q3Text.setBounds(94, 418, 290, 26);
+																																										q3Text.setForeground(new Color(204, 204, 204));
+																																										q3Text.setCaretColor(new Color(204, 204, 204));
+																																										q3Text.setBackground(new Color(52, 61, 70));
+																																										q3Text.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+																																										contentPane.add(q3Text);
+																																										
+																																										separator_3 = new JSeparator();
+																																										separator_3.setBounds(94, 176, 261, 16);
+																																										contentPane.add(separator_3);
+																																										
+																																												q1Choice1Text = new JTextField();
+																																												q1Choice1Text.setColumns(10);
+																																												q1Choice1Text.setBounds(94, 159, 261, 26);
+																																												q1Choice1Text.setForeground(new Color(204, 204, 204));
+																																												q1Choice1Text.setCaretColor(new Color(204, 204, 204));
+																																												q1Choice1Text.setBackground(new Color(52, 61, 70));
+																																												q1Choice1Text.setBorder(null);
+																																												contentPane.add(q1Choice1Text);
+																																														
+																																														separator_4 = new JSeparator();
+																																														separator_4.setBounds(94, 198, 261, 16);
+																																														contentPane.add(separator_4);
+																																																
+																																																		q1Choice2Text = new JTextField();
+																																																		q1Choice2Text.setColumns(10);
+																																																		q1Choice2Text.setBounds(94, 181, 261, 26);
+																																																		q1Choice2Text.setForeground(new Color(204, 204, 204));
+																																																		q1Choice2Text.setCaretColor(new Color(204, 204, 204));
+																																																		q1Choice2Text.setBackground(new Color(52, 61, 70));
+																																																		q1Choice2Text.setBorder(null);
+																																																		contentPane.add(q1Choice2Text);
+																																																		
+																																																		separator_5 = new JSeparator();
+																																																		separator_5.setBounds(94, 220, 261, 16);
+																																																		contentPane.add(separator_5);
+																																																		
+																																																				q1Choice3Text = new JTextField();
+																																																				q1Choice3Text.setColumns(10);
+																																																				q1Choice3Text.setBounds(94, 203, 261, 26);
+																																																				q1Choice3Text.setForeground(new Color(204, 204, 204));
+																																																				q1Choice3Text.setCaretColor(new Color(204, 204, 204));
+																																																				q1Choice3Text.setBackground(new Color(52, 61, 70));
+																																																				q1Choice3Text.setBorder(null);
+																																																				contentPane.add(q1Choice3Text);
+																																																								
+																																																								separator_6 = new JSeparator();
+																																																								separator_6.setBounds(94, 242, 261, 16);
+																																																								contentPane.add(separator_6);
+																																																								
+																																																										q1Choice4Text = new JTextField();
+																																																										q1Choice4Text.setColumns(10);
+																																																										q1Choice4Text.setBounds(94, 225, 261, 26);
+																																																										q1Choice4Text.setForeground(new Color(204, 204, 204));
+																																																										q1Choice4Text.setCaretColor(new Color(204, 204, 204));
+																																																										q1Choice4Text.setBackground(new Color(52, 61, 70));
+																																																										q1Choice4Text.setBorder(null);
+																																																										contentPane.add(q1Choice4Text);
+																																																												
+																																																												separator_7 = new JSeparator();
+																																																												separator_7.setBounds(94, 264, 261, 16);
+																																																												contentPane.add(separator_7);
+																																																												
+																																																														q2Text = new JTextField();
+																																																														q2Text.setColumns(10);
+																																																														q2Text.setBounds(94, 274, 290, 26);
+																																																														q2Text.setForeground(new Color(204, 204, 204));
+																																																														q2Text.setCaretColor(new Color(204, 204, 204));
+																																																														q2Text.setBackground(new Color(52, 61, 70));
+																																																														q2Text.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+																																																														contentPane.add(q2Text);
+																																																														
+																																																																q1Choice5Text = new JTextField();
+																																																																q1Choice5Text.setColumns(10);
+																																																																q1Choice5Text.setBounds(94, 247, 261, 26);
+																																																																q1Choice5Text.setForeground(new Color(204, 204, 204));
+																																																																q1Choice5Text.setCaretColor(new Color(204, 204, 204));
+																																																																q1Choice5Text.setBackground(new Color(52, 61, 70));
+																																																																q1Choice5Text.setBorder(null);
+																																																																contentPane.add(q1Choice5Text);
+																																																																
+																																																																separator_8 = new JSeparator();
+																																																																separator_8.setBounds(94, 319, 261, 16);
+																																																																contentPane.add(separator_8);
+																																																																
+																																																																separator_9 = new JSeparator();
+																																																																separator_9.setBounds(94, 341, 261, 16);
+																																																																contentPane.add(separator_9);
+																																																																
+																																																																separator_10 = new JSeparator();
+																																																																separator_10.setBounds(94, 363, 261, 16);
+																																																																contentPane.add(separator_10);
+																																																																
+																																																																separator_11 = new JSeparator();
+																																																																separator_11.setBounds(94, 385, 261, 16);
+																																																																contentPane.add(separator_11);
+																																																																
+																																																																		q2Choice1Text = new JTextField();
+																																																																		q2Choice1Text.setColumns(10);
+																																																																		q2Choice1Text.setBounds(94, 302, 261, 26);
+																																																																		q2Choice1Text.setForeground(new Color(204, 204, 204));
+																																																																		q2Choice1Text.setCaretColor(new Color(204, 204, 204));
+																																																																		q2Choice1Text.setBackground(new Color(52, 61, 70));
+																																																																		q2Choice1Text.setBorder(null);
+																																																																		contentPane.add(q2Choice1Text);
+																																																																		
+																																																																				q2Choice2Text = new JTextField();
+																																																																				q2Choice2Text.setColumns(10);
+																																																																				q2Choice2Text.setBounds(94, 324, 261, 26);
+																																																																				q2Choice2Text.setForeground(new Color(204, 204, 204));
+																																																																				q2Choice2Text.setCaretColor(new Color(204, 204, 204));
+																																																																				q2Choice2Text.setBackground(new Color(52, 61, 70));
+																																																																				q2Choice2Text.setBorder(null);
+																																																																				contentPane.add(q2Choice2Text);
+																																																																				
+																																																																						q2Choice3Text = new JTextField();
+																																																																						q2Choice3Text.setColumns(10);
+																																																																						q2Choice3Text.setBounds(94, 346, 261, 26);
+																																																																						q2Choice3Text.setForeground(new Color(204, 204, 204));
+																																																																						q2Choice3Text.setCaretColor(new Color(204, 204, 204));
+																																																																						q2Choice3Text.setBackground(new Color(52, 61, 70));
+																																																																						q2Choice3Text.setBorder(null);
+																																																																						contentPane.add(q2Choice3Text);
+																																																																								
+																																																																								separator_12 = new JSeparator();
+																																																																								separator_12.setBounds(94, 407, 261, 16);
+																																																																								contentPane.add(separator_12);
+																																																																								
+																																																																										q2Choice4Text = new JTextField();
+																																																																										q2Choice4Text.setColumns(10);
+																																																																										q2Choice4Text.setBounds(94, 368, 261, 26);
+																																																																										q2Choice4Text.setForeground(new Color(204, 204, 204));
+																																																																										q2Choice4Text.setCaretColor(new Color(204, 204, 204));
+																																																																										q2Choice4Text.setBackground(new Color(52, 61, 70));
+																																																																										q2Choice4Text.setBorder(null);
+																																																																										contentPane.add(q2Choice4Text);
+																																																																										
+																																																																												q2Choice5Text = new JTextField();
+																																																																												q2Choice5Text.setColumns(10);
+																																																																												q2Choice5Text.setBounds(94, 390, 261, 26);
+																																																																												q2Choice5Text.setForeground(new Color(204, 204, 204));
+																																																																												q2Choice5Text.setCaretColor(new Color(204, 204, 204));
+																																																																												q2Choice5Text.setBackground(new Color(52, 61, 70));
+																																																																												q2Choice5Text.setBorder(null);
+																																																																												contentPane.add(q2Choice5Text);
+																																																																												
+																																																																												separator_13 = new JSeparator();
+																																																																												separator_13.setBounds(94, 463, 261, 16);
+																																																																												contentPane.add(separator_13);
+																																																																												
+																																																																												separator_14 = new JSeparator();
+																																																																												separator_14.setBounds(94, 485, 261, 16);
+																																																																												contentPane.add(separator_14);
+																																																																												
+																																																																												separator_15 = new JSeparator();
+																																																																												separator_15.setBounds(94, 507, 261, 16);
+																																																																												contentPane.add(separator_15);
+																																																																												
+																																																																												separator_16 = new JSeparator();
+																																																																												separator_16.setBounds(94, 529, 261, 16);
+																																																																												contentPane.add(separator_16);
+																																																																												
+																																																																												separator_17 = new JSeparator();
+																																																																												separator_17.setBounds(94, 551, 261, 16);
+																																																																												contentPane.add(separator_17);
+																																																																												
+																																																																														q3Choice1Text = new JTextField();
+																																																																														q3Choice1Text.setColumns(10);
+																																																																														q3Choice1Text.setBounds(94, 446, 261, 26);
+																																																																														q3Choice1Text.setForeground(new Color(204, 204, 204));
+																																																																														q3Choice1Text.setCaretColor(new Color(204, 204, 204));
+																																																																														q3Choice1Text.setBackground(new Color(52, 61, 70));
+																																																																														q3Choice1Text.setBorder(null);
+																																																																														contentPane.add(q3Choice1Text);
+																																																																														
+																																																																																q3Choice2Text = new JTextField();
+																																																																																q3Choice2Text.setColumns(10);
+																																																																																q3Choice2Text.setBounds(94, 468, 261, 26);
+																																																																																q3Choice2Text.setForeground(new Color(204, 204, 204));
+																																																																																q3Choice2Text.setCaretColor(new Color(204, 204, 204));
+																																																																																q3Choice2Text.setBackground(new Color(52, 61, 70));
+																																																																																q3Choice2Text.setBorder(null);
+																																																																																contentPane.add(q3Choice2Text);
+																																																																																
+																																																																																		q3Choice3Text = new JTextField();
+																																																																																		q3Choice3Text.setColumns(10);
+																																																																																		q3Choice3Text.setBounds(94, 490, 261, 26);
+																																																																																		q3Choice3Text.setForeground(new Color(204, 204, 204));
+																																																																																		q3Choice3Text.setCaretColor(new Color(204, 204, 204));
+																																																																																		q3Choice3Text.setBackground(new Color(52, 61, 70));
+																																																																																		q3Choice3Text.setBorder(null);
+																																																																																		contentPane.add(q3Choice3Text);
+																																																																																		
+																																																																																				q3Choice4Text = new JTextField();
+																																																																																				q3Choice4Text.setColumns(10);
+																																																																																				q3Choice4Text.setBounds(94, 512, 261, 26);
+																																																																																				q3Choice4Text.setForeground(new Color(204, 204, 204));
+																																																																																				q3Choice4Text.setCaretColor(new Color(204, 204, 204));
+																																																																																				q3Choice4Text.setBackground(new Color(52, 61, 70));
+																																																																																				q3Choice4Text.setBorder(null);
+																																																																																				contentPane.add(q3Choice4Text);
+																																																																																				
+																																																																																						q3Choice5Text = new JTextField();
+																																																																																						q3Choice5Text.setColumns(10);
+																																																																																						q3Choice5Text.setBounds(94, 534, 261, 26);
+																																																																																						q3Choice5Text.setForeground(new Color(204, 204, 204));
+																																																																																						q3Choice5Text.setCaretColor(new Color(204, 204, 204));
+																																																																																						q3Choice5Text.setBackground(new Color(52, 61, 70));
+																																																																																						q3Choice5Text.setBorder(null);
+																																																																																						contentPane.add(q3Choice5Text);
 	}
 
 	private class AddNewPresentation extends AbstractAction {
