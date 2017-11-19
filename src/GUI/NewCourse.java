@@ -24,7 +24,7 @@ import java.awt.Color;
 import javax.swing.JSeparator;
 import java.awt.Font;
 
-public class NewClass extends JFrame {
+public class NewCourse extends JFrame {
 
 	private JPanel contentPane;
 	private JTextPane emailText;
@@ -39,7 +39,7 @@ public class NewClass extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					NewClass frame = new NewClass(null);
+					NewCourse frame = new NewCourse(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +51,7 @@ public class NewClass extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewClass(NotezzaClient client) {
+	public NewCourse(NotezzaClient client) {
 		setResizable(false);
 
 		this.client = client;
