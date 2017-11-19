@@ -1,26 +1,16 @@
-package NewGUI;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package NewGUI;
 
-import GUI.UserProfile;
-import NotezzaClient.NotezzaClient;
-import objects.CourseList;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
 import javax.swing.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 
 /**
  *
@@ -28,24 +18,43 @@ import com.teamdev.jxbrowser.chromium.swing.BrowserView;
  */
 public class MainWin extends javax.swing.JFrame {
 
-	Path path;
-	String currentRelativePath;
     /**
      * Creates new form MainWin
      */
-
-    private NotezzaClient client;
-    private CourseList courseList;
-
-    public MainWin(NotezzaClient client, CourseList courseList) {
-        this.client = client;
-        this.courseList = courseList;
-        path = Paths.get("");
-        currentRelativePath = path.toAbsolutePath().toString();
-        System.out.println(currentRelativePath);
+    public MainWin() {
         initComponents();
-        //OverviewList.setCellRender(getCellRenderer());        
-                
+        //OverviewList.setCellRender(getCellRenderer());
+        String title ="I am Title";
+        String content = "I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. "
+                + "I am content. I am content. I am content. ";
+        Post.setText("<html><body wrap=\"hard\"><h1><b>" + title + "</b></h1><br />"+ content + "</body></html>");
+//        Comments.setText("<html><body wrap=\"hard\">"
+//                + "<ul type=\"I\">"
+//                + "<li style=\"color:green\" bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment1</li>"
+//                + "<li bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment2</li>"
+//                + "</ul>"
+//                + "</body></html>");
     }
 
     /**
@@ -56,10 +65,7 @@ public class MainWin extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-    		
-    		browser = new Browser();
-        browserView = new BrowserView(browser);
-        
+
         MainPanel = new javax.swing.JPanel();
         functionBar = new javax.swing.JPanel();
         sortChoiceBox = new javax.swing.JComboBox<>();
@@ -70,14 +76,14 @@ public class MainWin extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
+        classes = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
         Menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         lecture = new javax.swing.JLabel();
         addClass = new javax.swing.JLabel();
-        changeClass = new javax.swing.JLabel();
         logout = new javax.swing.JLabel();
         profile = new javax.swing.JLabel();
         viewMember = new javax.swing.JLabel();
@@ -85,8 +91,18 @@ public class MainWin extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         OverviewList = new javax.swing.JList<>();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        PostContent = new javax.swing.JTextPane();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        layer2 = new javax.swing.JPanel();
+        PostScroll = new javax.swing.JScrollPane();
+        Post = new javax.swing.JTextPane();
+        layer1 = new javax.swing.JPanel();
+        likeButton = new javax.swing.JButton();
+        dislikeButton = new javax.swing.JButton();
+        CommentScroll = new javax.swing.JScrollPane();
+        Comments = new javax.swing.JTextPane();
+        writeCommentPanel = new javax.swing.JPanel();
+        CreateComment = new javax.swing.JTextField();
+        PostComment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +116,11 @@ public class MainWin extends javax.swing.JFrame {
                 sortChoiceBoxItemStateChanged(evt);
             }
         });
+        sortChoiceBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortChoiceBoxActionPerformed(evt);
+            }
+        });
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -108,7 +129,8 @@ public class MainWin extends javax.swing.JFrame {
         jLabel2.setText("Sort Posts By:");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/search-20.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search-20.png"))); // NOI18N
+        jLabel3.setToolTipText("Search Notes");
 
         searchNote.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         searchNote.setForeground(new java.awt.Color(42, 77, 105));
@@ -120,6 +142,11 @@ public class MainWin extends javax.swing.JFrame {
                 searchNoteMouseClicked(evt);
             }
         });
+        searchNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNoteActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -129,35 +156,44 @@ public class MainWin extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(42, 77, 105));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/plus-17-dark.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus-17-dark.png"))); // NOI18N
         jButton1.setText("Add New Post");
 
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 36, Short.MAX_VALUE)
-        );
+        classes.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
+        classes.setForeground(new java.awt.Color(42, 77, 105));
+        classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
+        classes.setToolTipText("Change Your Class");
+        classes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                classesItemStateChanged(evt);
+            }
+        });
+        classes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classesActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/home-20.png"))); // NOI18N
 
         javax.swing.GroupLayout functionBarLayout = new javax.swing.GroupLayout(functionBar);
         functionBar.setLayout(functionBarLayout);
         functionBarLayout.setHorizontalGroup(
             functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(functionBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(classes, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchNote, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,10 +201,11 @@ public class MainWin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sortChoiceBox, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         functionBarLayout.setVerticalGroup(
             functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,11 +216,12 @@ public class MainWin extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(sortChoiceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchNote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
                     .addComponent(jButton1)
                     .addComponent(jSeparator4)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(classes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -195,15 +233,13 @@ public class MainWin extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NOTEZZA");
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/logo50.png"))); // NOI18N
-
-        jSeparator3.setForeground(null);
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo50.png"))); // NOI18N
 
         lecture.setBackground(new java.awt.Color(75, 134, 180));
         lecture.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         lecture.setForeground(new java.awt.Color(231, 239, 246));
         lecture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lecture.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/lecture-20.png"))); // NOI18N
+        lecture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lecture-20.png"))); // NOI18N
         lecture.setText("Enter Lecture");
         lecture.setToolTipText("");
         lecture.setOpaque(true);
@@ -223,7 +259,7 @@ public class MainWin extends javax.swing.JFrame {
         addClass.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         addClass.setForeground(new java.awt.Color(231, 239, 246));
         addClass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addClass.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/plus-20.png"))); // NOI18N
+        addClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus-20.png"))); // NOI18N
         addClass.setText(" Add Class");
         addClass.setToolTipText("");
         addClass.setOpaque(true);
@@ -239,28 +275,11 @@ public class MainWin extends javax.swing.JFrame {
             }
         });
 
-        changeClass.setBackground(new java.awt.Color(75, 134, 180));
-        changeClass.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
-        changeClass.setForeground(new java.awt.Color(231, 239, 246));
-        changeClass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        changeClass.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/home-20.png"))); // NOI18N
-        changeClass.setText(" Your Classes");
-        changeClass.setToolTipText("");
-        changeClass.setOpaque(true);
-        changeClass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                changeClassMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                changeClassMouseEntered(evt);
-            }
-        });
-
         logout.setBackground(new java.awt.Color(75, 134, 180));
         logout.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         logout.setForeground(new java.awt.Color(231, 239, 246));
         logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/exit-20.png"))); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit-20.png"))); // NOI18N
         logout.setText("Log Out");
         logout.setToolTipText("");
         logout.setOpaque(true);
@@ -280,7 +299,7 @@ public class MainWin extends javax.swing.JFrame {
         profile.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         profile.setForeground(new java.awt.Color(231, 239, 246));
         profile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/profile-20.png"))); // NOI18N
+        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/profile-20.png"))); // NOI18N
         profile.setText(" Profile");
         profile.setToolTipText("");
         profile.setOpaque(true);
@@ -300,7 +319,7 @@ public class MainWin extends javax.swing.JFrame {
         viewMember.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         viewMember.setForeground(new java.awt.Color(231, 239, 246));
         viewMember.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        viewMember.setIcon(new javax.swing.ImageIcon(getClass().getResource( "img/viewMember-20.png"))); // NOI18N
+        viewMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/viewMember-20.png"))); // NOI18N
         viewMember.setText(" Find Classmates");
         viewMember.setToolTipText("");
         viewMember.setOpaque(true);
@@ -330,7 +349,6 @@ public class MainWin extends javax.swing.JFrame {
                     .addComponent(profile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lecture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewMember, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                    .addComponent(changeClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -351,11 +369,9 @@ public class MainWin extends javax.swing.JFrame {
                 .addComponent(lecture, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(viewMember, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(changeClass, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(15, 15, 15))
         );
 
         jPanel5.setBackground(new java.awt.Color(231, 239, 246));
@@ -383,18 +399,142 @@ public class MainWin extends javax.swing.JFrame {
         );
 
         jPanel6.setBackground(new java.awt.Color(231, 239, 246));
-        jPanel6.setLayout(new java.awt.BorderLayout());
 
-        PostContent.setEditable(false);
-        PostContent.setContentType("text/html"); // NOI18N
-        PostContent.setText("\n<html>\n  <head>\n    <title>USC: CSCI 201L Fall 2017</title>\n\n  </head>\n  <body text=\"#333333\" bgcolor=\"#EEEEEE\" link=\"#0000EE\" vlink=\"#551A8B\" alink=\"#336633\">\n<p wrap=\"hard\">\n    <h1>USC: CSCI 201L Fall 2017. USC: CSCI 201L Fall 2017. USC: CSCI 201L Fall 2017</h1>\n</p>\n  </body>\n</html>\n");
-        PostContent.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jScrollPane4.setViewportView(PostContent);
-        
-        jPanel6.add(browserView, java.awt.BorderLayout.CENTER);
-        browser.loadURL("https://piazza.com");
+        jLayeredPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLayeredPane1.setOpaque(true);
 
-        //jPanel6.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+        PostScroll.setBorder(null);
+
+        Post.setEditable(false);
+        Post.setContentType("text/html"); // NOI18N
+        PostScroll.setViewportView(Post);
+
+        javax.swing.GroupLayout layer2Layout = new javax.swing.GroupLayout(layer2);
+        layer2.setLayout(layer2Layout);
+        layer2Layout.setHorizontalGroup(
+            layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 561, Short.MAX_VALUE)
+            .addGroup(layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PostScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+        );
+        layer2Layout.setVerticalGroup(
+            layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 157, Short.MAX_VALUE)
+            .addGroup(layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PostScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+        );
+
+        layer1.setOpaque(false);
+
+        likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/like-22.png"))); // NOI18N
+        likeButton.setText("63");
+
+        dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/dislike-22.png"))); // NOI18N
+        dislikeButton.setText("63");
+
+        javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
+        layer1.setLayout(layer1Layout);
+        layer1Layout.setHorizontalGroup(
+            layer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layer1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(likeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dislikeButton)
+                .addGap(14, 14, 14))
+        );
+        layer1Layout.setVerticalGroup(
+            layer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layer1Layout.createSequentialGroup()
+                .addContainerGap(168, Short.MAX_VALUE)
+                .addGroup(layer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(likeButton)
+                    .addComponent(dislikeButton))
+                .addContainerGap())
+        );
+
+        jLayeredPane1.setLayer(layer2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(layer1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(layer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(layer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(layer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(layer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 51, Short.MAX_VALUE)))
+        );
+
+        Comments.setEditable(false);
+        Comments.setContentType("text/html"); // NOI18N
+        CommentScroll.setViewportView(Comments);
+
+        writeCommentPanel.setBackground(new java.awt.Color(231, 239, 246));
+
+        CreateComment.setToolTipText("Add Comment");
+        CreateComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        CreateComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateCommentActionPerformed(evt);
+            }
+        });
+
+        PostComment.setText("Post");
+        PostComment.setToolTipText("");
+        PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PostCommentMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout writeCommentPanelLayout = new javax.swing.GroupLayout(writeCommentPanel);
+        writeCommentPanel.setLayout(writeCommentPanelLayout);
+        writeCommentPanelLayout.setHorizontalGroup(
+            writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(writeCommentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CreateComment)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PostComment, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        writeCommentPanelLayout.setVerticalGroup(
+            writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(writeCommentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(writeCommentPanelLayout.createSequentialGroup()
+                        .addComponent(PostComment)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(CreateComment))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLayeredPane1)
+            .addComponent(writeCommentPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(CommentScroll, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(CommentScroll)
+                .addGap(0, 0, 0)
+                .addComponent(writeCommentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
@@ -408,21 +548,18 @@ public class MainWin extends javax.swing.JFrame {
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(functionBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
+                .addComponent(functionBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addComponent(functionBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addComponent(Menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(Menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -433,15 +570,13 @@ public class MainWin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>                        
-
-    private void changeClassMouseEntered(java.awt.event.MouseEvent evt) {                                         
-        changeClass.setBackground(new Color(42,77,105));
-    }                                        
 
     private void addClassMouseEntered(java.awt.event.MouseEvent evt) {                                      
         addClass.setBackground(new Color(42,77,105));
@@ -454,10 +589,6 @@ public class MainWin extends javax.swing.JFrame {
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {                                    
         logout.setBackground(new Color(42,77,105));
     }                                   
-
-    private void changeClassMouseExited(java.awt.event.MouseEvent evt) {                                        
-        changeClass.setBackground(new Color(75,134,180));
-    }                                       
 
     private void addClassMouseExited(java.awt.event.MouseEvent evt) {                                     
         addClass.setBackground(new Color(75,134,180));
@@ -491,11 +622,8 @@ public class MainWin extends javax.swing.JFrame {
         
     }                                              
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
-        System.out.println("Profile popping up!");
-        // TODO change this back to new GUI after it's done:
-        UserProfile profile = new UserProfile(client.getUser());
-        profile.setVisible(true);
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
+        
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -516,6 +644,30 @@ public class MainWin extends javax.swing.JFrame {
 
     private void viewMemberMouseEntered(java.awt.event.MouseEvent evt) {                                        
         viewMember.setBackground(new Color(42,77,105));
+    }                                       
+
+    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        
+    }                                             
+
+    private void sortChoiceBoxActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        
+    }                                             
+
+    private void searchNoteActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        
+    }                                          
+
+    private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        
+    }                                        
+
+    private void classesItemStateChanged(java.awt.event.ItemEvent evt) {                                         
+        // TODO add your handling code here:
+    }                                        
+
+    private void classesActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        // TODO add your handling code here:
     }                                       
 
     /**
@@ -548,7 +700,7 @@ public class MainWin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWin(null,null).setVisible(true);
+                new MainWin().setVisible(true);
             }
         });
     }
@@ -568,34 +720,42 @@ public class MainWin extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify                     
+    private javax.swing.JScrollPane CommentScroll;
+    private javax.swing.JTextPane Comments;
+    private javax.swing.JTextField CreateComment;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel Menu;
     private javax.swing.JList<String> OverviewList;
-    private javax.swing.JTextPane PostContent;
+    private javax.swing.JTextPane Post;
+    private javax.swing.JButton PostComment;
+    private javax.swing.JScrollPane PostScroll;
     private javax.swing.JLabel addClass;
-    private javax.swing.JLabel changeClass;
+    private javax.swing.JComboBox<String> classes;
+    private javax.swing.JButton dislikeButton;
     private javax.swing.JPanel functionBar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPanel layer1;
+    private javax.swing.JPanel layer2;
     private javax.swing.JLabel lecture;
+    private javax.swing.JButton likeButton;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logout;
     private javax.swing.JLabel profile;
     private javax.swing.JTextField searchNote;
     private javax.swing.JComboBox<String> sortChoiceBox;
     private javax.swing.JLabel viewMember;
-    private Browser browser;
-    private BrowserView browserView;
+    private javax.swing.JPanel writeCommentPanel;
     // End of variables declaration                   
 }
