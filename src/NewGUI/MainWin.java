@@ -33,13 +33,23 @@ public class MainWin extends javax.swing.JFrame {
      * Creates new form MainWin
      */
     public MainWin(NotezzaClient client,CourseList courseList) {
-        initComponents();
         this.client = client;
         this.courseList = courseList;
-        Vector<Course> course = courseList.getCourse();
-        currentCourse = course.get(0);
+        Vector<Course> courses = courseList.getCourse();
+        if (courses != null && courses.size() > 0) {
+            currentCourse = courses.get(0);
+            if (currentCourse.getAllNotes().size() > 0) {
+                currentNote = currentCourse.getAllNotes().get(0);
+            } else {
+                currentNote = null;
+            }
+        } else {
+            currentCourse = null;
+            currentNote = null;
+        }
+        initComponents();
 
-
+        /*
         String title ="I am Title";
         String content = "I am content. "
                 + "I am content. I am content. I am content. "
@@ -65,6 +75,7 @@ public class MainWin extends javax.swing.JFrame {
                 + "I am content. I am content. I am content. "
                 + "I am content. I am content. I am content. ";
         Post.setText("<html><body wrap=\"hard\"><h1><b>" + title + "</b></h1><br />"+ content + "</body></html>");
+        */
     }
 
     /**
