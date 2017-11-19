@@ -20,5 +20,7 @@ public enum CommandType {
     ADD_NOTE,
     UPDATE_NOTE,
     ADD_LIKE,
-    ADD_DISLIKE;
+    ADD_DISLIKE,
+    SEND_QUIZ,
+    UPDATE_QUIZ;
 }

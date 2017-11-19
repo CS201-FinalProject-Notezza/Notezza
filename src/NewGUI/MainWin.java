@@ -7,6 +7,8 @@ package NewGUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +17,8 @@ import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import GUI.UserPresentation;
 import GUI.UserProfile;
@@ -33,27 +37,15 @@ public class MainWin extends javax.swing.JFrame {
     private CourseList courseList;
     private Course currentCourse;
     private Note currentNote;
+
+    private Vector<Note> displayedNotes;
+    private DefaultListModel<String> notesOverviewModel;
     /**
      * Creates new form MainWin
      */
     public MainWin(NotezzaClient client, CourseList courseList) {
         this.client = client;
         this.courseList = courseList;
-        Vector<Course> courses;
-//        if (courseList != null) {
-//            courses = courseList.getCourses();
-//        } else courses = null;
-//        if (courses != null && courses.size() > 0) {
-//            currentCourse = courses.get(0);
-//            if (currentCourse.getAllNotes().size() > 0) {
-//                currentNote = currentCourse.getAllNotes().get(0);
-//            } else {
-//                currentNote = null;
-//            }
-//        } else {
-//            currentCourse = null;
-//            currentNote = null;
-//        }
         initComponents();
         initContent();
     }
@@ -78,24 +70,11 @@ public class MainWin extends javax.swing.JFrame {
         classes.setToolTipText("Change Class");
 
         // Posts
-
+        notesOverviewModel = new DefaultListModel<String>();
         // TODO change this back when done coz hardcoding to the second element
-        currentCourse = courses.get(1);
-        Vector<Note> notes = currentCourse.getAllNotes();
-        DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
-        for (Note note : notes) {
-            String str = "<html><body><h3><b>" + note.getTitle() + "</b></h3><br />";
-            String noteText = note.getTextContent();
-            if(noteText.length() <= 40) {
-                str += noteText;
-            } else {
-                str += noteText.substring(0, 39);
-            }
-            str += "</body></html>";
-            notesOverviewModel.addElement(Util.getHTMLforNote(note));
-        }
-
-        OverviewList.setModel(notesOverviewModel);
+        currentCourse = courses.get(0);
+        displayedNotes = new Vector<>();
+        updateNote();
 
         //    		OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
         //    			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -104,10 +83,6 @@ public class MainWin extends javax.swing.JFrame {
         //    		});
 
         // Post Area
-
-
-
-
     }
 
     /**
@@ -207,6 +182,18 @@ public class MainWin extends javax.swing.JFrame {
         classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         classes.setToolTipText("Change Your Class");
         classes.addItemListener(this::classesItemStateChanged);
+        classes.addActionListener(e -> {
+            String courseName = (String) classes.getSelectedItem();
+            notesOverviewModel.removeAllElements();
+            OverviewList.setModel(notesOverviewModel);
+            for (Course course : courseList.getCourses()) {
+                if (course.getCourseName().equals(courseName)) {
+                    currentCourse = course;
+                    updateNote();
+                    break;
+                }
+            }
+        });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
@@ -393,6 +380,16 @@ public class MainWin extends javax.swing.JFrame {
         OverviewList.setCellRenderer(getCellRenderer());
         OverviewList.setSelectionBackground(new java.awt.Color(173, 203, 227));
         OverviewList.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        OverviewList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    // TODO update comment
+                    int indexForComment = OverviewList.getSelectedIndex();
+
+                }
+            }
+        });
         jScrollPane1.setViewportView(OverviewList);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -591,7 +588,17 @@ public class MainWin extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
+
+    private void updateNote() {
+        displayedNotes.clear();
+        displayedNotes.addAll(currentCourse.getAllNotes());
+
+        for (Note note : displayedNotes) {
+            notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
+        }
+        OverviewList.setModel(notesOverviewModel);
+    }
 
     private void AddDisLikeMouseClicked(MouseEvent evt) {
         System.out.println("Adding a like");
@@ -671,16 +678,16 @@ public class MainWin extends javax.swing.JFrame {
     }                                       
 
     private void sortChoiceBoxActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        
+        // TODO add sort
     }                                             
 
-    private void searchNoteActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        
+    private void searchNoteActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add search
     }                                          
 
     private void classesItemStateChanged(java.awt.event.ItemEvent evt) {                                         
         // TODO add your handling code here:
-    }                                        
+    }
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("Post comment clicked...");

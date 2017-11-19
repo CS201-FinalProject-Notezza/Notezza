@@ -183,6 +183,10 @@ public class NotezzaServer {
                 dm.addNoteVote(disLikedNote,disLikedUser,false);
                 broadcast(new Command(UPDATE_NOTE,disLikedNote));
                 break;
+            case SEND_QUIZ:
+                System.out.println("Received a request to display quiz...");
+                Quiz quiz = (Quiz) obj;
+                broadcast(new Command(UPDATE_QUIZ,quiz));
         }
     }
 
