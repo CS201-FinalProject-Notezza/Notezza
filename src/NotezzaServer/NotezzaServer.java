@@ -168,8 +168,20 @@ public class NotezzaServer {
                 broadcast(new Command(UPDATE_CHAT, cm));
                 break;
             case ADD_LIKE:
+                System.out.println("Received a like...");
+                AddingLike addLike = (AddingLike) obj;
+                User likedUser = addLike.getUser();
+                Note likedNote = addLike.getNote();
+                dm.addNoteVote(likedNote,likedUser,true);
+                broadcast(new Command(UPDATE_NOTE,likedNote));
                 break;
             case ADD_DISLIKE:
+                System.out.println("Received a dislike...");
+                AddingDislike addDislike = (AddingDislike) obj;
+                User disLikedUser = addDislike.getUser();
+                Note disLikedNote = addDislike.getNote();
+                dm.addNoteVote(disLikedNote,disLikedUser,false);
+                broadcast(new Command(UPDATE_NOTE,disLikedNote));
                 break;
         }
     }
