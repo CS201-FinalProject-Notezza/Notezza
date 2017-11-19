@@ -990,8 +990,8 @@ public class DatabaseManager {
 		}
 	}
 	
-	public List<Course> findUserCourses(String name){
-        List<Course> courses= new ArrayList<>();
+	public Vector<Course> findUserCourses(String name){
+        Vector<Course> courses= new Vector<>();
         for(Course course : allCourses.values()) {
             if(course.containStudent(name)){
                 courses.add(course);

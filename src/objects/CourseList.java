@@ -2,16 +2,17 @@ package objects;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Vector;
 
 public class CourseList implements Serializable {
     public static final long serialVersionUID = 12341234;
-    private List<Course> course;
+    private Vector<Course> course;
 
-    public CourseList(List<Course> course) {
+    public CourseList(Vector<Course> course) {
         this.course = course;
     }
 
-    public List<Course> getCourse() {
+    public Vector<Course> getCourse() {
         return course;
     }
 }

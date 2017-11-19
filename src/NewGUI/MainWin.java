@@ -6,11 +6,15 @@
 package NewGUI;
 
 import GUI.UserProfile;
+import GUI.ViewStudentsInClass;
+import objects.Course;
 import objects.CourseList;
 import NotezzaClient.NotezzaClient;
+import objects.Note;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.*;
@@ -23,6 +27,8 @@ public class MainWin extends javax.swing.JFrame {
 
     private NotezzaClient client;
     private CourseList courseList;
+    private Course currentCourse;
+    private Note currentNote;
     /**
      * Creates new form MainWin
      */
@@ -30,6 +36,9 @@ public class MainWin extends javax.swing.JFrame {
         initComponents();
         this.client = client;
         this.courseList = courseList;
+        Vector<Course> course = courseList.getCourse();
+
+
         String title ="I am Title";
         String content = "I am content. "
                 + "I am content. I am content. I am content. "
@@ -619,6 +628,8 @@ public class MainWin extends javax.swing.JFrame {
 
     private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
         // TODO add your handling code here:
+        ViewStudentsInClass viewClassmates = new ViewStudentsInClass();
+        viewClassmates.setVisible(true);
     }                                       
 
     private void viewMemberMouseExited(java.awt.event.MouseEvent evt) {                                       
