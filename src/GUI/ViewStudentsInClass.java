@@ -69,7 +69,7 @@ public class ViewStudentsInClass extends JFrame {
 		
 		for(int i = 0; i<students.size(); i++)
 		{
-			if (!students.get(i).equals(currUser))
+			if (!students.get(i).equals(currUser) && !students.get(i).equals(instructor))
 			studentDefaultListModel.addElement(students.get(i).getUsername());
 		}
 		studentList = new JList(studentDefaultListModel);

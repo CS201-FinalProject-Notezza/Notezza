@@ -7,7 +7,6 @@ package NewGUI;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -415,19 +414,9 @@ public class MainWin extends javax.swing.JFrame {
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
         likeButton.setText("63");
-        likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddLikeMouseClicked(evt);
-            }
-        });
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
         dislikeButton.setText("63");
-        dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddDisLikeMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
         layer1.setLayout(layer1Layout);
@@ -568,16 +557,6 @@ public class MainWin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void AddDisLikeMouseClicked(MouseEvent evt) {
-        System.out.println("Adding a dislike...");
-        client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
-    }
-
-    private void AddLikeMouseClicked(MouseEvent evt) {
-        System.out.println("Adding a like");
-        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
-    }
-
     private void lectureMouseEntered(java.awt.event.MouseEvent evt) {                                     
         lecture.setBackground(new Color(42,77,105));
     }                                    
@@ -628,8 +607,10 @@ public class MainWin extends javax.swing.JFrame {
 
     private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("POPPING UP VIEW ClASSMATES...");
-        ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
-        viewClassMate.setVisible(true);
+        if (currentCourse != null) {
+        	ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
+        	viewClassMate.setVisible(true);
+        }
     }                                       
 
     private void viewMemberMouseExited(java.awt.event.MouseEvent evt) {                                       
