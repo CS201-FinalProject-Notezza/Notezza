@@ -591,9 +591,7 @@ public class MainWinInstr extends javax.swing.JFrame {
 		OverviewList.setModel(notesOverviewModel);
 		
 		// Post Content
-		//Post.setText("<html><h2><font face=\"Century Gothic\">You haven't select a post yet.</font></h2></html>");
-		
-		
+		Post.setText(Util.getHTMLforNoteDetail(notes.get(0)));
 		
     }
 
