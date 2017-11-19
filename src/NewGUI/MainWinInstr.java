@@ -560,7 +560,14 @@ public class MainWinInstr extends javax.swing.JFrame {
 			// classes dropdown box
 			jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
 			jComboBox1.setToolTipText("Change Class");
-			// Posts
+			// Posts Overview
+			OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
+    				String[] strings = { "<html><h3>No Posts Available<h3><html>" };
+    				public int getSize() { return strings.length; }
+    				public String getElementAt(int i) { return strings[i]; }
+    			});
+			
+			// Post Content
 			
 			return;
 		}
@@ -578,27 +585,13 @@ public class MainWinInstr extends javax.swing.JFrame {
 		Vector<Note> notes = currentCourse.getAllNotes();
 		DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
 		for (Note note : notes) {
-			String str = "<html><body><h3><b>" + note.getTitle() + "</b></h3><br />";
-			String noteText = note.getTextContent();
-			if(noteText.length() <= 40) {
-				str += noteText;
-			} else {
-				str += noteText.substring(0, 39);
-			}
-			str += "</body></html>";
-			notesOverviewModel.addElement(str);
+			notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
 		}
 		
 		OverviewList.setModel(notesOverviewModel);
 		
-//    		OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
-//    			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-//    			public int getSize() { return strings.length; }
-//    			public String getElementAt(int i) { return strings[i]; }
-//    		});
-		
-		// Post Area
-		
+		// Post Content
+		//Post.setText("<html><h2><font face=\"Century Gothic\">You haven't select a post yet.</font></h2></html>");
 		
 		
 		
