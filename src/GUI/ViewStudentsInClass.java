@@ -89,7 +89,7 @@ public class ViewStudentsInClass extends JFrame {
 		        	String username = (String)studentList.getSelectedValue();
 		        	for (User s : students) {
 		        		if (s.getUsername().equals(username)) {
-		        			UserProfile profile = new UserProfile(s);
+		        			UserProfile profile = new UserProfile(currUser, s);
 		        			profile.setVisible(true);
 		        			break;
 		        		}
@@ -118,7 +118,7 @@ public class ViewStudentsInClass extends JFrame {
 		        // Double click detected
 		        if (evt.getClickCount() == 2) {
 		        	
-		        	UserProfile profile = new UserProfile(instructor);
+		        	UserProfile profile = new UserProfile(currUser, instructor);
 		        	profile.setVisible(true);
 		        }
 		    }
