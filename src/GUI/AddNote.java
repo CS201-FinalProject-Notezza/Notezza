@@ -101,16 +101,9 @@ public class AddNote extends JFrame {
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnSubmit.setAction(action_1);
-		btnSubmit.setBounds(100, 351, 100, 34);
+		btnSubmit.setBounds(170, 354, 160, 34);
 		btnSubmit.setForeground(new java.awt.Color(52, 61, 70));
 		contentPane.add(btnSubmit);
-		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setAction(action);
-		btnCancel.setBounds(300, 351, 100, 34);
-		btnCancel.setFont(new Font("Dialog", Font.BOLD, 15));
-		btnCancel.setForeground(new java.awt.Color(52, 61, 70));
-		contentPane.add(btnCancel);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(68, 34, 411, 16);

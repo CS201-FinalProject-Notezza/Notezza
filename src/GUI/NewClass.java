@@ -20,14 +20,17 @@ import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import java.awt.Color;
+import javax.swing.JSeparator;
+import java.awt.Font;
 
 public class NewClass extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextPane textPane;
+	private JTextPane emailText;
 
 	private NotezzaClient client;
+	private JTextField courseNameText;
 
 	/**
 	 * Launch the application.
@@ -49,55 +52,59 @@ public class NewClass extends JFrame {
 	 * Create the frame.
 	 */
 	public NewClass(NotezzaClient client) {
-		
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
+		setResizable(false);
+
 		this.client = client;
 		
-		setTitle("New Class");
+		setTitle("New Course");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 320, 275);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(52, 61, 70));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblClassName = new JLabel("Class Name");
-		lblClassName.setBounds(47, 27, 94, 16);
-		contentPane.add(lblClassName);
+		JLabel courseNameLabel = new JLabel("Course Name:");
+		courseNameLabel.setBounds(20, 20, 116, 16);
+		courseNameLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		courseNameLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(courseNameLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(173, 22, 130, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		JLabel emailLabel = new JLabel("Student Emails:");
+		emailLabel.setBounds(20, 49, 165, 16);
+		emailLabel.setFont(new Font("Dialog", Font.BOLD, 15));
+		emailLabel.setForeground(new java.awt.Color(204, 204, 204));
+		contentPane.add(emailLabel);
 		
-		JLabel lblEmailsOfStudents = new JLabel("Emails of Students (Separated By Commas)");
-		lblEmailsOfStudents.setBounds(57, 65, 295, 16);
-		contentPane.add(lblEmailsOfStudents);
-		
-		textPane = new JTextPane();
-		textPane.setBounds(61, 93, 295, 122);
-		contentPane.add(textPane);
-		
-		JButton btnOk = new JButton("OK");
+		emailText = new JTextPane();
+		emailText.setBounds(20, 70, 280, 122);
+		emailText.setBackground(new java.awt.Color(204, 204, 204));
+		emailText.setForeground(new java.awt.Color(52, 61, 70));
+		emailText.setBorder(null);
+		emailText.setCaretColor(new java.awt.Color(52, 61, 70));
+		contentPane.add(emailText);
 		Action addClass = new AddClass();
-		btnOk.setAction(addClass);
-		btnOk.setBounds(47, 230, 117, 29);
-		contentPane.add(btnOk);
-		
-		JButton btnCancel = new JButton("Cancel");
 		Action action = new SwingAction();
-		btnCancel.setAction(action);
-		btnCancel.setBounds(207, 230, 117, 29);
-		contentPane.add(btnCancel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(136, 32, 164, 16);
+		contentPane.add(separator);
+		
+		courseNameText = new JTextField();
+		courseNameText.setForeground(new Color(204, 204, 204));
+		courseNameText.setColumns(10);
+		courseNameText.setCaretColor(new Color(204, 204, 204));
+		courseNameText.setBorder(null);
+		courseNameText.setBackground(new Color(52, 61, 70));
+		courseNameText.setBounds(136, 15, 164, 26);
+		contentPane.add(courseNameText);
+		
+		JButton createCourseButton = new JButton("Create Course");
+		createCourseButton.setForeground(new Color(52, 61, 70));
+		createCourseButton.setFont(new Font("Dialog", Font.BOLD, 15));
+		createCourseButton.setBounds(80, 205, 160, 34);
+		contentPane.add(createCourseButton);
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
@@ -114,8 +121,8 @@ public class NewClass extends JFrame {
 						putValue(SHORT_DESCRIPTION, "Some short description");
 					}
  		public void actionPerformed(ActionEvent e) {
-			String courseName = textField.getText();
-			String studentEmailStrings = textPane.getText();
+			String courseName = courseNameText.getText();
+			String studentEmailStrings = emailText.getText();
 			String[] studentEmailArrays = studentEmailStrings.split(",");
 
 			User instructor = client.getUser();
