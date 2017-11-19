@@ -5,11 +5,14 @@
  */
 package NewGUI;
 
+import GUI.UserProfile;
+import objects.CourseList;
+import NotezzaClient.NotezzaClient;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
-import javax.swing.border.LineBorder;
 import javax.swing.*;
 
 /**
@@ -18,12 +21,15 @@ import javax.swing.*;
  */
 public class MainWin extends javax.swing.JFrame {
 
+    private NotezzaClient client;
+    private CourseList courseList;
     /**
      * Creates new form MainWin
      */
-    public MainWin() {
+    public MainWin(NotezzaClient client,CourseList courseList) {
         initComponents();
-        //OverviewList.setCellRender(getCellRenderer());
+        this.client = client;
+        this.courseList = courseList;
         String title ="I am Title";
         String content = "I am content. "
                 + "I am content. I am content. I am content. "
@@ -49,12 +55,6 @@ public class MainWin extends javax.swing.JFrame {
                 + "I am content. I am content. I am content. "
                 + "I am content. I am content. I am content. ";
         Post.setText("<html><body wrap=\"hard\"><h1><b>" + title + "</b></h1><br />"+ content + "</body></html>");
-//        Comments.setText("<html><body wrap=\"hard\">"
-//                + "<ul type=\"I\">"
-//                + "<li style=\"color:green\" bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment1</li>"
-//                + "<li bgcolor=\"#EEEEEE\" cellpadding=\"20\">Comment2</li>"
-//                + "</ul>"
-//                + "</body></html>");
     }
 
     /**
@@ -111,16 +111,8 @@ public class MainWin extends javax.swing.JFrame {
         sortChoiceBox.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
         sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of Comments", "Most Number of Likes" }));
-        sortChoiceBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                sortChoiceBoxItemStateChanged(evt);
-            }
-        });
-        sortChoiceBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sortChoiceBoxActionPerformed(evt);
-            }
-        });
+        sortChoiceBox.addItemListener(this::sortChoiceBoxItemStateChanged);
+        sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -129,7 +121,7 @@ public class MainWin extends javax.swing.JFrame {
         jLabel2.setText("Sort Posts By:");
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/search-20.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/search-20.png"))); // NOI18N
         jLabel3.setToolTipText("Search Notes");
 
         searchNote.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
@@ -142,11 +134,7 @@ public class MainWin extends javax.swing.JFrame {
                 searchNoteMouseClicked(evt);
             }
         });
-        searchNote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchNoteActionPerformed(evt);
-            }
-        });
+        searchNote.addActionListener(this::searchNoteActionPerformed);
 
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -156,7 +144,7 @@ public class MainWin extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(42, 77, 105));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus-17-dark.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/plus-17-dark.png"))); // NOI18N
         jButton1.setText("Add New Post");
 
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
@@ -166,19 +154,11 @@ public class MainWin extends javax.swing.JFrame {
         classes.setForeground(new java.awt.Color(42, 77, 105));
         classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         classes.setToolTipText("Change Your Class");
-        classes.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                classesItemStateChanged(evt);
-            }
-        });
-        classes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                classesActionPerformed(evt);
-            }
-        });
+        classes.addItemListener(this::classesItemStateChanged);
+        classes.addActionListener(this::classesActionPerformed);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/home-20.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
 
         javax.swing.GroupLayout functionBarLayout = new javax.swing.GroupLayout(functionBar);
         functionBar.setLayout(functionBarLayout);
@@ -233,13 +213,13 @@ public class MainWin extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NOTEZZA");
 
-        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo50.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/logo50.png"))); // NOI18N
 
         lecture.setBackground(new java.awt.Color(75, 134, 180));
         lecture.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         lecture.setForeground(new java.awt.Color(231, 239, 246));
         lecture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lecture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lecture-20.png"))); // NOI18N
+        lecture.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/lecture-20.png"))); // NOI18N
         lecture.setText("Enter Lecture");
         lecture.setToolTipText("");
         lecture.setOpaque(true);
@@ -259,7 +239,7 @@ public class MainWin extends javax.swing.JFrame {
         addClass.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         addClass.setForeground(new java.awt.Color(231, 239, 246));
         addClass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/plus-20.png"))); // NOI18N
+        addClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/plus-20.png"))); // NOI18N
         addClass.setText(" Add Class");
         addClass.setToolTipText("");
         addClass.setOpaque(true);
@@ -279,7 +259,7 @@ public class MainWin extends javax.swing.JFrame {
         logout.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         logout.setForeground(new java.awt.Color(231, 239, 246));
         logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit-20.png"))); // NOI18N
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/exit-20.png"))); // NOI18N
         logout.setText("Log Out");
         logout.setToolTipText("");
         logout.setOpaque(true);
@@ -299,7 +279,7 @@ public class MainWin extends javax.swing.JFrame {
         profile.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         profile.setForeground(new java.awt.Color(231, 239, 246));
         profile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/profile-20.png"))); // NOI18N
+        profile.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/profile-20.png"))); // NOI18N
         profile.setText(" Profile");
         profile.setToolTipText("");
         profile.setOpaque(true);
@@ -319,7 +299,7 @@ public class MainWin extends javax.swing.JFrame {
         viewMember.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
         viewMember.setForeground(new java.awt.Color(231, 239, 246));
         viewMember.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        viewMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/viewMember-20.png"))); // NOI18N
+        viewMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/viewMember-20.png"))); // NOI18N
         viewMember.setText(" Find Classmates");
         viewMember.setToolTipText("");
         viewMember.setOpaque(true);
@@ -427,10 +407,10 @@ public class MainWin extends javax.swing.JFrame {
 
         layer1.setOpaque(false);
 
-        likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/like-22.png"))); // NOI18N
+        likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
         likeButton.setText("63");
 
-        dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/dislike-22.png"))); // NOI18N
+        dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
         dislikeButton.setText("63");
 
         javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
@@ -622,8 +602,11 @@ public class MainWin extends javax.swing.JFrame {
         
     }                                              
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
-        
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
+        System.out.println("Profile popping up!");
+        // TODO change this back to new GUI after it's done:
+        UserProfile profile = new UserProfile(client.getUser());
+        profile.setVisible(true);
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -686,13 +669,7 @@ public class MainWin extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -700,7 +677,7 @@ public class MainWin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWin().setVisible(true);
+                new MainWin(null,null).setVisible(true);
             }
         });
     }
