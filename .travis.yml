@@ -1,4 +1,5 @@
 language: java
 script:
      - mkdir -p out
-     - find * -type f -name '*.java' -exec javac -cp AbsoluteLayout.jar jxbrowser-6.17.jar jxbrowser-mac-6.17.jar -sourcepath src -d out {} \;
+     - SRCS=$(find * -type f -name '*.java')
+     - for SRC in $SRCS; do echo Compiling $SRC; javac -cp AbsoluteLayout.jar:jxbrowser-6.17.jar:jxbrowser-mac-6.17.jar -sourcepath src -d out $SRC; done;
