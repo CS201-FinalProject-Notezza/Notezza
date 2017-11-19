@@ -1,27 +1,15 @@
-package NewGUI;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package NewGUI;
 
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
-
-import GUI.NewClass;
-import GUI.UserPresentation;
-import GUI.UserProfile;
-import GUI.ViewStudentsInClass;
-import NotezzaClient.NotezzaClient;
-import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.swing.BrowserView;
-import objects.Course;
-import objects.CourseList;
-
 import javax.swing.*;
 
 /**
@@ -30,17 +18,11 @@ import javax.swing.*;
  */
 public class MainWinInstr extends javax.swing.JFrame {
 
-    private NotezzaClient client;
-    private CourseList courseList;
-    private Course currentCourse;
     /**
      * Creates new form MainWin
      */
-    public MainWinInstr(NotezzaClient client, CourseList courseList) {
+    public MainWinInstr() {
         initComponents();
-        //OverviewList.setCellRender(getCellRenderer());
-        this.client = client;
-        this.courseList = courseList;
     }
 
     /**
@@ -51,9 +33,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-        browser = new Browser();
-        browserView = new BrowserView(browser);
-    		
+
         MainPanel = new javax.swing.JPanel();
         functionBar = new javax.swing.JPanel();
         sortChoiceBox = new javax.swing.JComboBox<>();
@@ -64,14 +44,14 @@ public class MainWinInstr extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
+        homeLabel = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         Menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         lecture = new javax.swing.JLabel();
         addClass = new javax.swing.JLabel();
-        changeClass = new javax.swing.JLabel();
         logout = new javax.swing.JLabel();
         profile = new javax.swing.JLabel();
         viewMember = new javax.swing.JLabel();
@@ -79,8 +59,18 @@ public class MainWinInstr extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         OverviewList = new javax.swing.JList<>();
         jPanel6 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        PostContent = new javax.swing.JTextPane();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        layer2 = new javax.swing.JPanel();
+        PostScroll = new javax.swing.JScrollPane();
+        Post = new javax.swing.JTextPane();
+        layer1 = new javax.swing.JPanel();
+        likeButton = new javax.swing.JButton();
+        dislikeButton = new javax.swing.JButton();
+        CommentScroll = new javax.swing.JScrollPane();
+        Comments = new javax.swing.JTextPane();
+        writeCommentPanel = new javax.swing.JPanel();
+        CreateComment = new javax.swing.JTextField();
+        PostComment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,29 +119,27 @@ public class MainWinInstr extends javax.swing.JFrame {
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 36, Short.MAX_VALUE)
-        );
+        homeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        homeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
+        homeLabel.setToolTipText("Change Class");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CS201" }));
+        jComboBox1.setToolTipText("Change Class");
 
         javax.swing.GroupLayout functionBarLayout = new javax.swing.GroupLayout(functionBar);
         functionBar.setLayout(functionBarLayout);
         functionBarLayout.setHorizontalGroup(
             functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(functionBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(homeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchNote, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,25 +147,27 @@ public class MainWinInstr extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sortChoiceBox, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         functionBarLayout.setVerticalGroup(
             functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(functionBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(homeLabel)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator4)
                     .addComponent(jLabel3)
+                    .addComponent(searchNote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addComponent(sortChoiceBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchNote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator1)
                     .addComponent(jSeparator2)
-                    .addComponent(jButton1)
-                    .addComponent(jSeparator4)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -228,23 +218,6 @@ public class MainWinInstr extends javax.swing.JFrame {
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addClassMouseEntered(evt);
-            }
-        });
-
-        changeClass.setBackground(new java.awt.Color(59, 89, 152));
-        changeClass.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
-        changeClass.setForeground(new java.awt.Color(231, 239, 246));
-        changeClass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        changeClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
-        changeClass.setText(" Your Classes");
-        changeClass.setToolTipText("");
-        changeClass.setOpaque(true);
-        changeClass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                changeClassMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                changeClassMouseEntered(evt);
             }
         });
 
@@ -322,7 +295,6 @@ public class MainWinInstr extends javax.swing.JFrame {
                     .addComponent(profile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lecture, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewMember, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                    .addComponent(changeClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -343,9 +315,7 @@ public class MainWinInstr extends javax.swing.JFrame {
                 .addComponent(lecture, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(viewMember, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(changeClass, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
@@ -375,17 +345,143 @@ public class MainWinInstr extends javax.swing.JFrame {
         );
 
         jPanel6.setBackground(new java.awt.Color(231, 239, 246));
-        jPanel6.setLayout(new java.awt.BorderLayout());
 
-        PostContent.setEditable(false);
-        PostContent.setContentType("text/html"); // NOI18N
-        PostContent.setText("\n<html>\n  <head>\n    <title>USC: CSCI 201L Fall 2017</title>\n\n  </head>\n  <body text=\"#333333\" bgcolor=\"#EEEEEE\" link=\"#0000EE\" vlink=\"#551A8B\" alink=\"#336633\">\n<p wrap=\"hard\">\n    <h1>USC: CSCI 201L Fall 2017. USC: CSCI 201L Fall 2017. USC: CSCI 201L Fall 2017</h1>\n</p>\n  </body>\n</html>\n");
-        PostContent.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jScrollPane4.setViewportView(PostContent);
+        jLayeredPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLayeredPane1.setOpaque(true);
 
-        //jPanel6.add(jScrollPane4, java.awt.BorderLayout.CENTER);
-        jPanel6.add(browserView, java.awt.BorderLayout.CENTER);
-        browser.loadURL("https://piazza.com");
+        PostScroll.setBorder(null);
+
+        Post.setEditable(false);
+        Post.setContentType("text/html"); // NOI18N
+        PostScroll.setViewportView(Post);
+
+        javax.swing.GroupLayout layer2Layout = new javax.swing.GroupLayout(layer2);
+        layer2.setLayout(layer2Layout);
+        layer2Layout.setHorizontalGroup(
+            layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 561, Short.MAX_VALUE)
+            .addGroup(layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PostScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+        );
+        layer2Layout.setVerticalGroup(
+            layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 157, Short.MAX_VALUE)
+            .addGroup(layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PostScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+        );
+
+        layer1.setOpaque(false);
+
+        likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
+        likeButton.setText("63");
+
+        dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
+        dislikeButton.setText("63");
+
+        javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
+        layer1.setLayout(layer1Layout);
+        layer1Layout.setHorizontalGroup(
+            layer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layer1Layout.createSequentialGroup()
+                .addContainerGap(429, Short.MAX_VALUE)
+                .addComponent(likeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dislikeButton)
+                .addGap(14, 14, 14))
+        );
+        layer1Layout.setVerticalGroup(
+            layer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layer1Layout.createSequentialGroup()
+                .addContainerGap(168, Short.MAX_VALUE)
+                .addGroup(layer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(likeButton)
+                    .addComponent(dislikeButton))
+                .addContainerGap())
+        );
+
+        jLayeredPane1.setLayer(layer2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(layer1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(layer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(layer2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(layer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addComponent(layer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 51, Short.MAX_VALUE)))
+        );
+
+        Comments.setEditable(false);
+        Comments.setContentType("text/html"); // NOI18N
+        CommentScroll.setViewportView(Comments);
+
+        writeCommentPanel.setBackground(new java.awt.Color(231, 239, 246));
+
+        CreateComment.setToolTipText("Add Comment");
+        CreateComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        CreateComment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateCommentActionPerformed(evt);
+            }
+        });
+
+        PostComment.setText("Post");
+        PostComment.setToolTipText("");
+        PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PostCommentMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout writeCommentPanelLayout = new javax.swing.GroupLayout(writeCommentPanel);
+        writeCommentPanel.setLayout(writeCommentPanelLayout);
+        writeCommentPanelLayout.setHorizontalGroup(
+            writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(writeCommentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CreateComment)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PostComment, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        writeCommentPanelLayout.setVerticalGroup(
+            writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(writeCommentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(writeCommentPanelLayout.createSequentialGroup()
+                        .addComponent(PostComment)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(CreateComment))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLayeredPane1)
+            .addComponent(CommentScroll)
+            .addComponent(writeCommentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(CommentScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(writeCommentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
@@ -399,7 +495,7 @@ public class MainWinInstr extends javax.swing.JFrame {
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(functionBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         MainPanelLayout.setVerticalGroup(
@@ -411,7 +507,7 @@ public class MainWinInstr extends javax.swing.JFrame {
                         .addGap(0, 0, 0)
                         .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(Menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -430,10 +526,6 @@ public class MainWinInstr extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void changeClassMouseEntered(java.awt.event.MouseEvent evt) {                                         
-        changeClass.setBackground(new Color(139,157,195));
-    }                                        
-
     private void addClassMouseEntered(java.awt.event.MouseEvent evt) {                                      
         addClass.setBackground(new Color(139,157,195));
     }                                     
@@ -445,10 +537,6 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {                                    
         logout.setBackground(new Color(139,157,195));
     }                                   
-
-    private void changeClassMouseExited(java.awt.event.MouseEvent evt) {                                        
-        changeClass.setBackground(new Color(59,89,152));
-    }                                       
 
     private void addClassMouseExited(java.awt.event.MouseEvent evt) {                                     
         addClass.setBackground(new Color(59,89,152));
@@ -462,32 +550,28 @@ public class MainWinInstr extends javax.swing.JFrame {
         logout.setBackground(new Color(59,89,152));
     }                                  
 
-    private void addClassMouseClicked(java.awt.event.MouseEvent evt) {
-        NewClass newclass = new NewClass(client);
-        newclass.setVisible(true);
+    private void addClassMouseClicked(java.awt.event.MouseEvent evt) {                                      
+        
     }                                     
 
-    private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
-        UserPresentation presentation = new UserPresentation(client,currentCourse);
-        presentation.setVisible(true);
+    private void lectureMouseClicked(java.awt.event.MouseEvent evt) {                                     
+        
     }                                    
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
-        System.exit(0);
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {                                    
+        
     }                                   
 
     private void searchNoteMouseClicked(java.awt.event.MouseEvent evt) {                                        
         searchNote.setText("");
-        //TODO IMPLEMENT SEARCH HERE
     }                                       
 
     private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) {                                               
-        //TODO IMPLEMENT SORT HERE
+        
     }                                              
 
-    private void profileMouseClicked(java.awt.event.MouseEvent evt) {
-        UserProfile profile = new UserProfile(client.getUser());
-        profile.setVisible(true);
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
+        
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -498,9 +582,8 @@ public class MainWinInstr extends javax.swing.JFrame {
         profile.setBackground(new Color(139,157,195));
     }                                    
 
-    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
-        ViewStudentsInClass viewMembers = new ViewStudentsInClass(currentCourse.getStudents());
-        viewMembers.setVisible(true);
+    private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        // TODO add your handling code here:
     }                                       
 
     private void viewMemberMouseExited(java.awt.event.MouseEvent evt) {                                       
@@ -510,6 +593,14 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void viewMemberMouseEntered(java.awt.event.MouseEvent evt) {                                        
         viewMember.setBackground(new Color(139,157,195));
     }                                       
+
+    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
+
+    }                                             
+
+    private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
+
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -541,7 +632,7 @@ public class MainWinInstr extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWinInstr(null,null).setVisible(true);
+                new MainWinInstr().setVisible(true);
             }
         });
     }
@@ -561,34 +652,42 @@ public class MainWinInstr extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify                     
+    private javax.swing.JScrollPane CommentScroll;
+    private javax.swing.JTextPane Comments;
+    private javax.swing.JTextField CreateComment;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel Menu;
     private javax.swing.JList<String> OverviewList;
-    private javax.swing.JTextPane PostContent;
+    private javax.swing.JTextPane Post;
+    private javax.swing.JButton PostComment;
+    private javax.swing.JScrollPane PostScroll;
     private javax.swing.JLabel addClass;
-    private javax.swing.JLabel changeClass;
+    private javax.swing.JButton dislikeButton;
     private javax.swing.JPanel functionBar;
+    private javax.swing.JLabel homeLabel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JPanel layer1;
+    private javax.swing.JPanel layer2;
     private javax.swing.JLabel lecture;
+    private javax.swing.JButton likeButton;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logout;
     private javax.swing.JLabel profile;
     private javax.swing.JTextField searchNote;
     private javax.swing.JComboBox<String> sortChoiceBox;
     private javax.swing.JLabel viewMember;
-    private Browser browser;
-    private BrowserView browserView;
+    private javax.swing.JPanel writeCommentPanel;
     // End of variables declaration                   
 }
