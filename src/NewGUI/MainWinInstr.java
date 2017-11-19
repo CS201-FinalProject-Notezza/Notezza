@@ -26,8 +26,10 @@ import javax.swing.*;
 public class MainWinInstr extends javax.swing.JFrame {
     private NotezzaClient client;
     private CourseList courseList;
+    private Vector<Course> courses;
     private Course currentCourse;
     private Note currentNote;
+    private DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
     /**
      * Creates new form MainWin
      */
@@ -398,10 +400,22 @@ public class MainWinInstr extends javax.swing.JFrame {
         layer1.setOpaque(false);
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
-        likeButton.setText("63");
+        likeButton.setText("0");
+        likeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                likeButtonActionPerformed(evt);
+            }
+        });
+        
+        
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
-        dislikeButton.setText("63");
+        dislikeButton.setText("0");
+        dislikeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dislikeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
         layer1.setLayout(layer1Layout);
@@ -552,8 +566,6 @@ public class MainWinInstr extends javax.swing.JFrame {
     
     
     private void initContents() {
-    		List<String> overviewList = new ArrayList<String>();
-    		Vector<Course> courses;
 		if (courseList == null || courseList.getCourses() == null || courseList.getCourses().isEmpty()) {
 			// No course available
 			
@@ -568,7 +580,17 @@ public class MainWinInstr extends javax.swing.JFrame {
     			});
 			
 			// Post Content
-			
+			this.Post.setText("<html><body style='background-color:#f0f8ff;'>"
+					+ "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
+					+ "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
+					+ "<h1>You have no classes now.</h1></div></body></html>");
+			this.likeButton.setEnabled(false);
+			this.dislikeButton.setEnabled(false);
+			this.PostComment.setEnabled(false);
+			this.jButton1.setEnabled(false);
+			this.searchNote.setEnabled(false);
+			this.sortChoiceBox.setEnabled(false);
+			this.CreateComment.setEnabled(false);
 			return;
 		}
 		courses = courseList.getCourses();
@@ -582,17 +604,29 @@ public class MainWinInstr extends javax.swing.JFrame {
 		
 		// Posts
 		Course currentCourse = courses.get(1); 
+		//Course currentCourse = courses.get(0); 
 		Vector<Note> notes = currentCourse.getAllNotes();
-		DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
 		for (Note note : notes) {
 			notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
 		}
 		
-		OverviewList.setModel(notesOverviewModel);
+		this.OverviewList.setModel(notesOverviewModel);
 		
 		// Post Content
-		Post.setText(Util.getHTMLforNoteDetail(notes.get(0)));
-		
+		this.Post.setText("<html><body style='background-color:#f0f8ff;'>"
+				+ "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
+				+ "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
+				+ "<h1>Welcome to Notezza!"
+				+ "<br/>Select a note to view!</h1></div>"
+				+ "</body></html>");
+		this.likeButton.setEnabled(false);
+		this.dislikeButton.setEnabled(false);
+		this.PostComment.setEnabled(false);
+		this.CreateComment.setEnabled(false);
+    }
+    
+    public void update() {
+    		
     }
 
     private void addClassMouseEntered(java.awt.event.MouseEvent evt) {                                      
@@ -668,8 +702,16 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                             
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
-
-    }                                        
+    		
+    }     
+    
+    private void likeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    		
+    } 
+    
+    private void dislikeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
+		
+    }
 
     /**
      * @param args the command line arguments
