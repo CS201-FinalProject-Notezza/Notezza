@@ -5,8 +5,14 @@
  */
 package NewGUI;
 
+import NotezzaClient.NotezzaClient;
+import objects.Course;
+import objects.CourseList;
+import objects.Note;
+
 import java.awt.Color;
 import java.awt.Component;
+import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.LineBorder;
@@ -17,14 +23,30 @@ import javax.swing.*;
  * @author user
  */
 public class MainWinInstr extends javax.swing.JFrame {
-
+    private NotezzaClient client;
+    private CourseList courseList;
+    private Course currentCourse;
+    private Note currentNote;
     /**
      * Creates new form MainWin
      */
-    public MainWinInstr() {
+    public MainWinInstr(NotezzaClient client, CourseList courseList) {
+        this.client = client;
+        this.courseList = courseList;
+        Vector<Course> courses = courseList.getCourse();
+        if (courses != null && courses.size() > 0) {
+            currentCourse = courses.get(0);
+            if (currentCourse.getAllNotes().size() > 0) {
+                currentNote = currentCourse.getAllNotes().get(0);
+            } else {
+                currentNote = null;
+            }
+        } else {
+            currentCourse = null;
+            currentNote = null;
+        }
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -632,7 +654,7 @@ public class MainWinInstr extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWinInstr().setVisible(true);
+                new MainWinInstr(null,null).setVisible(true);
             }
         });
     }

@@ -7,20 +7,43 @@ package NewGUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.*;
+import NotezzaClient.NotezzaClient;
+import objects.Course;
+import objects.CourseList;
+import objects.Note;
 
 /**
  *
  * @author user
  */
 public class MainWin extends javax.swing.JFrame {
-
+    private NotezzaClient client;
+    private CourseList courseList;
+    private Course currentCourse;
+    private Note currentNote;
     /**
      * Creates new form MainWin
      */
-    public MainWin() {
+    public MainWin(NotezzaClient client, CourseList courseList) {
+        this.client = client;
+        this.courseList = courseList;
+        Vector<Course> courses = courseList.getCourse();
+        if (courses != null && courses.size() > 0) {
+            currentCourse = courses.get(0);
+            if (currentCourse.getAllNotes().size() > 0) {
+                currentNote = currentCourse.getAllNotes().get(0);
+            } else {
+                currentNote = null;
+            }
+        } else {
+            currentCourse = null;
+            currentNote = null;
+        }
+
         initComponents();
         String title ="I am Title";
         String content = "I am content. "
@@ -673,13 +696,7 @@ public class MainWin extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | UnsupportedLookAndFeelException | IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(MainWin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -687,7 +704,7 @@ public class MainWin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWin().setVisible(true);
+                new MainWin(null,null).setVisible(true);
             }
         });
     }
