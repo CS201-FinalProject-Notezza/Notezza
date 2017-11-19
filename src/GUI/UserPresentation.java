@@ -12,10 +12,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.net.MalformedURLException;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Vector;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.BevelBorder;
@@ -29,6 +31,10 @@ public class UserPresentation extends JFrame {
 
 	private NotezzaClient client;
 	private Course course;
+
+	private JLabel slideImageLabel;
+	private URL temp;
+	private BufferedImage image;
 
 	private JButton slideBackwardsButton;
 	private JButton slideForwardButton;
@@ -105,8 +111,13 @@ public class UserPresentation extends JFrame {
 
 		//this.urls = course.getCurrentLecture().getLinks();
 		// Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
+		// TODO CHANGE THIS LATER:
 		// HARDCODE WARNING:
 		this.urls = new Vector<>();
+		slideImageLabel = new JLabel("");
+		slidePanel.add(slideImageLabel);
+
+		urls.add("http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg");
 		urls.add("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif");
 		if (urls.size() != 0) {
 			displayImage();
@@ -225,6 +236,8 @@ public class UserPresentation extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("> pressed");
+			// TODO UNCOMMENT THIS AFTER POPULATING
+			/*
 			System.out.println(lectureIndex);
 			System.out.println(course.getCurrentLecture().getLinks().size() - 1);
 
@@ -232,6 +245,15 @@ public class UserPresentation extends JFrame {
 				lectureIndex++;
 				displayImage();
 			}
+			*/
+
+			// TODO DELETE THIS AFTER POPULATING
+			if (lectureIndex < urls.size() - 1) {
+				lectureIndex++;
+				displayImage();
+			}
+
+
 		}
 	}
 
@@ -243,9 +265,11 @@ public class UserPresentation extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("< pressed");
+			// TODO UNCOMMENT THIS AFTER POPULATING
+			/*
 			System.out.println(lectureIndex);
 			System.out.println(course.getCurrentLecture().getLinks().size() - 1);
-
+			*/
 			if (lectureIndex >= 1) {
 				lectureIndex--;
 				displayImage();
@@ -272,14 +296,15 @@ public class UserPresentation extends JFrame {
 	private void displayImage() {
 		try {
 			System.out.println("lectureIndex is: " + lectureIndex);
+			// TODO change the urls in the following 2 lines:
 			System.out.println("url is " + urls.get(lectureIndex));
-			URL temp = new URL(urls.get(lectureIndex));
-			ImageIcon slideImage = new ImageIcon(temp);
-			JLabel slideImageLabel = new JLabel("");
-			slideImageLabel.setIcon(slideImage);
-			slidePanel.add(slideImageLabel);
-		} catch (MalformedURLException murle) {
-			murle.printStackTrace();
+			temp = new URL(urls.get(lectureIndex));
+			image = ImageIO.read(temp);
+			ImageIcon icon = new ImageIcon(image);
+			slideImageLabel.setIcon(icon);
+			slidePanel.repaint();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
