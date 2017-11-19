@@ -44,6 +44,10 @@ public class UserPresentation extends JFrame {
 	private final Action sendChatMessage = new SendChatMessage();
 	private int lectureIndex;
 	private Vector<String> urls;
+	
+	private JList chatWindow;
+	private DefaultListModel chatDefaultListModel;
+	
 	//private final Action slideBackwards;
 
 	/**
@@ -89,7 +93,9 @@ public class UserPresentation extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JList chatWindow = new JList();
+		chatDefaultListModel = new DefaultListModel();
+		
+		chatWindow = new JList(chatDefaultListModel);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		chatWindow.setBounds(500, 271, 272, 202);
 		contentPane.add(chatWindow);
@@ -290,6 +296,8 @@ public class UserPresentation extends JFrame {
 			System.out.println(username + ": " + chatContent);
 			System.out.println("Chat has been sent");
 			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
+			
+			
 		}
 	}
 
@@ -305,6 +313,13 @@ public class UserPresentation extends JFrame {
 			slidePanel.repaint();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void receiveChatMessage(ChatMessage cm)
+	{
+		if(cm.getCourse().equals(course)) {
+			chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
 		}
 	}
 }
