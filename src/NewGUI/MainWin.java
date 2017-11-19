@@ -607,7 +607,7 @@ public class MainWin extends javax.swing.JFrame {
 
     private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("POPPING UP VIEW ClASSMATES...");
-        ViewStudentsInClass viewClassMate = new ViewStudentsInClass(currentCourse.getStudents());
+        ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
         viewClassMate.setVisible(true);
     }                                       
 

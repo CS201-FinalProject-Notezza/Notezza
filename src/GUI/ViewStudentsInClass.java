@@ -40,7 +40,7 @@ public class ViewStudentsInClass extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewStudentsInClass frame = new ViewStudentsInClass(null, null);
+					ViewStudentsInClass frame = new ViewStudentsInClass(null, null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class ViewStudentsInClass extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ViewStudentsInClass(Vector<User> students, User instructor) {
+	public ViewStudentsInClass(User currUser, Vector<User> students, User instructor) {
 		setTitle("Course Info");
 		setResizable(false);
 
@@ -69,6 +69,7 @@ public class ViewStudentsInClass extends JFrame {
 		
 		for(int i = 0; i<students.size(); i++)
 		{
+			if (!students.get(i).equals(currUser))
 			studentDefaultListModel.addElement(students.get(i).getUsername());
 		}
 		studentList = new JList(studentDefaultListModel);
