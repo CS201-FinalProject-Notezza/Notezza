@@ -460,7 +460,9 @@ public class MainWinInstr extends javax.swing.JFrame {
         PostComment.setToolTipText("");
         PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PostCommentMouseClicked(evt);
+            	if (currentNote != null) {
+            		PostCommentMouseClicked(evt);
+            	}
             }
         });
 

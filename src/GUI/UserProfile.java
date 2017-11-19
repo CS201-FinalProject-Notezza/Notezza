@@ -31,7 +31,7 @@ public class UserProfile extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserProfile frame = new UserProfile(null);
+					UserProfile frame = new UserProfile(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class UserProfile extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UserProfile(User user) {
+	public UserProfile(User currUser, User user) {
 		setResizable(false);
 		this.user = user;
 		
@@ -120,7 +120,7 @@ public class UserProfile extends JFrame {
 		usernameText.setBorder(null);
 		contentPane.add(usernameText);
 		
-		if (!user.isVisible()) {
+		if (!user.isVisible() && !currUser.equals(user)) {
 			privateLabel.setVisible(true);
 			fnameLabel.setVisible(false);
 			fnameText.setVisible(false);

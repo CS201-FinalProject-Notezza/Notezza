@@ -335,7 +335,7 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			UserProfile profile = new UserProfile(client.getUser());
+			UserProfile profile = new UserProfile(client.getUser(), client.getUser());
 			profile.setVisible(true);
 		}
 	}
@@ -381,7 +381,7 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-		    ViewStudentsInClass viewMembers = new ViewStudentsInClass(currentCourse.getStudents());
+		    ViewStudentsInClass viewMembers = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
 			viewMembers.setVisible(true);
 		}
 	}

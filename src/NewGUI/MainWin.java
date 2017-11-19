@@ -473,7 +473,9 @@ public class MainWin extends javax.swing.JFrame {
         PostComment.setToolTipText("");
         PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PostCommentMouseClicked(evt);
+            	if (currentNote != null) {
+            		PostCommentMouseClicked(evt);
+            	}
             }
         });
 
@@ -593,7 +595,7 @@ public class MainWin extends javax.swing.JFrame {
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("POPPING UP PROFILES...");
-        UserProfile profile = new UserProfile(client.getUser());
+        UserProfile profile = new UserProfile(client.getUser(), client.getUser());
         profile.setVisible(true);
     }                                    
 

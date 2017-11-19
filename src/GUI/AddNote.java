@@ -1,14 +1,7 @@
 package GUI;
 
-import NotezzaClient.NotezzaClient;
-import NotezzaServer.Command;
-import NotezzaServer.CommandType;
-import objects.Course;
-import objects.CourseANDNote;
-import objects.Note;
-import objects.User;
-
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.util.Arrays;
@@ -22,20 +15,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
-import java.awt.Font;
-import javax.swing.JSeparator;
+
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.Course;
+import objects.CourseANDNote;
+import objects.Note;
+import objects.User;
 
 public class AddNote extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField titleField;
 	private JTextField tagsField;
-	private JTextArea descriptionText;
+	private JTextPane descriptionText;
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
 	private NotezzaClient client;
@@ -91,8 +90,7 @@ public class AddNote extends JFrame {
 		noteLabel.setForeground(new java.awt.Color(204, 204, 204));
 		contentPane.add(noteLabel);
 		
-		descriptionText = new JTextArea();
-		descriptionText.setTabSize(4);
+		descriptionText = new JTextPane();
 		descriptionText.setBackground(new java.awt.Color(204, 204, 204));
 		descriptionText.setForeground(new java.awt.Color(52, 61, 70));
 		descriptionText.setBorder(null);
@@ -103,16 +101,9 @@ public class AddNote extends JFrame {
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnSubmit.setAction(action_1);
-		btnSubmit.setBounds(100, 351, 100, 34);
+		btnSubmit.setBounds(170, 354, 160, 34);
 		btnSubmit.setForeground(new java.awt.Color(52, 61, 70));
 		contentPane.add(btnSubmit);
-		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setAction(action);
-		btnCancel.setBounds(300, 351, 100, 34);
-		btnCancel.setFont(new Font("Dialog", Font.BOLD, 15));
-		btnCancel.setForeground(new java.awt.Color(52, 61, 70));
-		contentPane.add(btnCancel);
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(68, 34, 411, 16);
