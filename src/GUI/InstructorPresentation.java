@@ -5,9 +5,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -31,6 +33,7 @@ import NotezzaServer.Command;
 import NotezzaServer.CommandType;
 import objects.ChatMessage;
 import objects.Course;
+import objects.Quiz;
 
 public class InstructorPresentation extends JFrame {
 
@@ -54,8 +57,11 @@ public class InstructorPresentation extends JFrame {
 	private int lectureIndex;
 	private Vector<String> urls;
 	private final Action action = new NewPresentationClicked();
-	//private final Action slideBackwards;
-
+	
+	private JList chatWindow;
+	private JButton newPresentationButton;
+	private JComboBox questionBox;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -99,7 +105,7 @@ public class InstructorPresentation extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JList chatWindow = new JList();
+		chatWindow = new JList();
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		chatWindow.setBounds(500, 100, 272, 373);
 		contentPane.add(chatWindow);
@@ -158,11 +164,30 @@ public class InstructorPresentation extends JFrame {
 		slideButtonPanel.add(slideForwardButton, gbc_slideForwardButton);
 		slideForwardButton.setAction(slideForwards);
 		
-		JComboBox questionBox = new JComboBox();
+		ArrayList<String> questionList = new ArrayList<String>();
+		questionList.add("Select a question");
+		for (Quiz q : course.getCurrentLecture().getQuizzes()) {
+			questionList.add(q.getQuestion());
+		}
+		questionBox = new JComboBox(questionList.toArray());
 		questionBox.setBounds(500, 61, 271, 27);
 		contentPane.add(questionBox);
+		questionBox.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        String question = (String)questionBox.getSelectedItem();
+		        Quiz toSend = null;
+		        for (Quiz q : course.getCurrentLecture().getQuizzes()) {
+		        	if (q.getQuestion().equals(q)) {
+		        		toSend = q;
+		        		break;
+		        	}
+		        }
+		        
+		        client.sendCommand(new Command(CommandType.SEND_QUIZ, toSend));
+		    }
+		});
 		
-		JButton newPresentationButton = new JButton("New Presentation");
+		newPresentationButton = new JButton("New Presentation");
 		newPresentationButton.setAction(action);
 		newPresentationButton.setText("New Presentation");
 		newPresentationButton.setBounds(619, 20, 152, 29);
