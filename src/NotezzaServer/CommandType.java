@@ -18,5 +18,7 @@ public enum CommandType {
     ADD_COMMENT,
     UPDATE_COMMENT,
     ADD_NOTE,
-    UPDATE_NOTE;
+    UPDATE_NOTE,
+    ADD_LIKE,
+    ADD_DISLIKE;
 }

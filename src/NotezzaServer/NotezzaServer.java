@@ -139,9 +139,6 @@ public class NotezzaServer {
                 dm.addCourse(course);
                 broadcast(new Command(UPDATE_CLASS,course));
                 break;
-            case VIEW_PRESENTATION:
-                
-                break;
             case CREATE_PRESENTATION:
                 System.out.println("Received request to create new presentation...");
                 PresentationANDCourse pc = (PresentationANDCourse) obj;
@@ -149,9 +146,6 @@ public class NotezzaServer {
                 Course courseForPresentation = pc.getCourse();
                 dm.addPresentation(presentation,courseForPresentation);
                 broadcast(new Command(UPDATE_PRESENTATION, presentation));
-                break;
-            case VIEW_CLASS_INFORMATION:
-                
                 break;
             case ADD_COMMENT:
                 System.out.println("Received request to add comment...");
@@ -173,6 +167,11 @@ public class NotezzaServer {
                 System.out.println("Received a chat message...");
                 ChatMessage cm = (ChatMessage) obj;
                 broadcast(new Command(UPDATE_CHAT, cm));
+                break;
+            case ADD_LIKE:
+                break;
+            case ADD_DISLIKE:
+                break;
         }
     }
 
