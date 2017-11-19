@@ -12,9 +12,10 @@ import objects.Note;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.ListCellRenderer;
+
 import javax.swing.border.LineBorder;
 import javax.swing.*;
 
@@ -33,19 +34,20 @@ public class MainWinInstr extends javax.swing.JFrame {
     public MainWinInstr(NotezzaClient client, CourseList courseList) {
         this.client = client;
         this.courseList = courseList;
-        Vector<Course> courses = courseList.getCourses();
-        if (courses != null && courses.size() > 0) {
-            currentCourse = courses.get(0);
-            if (currentCourse.getAllNotes().size() > 0) {
-                currentNote = currentCourse.getAllNotes().get(0);
-            } else {
-                currentNote = null;
-            }
-        } else {
-            currentCourse = null;
-            currentNote = null;
-        }
+//        Vector<Course> courses = courseList.getCourses();
+//        if (courses != null && courses.size() > 0) {
+//            currentCourse = courses.get(0);
+//            if (currentCourse.getAllNotes().size() > 0) {
+//                currentNote = currentCourse.getAllNotes().get(0);
+//            } else {
+//                currentNote = null;
+//            }
+//        } else {
+//            currentCourse = null;
+//            currentNote = null;
+//        }
         initComponents();
+        initContents();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -145,8 +147,8 @@ public class MainWinInstr extends javax.swing.JFrame {
         homeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
         homeLabel.setToolTipText("Change Class");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CS201" }));
-        jComboBox1.setToolTipText("Change Class");
+//        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CS201" }));
+//        jComboBox1.setToolTipText("Change Class");
 
         javax.swing.GroupLayout functionBarLayout = new javax.swing.GroupLayout(functionBar);
         functionBar.setLayout(functionBarLayout);
@@ -344,11 +346,11 @@ public class MainWinInstr extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(231, 239, 246));
 
-        OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+//        OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
+//            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+//            public int getSize() { return strings.length; }
+//            public String getElementAt(int i) { return strings[i]; }
+//        });
         OverviewList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         OverviewList.setCellRenderer(getCellRenderer());
         OverviewList.setSelectionBackground(new java.awt.Color(223, 227, 238));
@@ -460,9 +462,7 @@ public class MainWinInstr extends javax.swing.JFrame {
         PostComment.setToolTipText("");
         PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	if (currentNote != null) {
-            		PostCommentMouseClicked(evt);
-            	}
+                PostCommentMouseClicked(evt);
             }
         });
 
@@ -548,7 +548,61 @@ public class MainWinInstr extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>  
+    
+    
+    private void initContents() {
+    		List<String> overviewList = new ArrayList<String>();
+    		Vector<Course> courses;
+		if (courseList == null || courseList.getCourses() == null || courseList.getCourses().isEmpty()) {
+			// No course available
+			
+			// classes dropdown box
+			jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
+			jComboBox1.setToolTipText("Change Class");
+			// Posts
+			
+			return;
+		}
+		courses = courseList.getCourses();
+		// classes dropdown box
+		DefaultComboBoxModel dropDownModel = new DefaultComboBoxModel();
+		for (Course course : courses) {
+			dropDownModel.addElement(course.getCourseName());
+		}
+		jComboBox1.setModel(dropDownModel);
+		jComboBox1.setToolTipText("Change Class");
+		
+		// Posts
+		Course currentCourse = courses.get(1); 
+		Vector<Note> notes = currentCourse.getAllNotes();
+		DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
+		for (Note note : notes) {
+			String str = "<html><body><h3><b>" + note.getTitle() + "</b></h3><br />";
+			String noteText = note.getTextContent();
+			if(noteText.length() <= 40) {
+				str += noteText;
+			} else {
+				str += noteText.substring(0, 39);
+			}
+			str += "</body></html>";
+			notesOverviewModel.addElement(str);
+		}
+		
+		OverviewList.setModel(notesOverviewModel);
+		
+//    		OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
+//    			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+//    			public int getSize() { return strings.length; }
+//    			public String getElementAt(int i) { return strings[i]; }
+//    		});
+		
+		// Post Area
+		
+		
+		
+		
+    }
 
     private void addClassMouseEntered(java.awt.event.MouseEvent evt) {                                      
         addClass.setBackground(new Color(139,157,195));
