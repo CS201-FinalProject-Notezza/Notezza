@@ -2,6 +2,9 @@ package NewGUI;
 
 import objects.Note;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Util {
     public static String getHTMLforNote(Note note) {
         StringBuilder sb = new StringBuilder();
@@ -14,5 +17,11 @@ public class Util {
         sb.append(note.getTextContent());
         sb.append("</body></html>");
         return sb.toString();
+    }
+    public static Date getCurrentDate() {
+        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+        Date d = new Date();
+        df.format(d);
+        return d;
     }
 }

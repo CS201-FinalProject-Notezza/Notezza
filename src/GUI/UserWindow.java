@@ -391,13 +391,13 @@ public class UserWindow extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			if(commentText.getText().equals("")) 
-			{
-				//open a dialogue to warn the user
-				JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
-			} else {
+            if(commentText.getText().equals(""))
+            {
+                //open a dialogue to warn the user
+                JOptionPane.showMessageDialog(contentPane, "ERROR: Please enter a comment!", "ERROR",  JOptionPane.ERROR_MESSAGE);
+            } else {
                 // LINK
-			    String commentContent = commentText.getText();
+                String commentContent = commentText.getText();
                 DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
                 Date d = new Date();
                 df.format(d);
@@ -405,7 +405,7 @@ public class UserWindow extends JFrame {
                 Comment comment = new Comment(user,commentContent,d,currentNote);
                 client.sendCommand(new Command(CommandType.ADD_COMMENT,comment));
             }
-		}
+        }
 	}
 	private class SwingAction_6 extends AbstractAction {
 		public SwingAction_6() {
