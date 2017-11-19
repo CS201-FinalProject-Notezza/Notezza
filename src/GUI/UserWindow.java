@@ -1,11 +1,9 @@
 package GUI;
 import java.awt.EventQueue;
-import java.awt.List;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
 
@@ -31,7 +29,6 @@ import objects.Comment;
 import objects.Course;
 import objects.CourseList;
 import objects.Note;
-import objects.SortType;
 import objects.User;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -68,6 +65,9 @@ public class UserWindow extends JFrame {
 	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
 
+	private Vector<Note> notesForDisplay;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -102,9 +102,6 @@ public class UserWindow extends JFrame {
 		}
 		
 		allNotes = new Vector<Note>();
-		
-		
-		
 		setTitle("Notezza");
 		this.client = client;
 		this.courseList = courseList;
@@ -119,15 +116,7 @@ public class UserWindow extends JFrame {
 		btnUserProfile.setAction(action);
 		btnUserProfile.setBounds(877, 6, 117, 29);
 		contentPane.add(btnUserProfile);
-		
-		/*Button button = new Button("Add Note");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		button.setBounds(772, 627, 117, 29);
-		contentPane.add(button);*/
-		
+
 		//get the list of the notes
 		//Print out the Title of the notes
 		//when click on the note list, print out the description
@@ -183,17 +172,13 @@ public class UserWindow extends JFrame {
 			Vector<Course> allCourses = new Vector<Course>();
 			
 			//Collections.copy(allCourses, courseList.getCourse());
-			for(int i = 0; i<courseList.getCourse().size(); i++)
-			{
-				allCourses.add(courseList.getCourse().get(i));
-			}
+            allCourses.addAll(courseList.getCourse());
 			
 			Vector<String> allCourseNames = new Vector<String>();
-			
-			for(int i = 0; i<allCourses.size(); i++)
-			{
-				allCourseNames.add(allCourses.get(i).getCourseName());
-			}
+
+            for (Course allCourse : allCourses) {
+                allCourseNames.add(allCourse.getCourseName());
+            }
 			
 			if(allCourses.size()!=0)
 			{
@@ -454,8 +439,6 @@ public class UserWindow extends JFrame {
 					}
 					
 				}
-				
-					
 					
 			}
 		}
@@ -496,10 +479,9 @@ public class UserWindow extends JFrame {
 			}
 		}
 		
-		
-		
-		
+
 		//if not, we prob just need to update the database
 		
 	}
+
 }
