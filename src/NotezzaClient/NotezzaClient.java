@@ -191,7 +191,7 @@ public class NotezzaClient extends Thread {
         loginWindow.setVisible(true);
         loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
+    
     public static void main(String[] args) {
         NotezzaClient client = new NotezzaClient("localhost",1234);
     }

@@ -48,7 +48,7 @@ public class Comment implements Serializable {
     }
     
     public Note getNote() {
-    	return note;
+    		return note;
     }
     
     public boolean hasLiked(User user) {
