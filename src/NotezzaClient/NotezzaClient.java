@@ -12,15 +12,21 @@ import java.net.Socket;
 import javax.swing.JFrame;
 
 import GUI.InstructorPresentation;
-import GUI.InstructorWindow;
 import GUI.UserPresentation;
-import GUI.UserWindow;
 import NewGUI.Login;
 import NewGUI.MainWin;
 import NewGUI.MainWinInstr;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.*;
+import objects.ChatMessage;
+import objects.Comment;
+import objects.Course;
+import objects.CourseANDNote;
+import objects.CourseList;
+import objects.CourseNoteComment;
+import objects.Note;
+import objects.Quiz;
+import objects.User;
 
 public class NotezzaClient extends Thread {
     private User user;
@@ -29,11 +35,6 @@ public class NotezzaClient extends Thread {
     private ObjectOutputStream oos;
 
     public User getUser() { return user; }
-
-    // Windows
-    //private LoginScreen loginWindow;
-    private UserWindow userWindow;
-    private InstructorWindow instructorWindow;
 
     // New GUI
     private JFrame loginWindow;
@@ -113,22 +114,18 @@ public class NotezzaClient extends Thread {
                 user = (User) obj;
                 // A new user should not see anything, just pop up a window
                 if (!user.isInstructor()) {
-                    userWindow = new UserWindow(this, courseList);
-                    userWindow.setVisible(true);
+                    mainWin = new MainWin(this, courseList);
+                    mainWin.setVisible(true);
                 } else {
-                    instructorWindow = new InstructorWindow(this, courseList, null);
-                    instructorWindow.setVisible(true);
+                    mainWinInstr = new MainWinInstr(this, courseList);
+                    mainWinInstr.setVisible(true);
                 }
                 break;
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList) obj;
                 System.out.println("WE GOT EVERYTHING! POPPING UP THE STUDENT WINDOW!");
                 loginWindow.setVisible(false);
-                // pop up userWindow OLD GUI
-                /*
-                userWindow = new UserWindow(this, courseList);
-                userWindow.setVisible(true);
-                */
+              
                 // new GUI
                 mainWin = new MainWin(this,courseList);
                 mainWin.setVisible(true);
@@ -137,11 +134,7 @@ public class NotezzaClient extends Thread {
                 courseList = (CourseList) obj;
                 System.out.println("WE GOT EVERYTHING! POPPING UP THE INSTRUCTOR WINDOW!");
                 loginWindow.setVisible(false);
-                // pop up instructor window OLD GUI
-                /*
-                instructorWindow = new InstructorWindow(this, courseList,userSet);
-                instructorWindow.setVisible(true);
-                */
+                
                 mainWinInstr = new MainWinInstr(this,courseList);
                 mainWinInstr.setVisible(true);
                 break;
