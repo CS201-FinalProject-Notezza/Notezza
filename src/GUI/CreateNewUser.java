@@ -263,6 +263,7 @@ public class CreateNewUser extends JFrame {
 					user = new UserCredential(fname, lname, userName, email, passWord, true, true);
 				}
 
+				setVisible(false);
 				client.sendCommand(new Command(CommandType.REGISTER,user));
 			}
 		}
