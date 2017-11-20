@@ -693,7 +693,7 @@ public class MainWin extends javax.swing.JFrame {
         System.out.println("POPPING UP PROFILES...");
         UserProfile profile = new UserProfile(client.getUser(), client.getUser());
         profile.setVisible(true);
-    }                                    
+    }                                  
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
         profile.setBackground(new Color(75,134,180));
@@ -761,7 +761,6 @@ public class MainWin extends javax.swing.JFrame {
             Comment comment = new Comment(user,commentContent,date,currentNote);
             client.sendCommand(new Command(CommandType.ADD_COMMENT,comment));
         }
-
     }                                        
 
     private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              

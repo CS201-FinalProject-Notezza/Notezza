@@ -9,6 +9,7 @@ import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
 import objects.AddingDislike;
+import objects.AddingLike;
 import objects.Comment;
 import objects.Course;
 import objects.CourseList;
@@ -111,7 +112,7 @@ public class MainWinInstr extends javax.swing.JFrame {
         likeButton = new javax.swing.JButton();
         dislikeButton = new javax.swing.JButton();
         CommentScroll = new javax.swing.JScrollPane();
-        Comments = new javax.swing.JTextPane();
+        comments = new javax.swing.JTextPane();
         writeCommentPanel = new javax.swing.JPanel();
         createComment = new javax.swing.JTextField();
         postComment = new javax.swing.JButton();
@@ -499,9 +500,9 @@ public class MainWinInstr extends javax.swing.JFrame {
                     .addGap(0, 51, Short.MAX_VALUE)))
         );
 
-        Comments.setEditable(false);
-        Comments.setContentType("text/html"); // NOI18N
-        CommentScroll.setViewportView(Comments);
+        comments.setEditable(false);
+        comments.setContentType("text/html"); // NOI18N
+        CommentScroll.setViewportView(comments);
 
         writeCommentPanel.setBackground(new java.awt.Color(231, 239, 246));
 
@@ -644,8 +645,7 @@ public class MainWinInstr extends javax.swing.JFrame {
 		classes.setToolTipText("Change Class");
 		
 		// Post Overview
-		currentCourse = courses.get(1); 
-		//Course currentCourse = courses.get(0); 
+		currentCourse = courses.get(0); 
 		notes = currentCourse.getAllNotes();
 		for (Note note : notes) {
 			notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
@@ -770,7 +770,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     
     private void likeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
     		System.out.println("Adding a like");
-        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
+        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingLike(client.getUser(),currentNote)));
     } 
     
     private void dislikeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
@@ -798,7 +798,6 @@ public class MainWinInstr extends javax.swing.JFrame {
 		}
     }
 
-    
     private void refreshList() {
     		this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
 		notesOverviewModel.removeAllElements();
@@ -814,18 +813,13 @@ public class MainWinInstr extends javax.swing.JFrame {
     
     private void displayCurrentNote() {
         post.setText(Util.getHTMLforNoteDetail(currentNote));
-        Vector<Comment> currentComments = currentNote.getComments();
-        
-    }
-    
-    private void resetPost() {
-    		
+        comments.setText(Util.getHTMLforComments(currentNote));
     }
     
     private void updateNotes() {
         notes = currentCourse.getAllNotes();
     }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -877,7 +871,7 @@ public class MainWinInstr extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane CommentScroll;
-    private javax.swing.JTextPane Comments;
+    private javax.swing.JTextPane comments;
     private javax.swing.JTextField createComment;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel Menu;
