@@ -129,16 +129,15 @@ public class InstructorPresentation extends JFrame {
 		slidePanel.setBounds(20, 37, 468, 409);
 		contentPane.add(slidePanel);
 
-		//this.urls = course.getCurrentLecture().getLinks();
-		// Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
-		// TODO CHANGE THIS LATER:
+		this.urls = course.getCurrentLecture().getLinks();
+		/* Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		// HARDCODE WARNING:
 		this.urls = new Vector<>();
 		slideImageLabel = new JLabel("");
 		slidePanel.add(slideImageLabel);
 
 		urls.add("http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg");
-		urls.add("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif");
+		urls.add("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif"); */
 		if (urls.size() != 0) {
 			displayImage();
 		}
@@ -206,8 +205,6 @@ public class InstructorPresentation extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("> pressed");
-			// TODO UNCOMMENT THIS AFTER POPULATING
-			/*
 			System.out.println(lectureIndex);
 			System.out.println(course.getCurrentLecture().getLinks().size() - 1);
 
@@ -215,13 +212,12 @@ public class InstructorPresentation extends JFrame {
 				lectureIndex++;
 				displayImage();
 			}
-			*/
 
-			// TODO DELETE THIS AFTER POPULATING
-			if (lectureIndex < urls.size() - 1) {
+			// HARDCODE WARNING: DELETE THIS AFTER POPULATING
+			/*if (lectureIndex < urls.size() - 1) {
 				lectureIndex++;
 				displayImage();
-			}
+			}*/
 
 
 		}
@@ -235,11 +231,8 @@ public class InstructorPresentation extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("< pressed");
-			// TODO UNCOMMENT THIS AFTER POPULATING
-			/*
 			System.out.println(lectureIndex);
 			System.out.println(course.getCurrentLecture().getLinks().size() - 1);
-			*/
 			if (lectureIndex >= 1) {
 				lectureIndex--;
 				displayImage();
@@ -266,9 +259,10 @@ public class InstructorPresentation extends JFrame {
 	private void displayImage() {
 		try {
 			System.out.println("lectureIndex is: " + lectureIndex);
-			// TODO change the urls in the following 2 lines:
-			System.out.println("url is " + urls.get(lectureIndex));
-			temp = new URL(urls.get(lectureIndex));
+			// HARDCODE: change the urls in the following 2 lines:
+			// old url = urls.get(lectureIndex)
+			System.out.println("url is " + course.getCurrentLecture().getLinks().get(lectureIndex));
+			temp = new URL(course.getCurrentLecture().getLinks().get(lectureIndex));
 			image = ImageIO.read(temp);
 			ImageIcon icon = new ImageIcon(image);
 			slideImageLabel.setIcon(icon);
