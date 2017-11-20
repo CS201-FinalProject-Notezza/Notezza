@@ -900,7 +900,7 @@ public class MainWin extends javax.swing.JFrame {
                 courseInList.addNote(note);
                 updateNote();
                 System.out.println("Note added!");
-                break;
+                return;
             }
         }
         System.out.println("Adding note failed");
