@@ -646,6 +646,7 @@ public class NewPresentation extends JFrame {
 			// send to server
 			PresentationANDCourse pc = new PresentationANDCourse(presentation,course);
 			client.sendCommand(new Command(CommandType.CREATE_PRESENTATION, pc));
+			setVisible(false);
 		}
 
 		private Quiz createQuiz(String name, String[] quizArray,JCheckBox[] checkBoxes) {
