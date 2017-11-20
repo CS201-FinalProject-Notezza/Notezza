@@ -286,8 +286,6 @@ public class InstructorPresentation extends JFrame {
 	
 	public void receiveChatMessage(ChatMessage cm)
 	{
-		if(cm.getCourse().equals(course)) {
-			chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
-		}
+		chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
 	}
 }

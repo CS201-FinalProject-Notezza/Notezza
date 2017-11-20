@@ -396,9 +396,7 @@ public class UserPresentation extends JFrame {
 	
 	public void receiveChatMessage(ChatMessage cm)
 	{
-		if(cm.getCourse().equals(course)) {
-			chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
-		}
+		chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
 	}
 	
 	public void updateQuiz(Quiz q) {
