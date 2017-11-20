@@ -182,12 +182,13 @@ public class InstructorPresentation extends JFrame {
 		        String question = (String)questionBox.getSelectedItem();
 		        Quiz toSend = null;
 		        for (Quiz q : course.getCurrentLecture().getQuizzes()) {
-		        	if (q.getQuestion().equals(q)) {
+		        	
+		        	if (q.getQuestion().equals(question)) {
 		        		toSend = q;
 		        		break;
 		        	}
 		        }
-		        
+
 		        client.sendCommand(new Command(CommandType.SEND_QUIZ, toSend));
 		    }
 		});
@@ -255,8 +256,6 @@ public class InstructorPresentation extends JFrame {
 			System.out.println(username + ": " + chatContent);
 			System.out.println("Chat has been sent");
 			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
-			
-			chatTextBox.setText("");
 		}
 	}
 

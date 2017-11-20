@@ -347,7 +347,6 @@ public class UserPresentation extends JFrame {
 			System.out.println("Chat has been sent");
 			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
 			
-			chatTextBox.setText("");
 			
 		}
 	}
@@ -411,12 +410,12 @@ public class UserPresentation extends JFrame {
 	}
 	
 	public void updateQuiz(Quiz q) {
-		if (q.equals(null)) {
+		if (q == null) {
 			for (JComponent jc : quizObjects) {
 				jc.setVisible(false);
 			}
 		} else {
-			
+			currQuiz = q;
 			questionLabel.setText(q.getQuestion());
 			int i;
 			for (i = 0; i < q.getChoices().size(); i++) {

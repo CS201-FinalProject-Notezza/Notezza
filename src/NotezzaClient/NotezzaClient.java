@@ -87,7 +87,9 @@ public class NotezzaClient extends Thread {
         try {
             oos.writeObject(cm);
             oos.flush();
-            System.out.println("Command sent: " + cm.getObject().toString());
+            if (cm.getObject() != null) {
+            	System.out.println("Command sent: " + cm.getObject().toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,7 +149,8 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addComment(course,note,comment);
                 } else if (mainWinInstr != null) {
-                    mainWinInstr.addComment(course,note,comment);
+                    //TODO uncomment
+                    //mainWinInstr.addComment(course,note,comment);
                 }
                 break;
             case UPDATE_NOTE:
@@ -157,7 +160,8 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addNote(cn.getCourse(), cn.getNote());
                 } else if (mainWinInstr != null) {
-                    mainWinInstr.addNote(cn.getCourse(),cn.getNote());
+                    // TODO uncomment
+                    //mainWinInstr.addNote(cn.getCourse(),cn.getNote());
                 }
                 break;
             case UPDATE_CLASS:
