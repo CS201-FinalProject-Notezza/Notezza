@@ -6,20 +6,32 @@
 package NewGUI;
 
 import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.AddingDislike;
+import objects.Comment;
 import objects.Course;
 import objects.CourseList;
 import objects.Note;
 import objects.SortType;
+import objects.User;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.border.LineBorder;
+
+import GUI.InstructorPresentation;
+import GUI.UserPresentation;
+import GUI.UserProfile;
+import GUI.ViewStudentsInClass;
+
 import javax.swing.*;
 
 /**
@@ -77,7 +89,7 @@ public class MainWinInstr extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         homeLabel = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        classes = new javax.swing.JComboBox<>();
         Menu = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
@@ -160,9 +172,14 @@ public class MainWinInstr extends javax.swing.JFrame {
         homeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         homeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
         homeLabel.setToolTipText("Change Class");
-
-//        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CS201" }));
-//        jComboBox1.setToolTipText("Change Class");
+        
+        
+        classes.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
+        classes.setForeground(new java.awt.Color(42, 77, 105));
+        classes.setToolTipText("Change Your Class");
+        classes.addItemListener(this::classesItemStateChanged);
+//        classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CS201" }));
+//        classes.setToolTipText("Change Class");
 
         javax.swing.GroupLayout functionBarLayout = new javax.swing.GroupLayout(functionBar);
         functionBar.setLayout(functionBarLayout);
@@ -172,7 +189,7 @@ public class MainWinInstr extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(homeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(classes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -197,7 +214,7 @@ public class MainWinInstr extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(functionBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(homeLabel)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(classes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator4)
                     .addComponent(jLabel3)
                     .addComponent(searchNote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,6 +386,19 @@ public class MainWinInstr extends javax.swing.JFrame {
         overviewList.setCellRenderer(getCellRenderer());
         overviewList.setSelectionBackground(new java.awt.Color(223, 227, 238));
         overviewList.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        overviewList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                this.likeButton.setEnabled(true);
+                this.dislikeButton.setEnabled(true);
+                this.postComment.setEnabled(true);
+                this.createComment.setEnabled(true);
+                int noteForIndex = overviewList.getSelectedIndex();
+                if (noteForIndex < currentCourse.getAllNotes().size() && noteForIndex >= 0) {
+                    currentNote = currentCourse.getAllNotes().get(noteForIndex);
+                    displayCurrentNote();
+                }
+            }
+        });
         jScrollPane1.setViewportView(overviewList);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -418,7 +448,6 @@ public class MainWinInstr extends javax.swing.JFrame {
                 likeButtonActionPerformed(evt);
             }
         });
-        
         
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
@@ -582,8 +611,8 @@ public class MainWinInstr extends javax.swing.JFrame {
 			// No course available
 			
 			// classes dropdown box
-			jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
-			jComboBox1.setToolTipText("Change Class");
+			classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
+			classes.setToolTipText("Change Class");
 			// Posts Overview
 			overviewList.setModel(new javax.swing.AbstractListModel<String>() {
     				String[] strings = { "<html><h3>No Posts Available<h3><html>" };
@@ -611,8 +640,8 @@ public class MainWinInstr extends javax.swing.JFrame {
 		for (Course course : courses) {
 			dropDownModel.addElement(course.getCourseName());
 		}
-		jComboBox1.setModel(dropDownModel);
-		jComboBox1.setToolTipText("Change Class");
+		classes.setModel(dropDownModel);
+		classes.setToolTipText("Change Class");
 		
 		// Post Overview
 		currentCourse = courses.get(1); 
@@ -666,11 +695,15 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                     
 
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {                                     
-        
+		System.out.println("POPPING UP PRESENTATION WINDOW..");
+		InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
+		client.setInstructorPresentationWindow(presentation);
+		presentation.setVisible(true);
     }                                    
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {                                    
-        
+		System.out.println("GOODBYE");
+		System.exit(0);
     }                                   
 
     private void searchNoteMouseClicked(java.awt.event.MouseEvent evt) {                                        
@@ -678,13 +711,19 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                       
 
     private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) { 
+    		sortNotes();
+    }   
+    
+    private void sortNotes() {
     		int sortTypeInt = sortChoiceBox.getSelectedIndex();
-    		notes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
-    		refreshList();
-    }                                              
+		notes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
+		refreshList();
+    }
     
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
-        
+    		System.out.println("POPPING UP PROFILES...");
+        UserProfile profile = new UserProfile(client.getUser(), client.getUser());
+        profile.setVisible(true);
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
@@ -696,7 +735,14 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                    
 
     private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
-        // TODO add your handling code here:
+		System.out.println("POPPING UP VIEW ClASSMATES...");
+		if (currentCourse != null) {
+			ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(),
+					currentCourse.getInstructor());
+			viewClassMate.setVisible(true);
+		} else {
+			System.out.println("Current course is null");
+		}
     }                                       
 
     private void viewMemberMouseExited(java.awt.event.MouseEvent evt) {                                       
@@ -708,19 +754,28 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                       
 
     private void createCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
-
+    		
     }                                             
 
     private void postCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
-    		
+		System.out.println("post comment clicked...");
+		if (!createComment.getText().isEmpty()) {
+			String commentContent = createComment.getText();
+			Date date = Util.getCurrentDate();
+			User user = client.getUser();
+			Comment comment = new Comment(user, commentContent, date, currentNote);
+			client.sendCommand(new Command(CommandType.ADD_COMMENT, comment));
+		}
     }     
     
     private void likeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    		
+    		System.out.println("Adding a like");
+        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
     } 
     
     private void dislikeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
-		
+    		System.out.println("Adding a dislike...");
+        client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
     }
     
     private void searchNoteActionPerformed(java.awt.event.ActionEvent evt) {                                         
@@ -729,6 +784,20 @@ public class MainWinInstr extends javax.swing.JFrame {
 		this.refreshList();
 		System.out.println("Performing search");
     }
+
+    private void classesItemStateChanged(java.awt.event.ItemEvent evt) {
+		String courseName = String.valueOf(classes.getSelectedItem());
+		for (Course course : courses) {
+			if (course.getCourseName().equals(courseName)) {
+				currentCourse = course;
+				updateNotes();
+				sortChoiceBox.setSelectedIndex(0);
+				sortNotes();
+				break;
+			}
+		}
+    }
+
     
     private void refreshList() {
     		this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
@@ -741,6 +810,20 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void clearList() {
     		this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
     		notesOverviewModel.removeAllElements();
+    }
+    
+    private void displayCurrentNote() {
+        post.setText(Util.getHTMLforNoteDetail(currentNote));
+        Vector<Comment> currentComments = currentNote.getComments();
+        
+    }
+    
+    private void resetPost() {
+    		
+    }
+    
+    private void updateNotes() {
+        notes = currentCourse.getAllNotes();
     }
 
     /**
@@ -807,7 +890,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     private javax.swing.JPanel functionBar;
     private javax.swing.JLabel homeLabel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> classes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
