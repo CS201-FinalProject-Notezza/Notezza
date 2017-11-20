@@ -163,7 +163,7 @@ public class MainWin extends javax.swing.JFrame {
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
         sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of Comments", "Most Number of Likes" }));
         sortChoiceBox.addItemListener(this::sortChoiceBoxItemStateChanged);
-        sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
+        //sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -206,19 +206,19 @@ public class MainWin extends javax.swing.JFrame {
         classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1" }));
         classes.setToolTipText("Change Your Class");
         classes.addItemListener(this::classesItemStateChanged);
-        classes.addActionListener(e -> {
-            initPost();
-            String courseName = (String) classes.getSelectedItem();
-            notesOverviewModel.removeAllElements();
-            overviewList.setModel(notesOverviewModel);
-            for (Course course : courseList.getCourses()) {
-                if (course.getCourseName().equals(courseName)) {
-                    currentCourse = course;
-                    updateNote();
-                    break;
-                }
-            }
-        });
+//        classes.addActionListener(e -> {
+//            initPost();
+//            String courseName = (String) classes.getSelectedItem();
+//            notesOverviewModel.removeAllElements();
+//            overviewList.setModel(notesOverviewModel);
+//            for (Course course : courseList.getCourses()) {
+//                if (course.getCourseName().equals(courseName)) {
+//                    currentCourse = course;
+//                    updateNote();
+//                    break;
+//                }
+//            }
+//        });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/home-20.png"))); // NOI18N
@@ -673,9 +673,19 @@ public class MainWin extends javax.swing.JFrame {
         searchNote.setText("");
     }                                       
 
-    private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) {                                               
-        
-    }                                              
+    private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) {
+        int sortTypeInt = sortChoiceBox.getSelectedIndex();
+        displayedNotes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
+        refreshList();
+    }
+
+    private void refreshList() {
+        this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
+        notesOverviewModel.removeAllElements();
+        for (Note note: displayedNotes) {
+            this.notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
+        }
+    }
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("POPPING UP PROFILES...");
@@ -708,22 +718,35 @@ public class MainWin extends javax.swing.JFrame {
     private void viewMemberMouseEntered(java.awt.event.MouseEvent evt) {                                        
         viewMember.setBackground(new Color(42,77,105));
     }                                       
-
-    private void sortChoiceBoxActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add sort
-    }                                             
+//
+//    private void sortChoiceBoxActionPerformed(java.awt.event.ActionEvent evt) {
+//
+//    }
 
     private void searchNoteActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add search
+        String keyword = this.searchNote.getText();
+        displayedNotes = currentCourse.searchNote(keyword);
+        this.refreshList();
+        System.out.println("Performing search");
     }                                          
 
-    private void classesItemStateChanged(java.awt.event.ItemEvent evt) {                                         
-        // TODO add your handling code here:
+    private void classesItemStateChanged(java.awt.event.ItemEvent evt) {
+        initPost();
+        String courseName = (String) classes.getSelectedItem();
+        notesOverviewModel.removeAllElements();
+        overviewList.setModel(notesOverviewModel);
+        for (Course course : courseList.getCourses()) {
+            if (course.getCourseName().equals(courseName)) {
+                currentCourse = course;
+                updateNote();
+                break;
+            }
+        }
     }
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("post comment clicked...");
-        if(!createComment.getText().isEmpty())
+        if (!createComment.getText().isEmpty())
         {
             String commentContent = createComment.getText();
             Date date = Util.getCurrentDate();
