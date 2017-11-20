@@ -872,6 +872,7 @@ public class MainWin extends javax.swing.JFrame {
 
     public void addComment(Course course, Note note, Comment comment) {
         for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Receiving a comment now..");
             System.out.println("Checking courses..");
             if (courseInList.getCourseName().equals(course.getCourseName())) {
                 System.out.println("Find course!");
@@ -881,16 +882,28 @@ public class MainWin extends javax.swing.JFrame {
                         System.out.println("Find note!");
                         noteInSideTheCourse.addComment(comment);
                         displayComment();
+                        System.out.println("Comment added");
+                        return;
                     }
                 }
             }
         }
+        System.out.println("Adding comment failed");
     }
 
     public void addNote(Course course, Note note) {
         for (Course courseInList : courseList.getCourses()) {
-            System.out.println("Chec");
+            System.out.println("Receiving a note now");
+            System.out.println("Checking notes...");
+            if ( courseInList.getCourseName().equals(course.getCourseName())) {
+                System.out.println("Find course!");
+                courseInList.addNote(note);
+                updateNote();
+                System.out.println("Note added!");
+                break;
+            }
         }
+        System.out.println("Adding note failed");
     }
 
     // End of variables declaration                   
