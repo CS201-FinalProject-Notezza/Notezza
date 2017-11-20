@@ -9,14 +9,7 @@ import GUI.*;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.AddingDislike;
-import objects.AddingLike;
-import objects.Comment;
-import objects.Course;
-import objects.CourseList;
-import objects.Note;
-import objects.SortType;
-import objects.User;
+import objects.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -777,7 +770,8 @@ public class MainWinInstr extends javax.swing.JFrame {
             Date date = Util.getCurrentDate();
             User user = client.getUser();
             Comment comment = new Comment(user, commentContent, date, currentNote);
-            client.sendCommand(new Command(CommandType.ADD_COMMENT, comment));
+            CourseNoteComment cnc = new CourseNoteComment(currentCourse,currentNote,comment);
+            client.sendCommand(new Command(CommandType.ADD_COMMENT, cnc));
         }
         createComment.setText("");
     }
