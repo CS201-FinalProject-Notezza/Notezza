@@ -120,7 +120,8 @@ public class UserProfile extends JFrame {
 		usernameText.setBorder(null);
 		contentPane.add(usernameText);
 		
-		if (!user.isVisible() && !currUser.equals(user)) {
+		
+		if (!user.isVisible() && (currUser == null || !currUser.equals(user))) {
 			privateLabel.setVisible(true);
 			fnameLabel.setVisible(false);
 			fnameText.setVisible(false);

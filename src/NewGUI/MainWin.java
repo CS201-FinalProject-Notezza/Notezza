@@ -160,7 +160,7 @@ public class MainWin extends javax.swing.JFrame {
 
         sortChoiceBox.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
-        sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of comments", "Most Number of Likes" }));
+        sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Comments", "Most Likes" }));
         sortChoiceBox.addItemListener(this::sortChoiceBoxItemStateChanged);
         //sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
 
@@ -195,12 +195,13 @@ public class MainWin extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(42, 77, 105));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/plus-17-dark.png"))); // NOI18N
-        jButton1.setText("Add New post");
+        jButton1.setText("Add New Post");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 createNewNote(evt);
             }
         });
+        jButton1.setEnabled(client != null);
 
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -301,6 +302,7 @@ public class MainWin extends javax.swing.JFrame {
                 lectureMouseEntered(evt);
             }
         });
+        lecture.setEnabled(client != null);
 
         logout.setBackground(new java.awt.Color(75, 134, 180));
         logout.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
@@ -341,6 +343,7 @@ public class MainWin extends javax.swing.JFrame {
                 profileMouseEntered(evt);
             }
         });
+        profile.setEnabled(client != null);
 
         viewMember.setBackground(new java.awt.Color(75, 134, 180));
         viewMember.setFont(new java.awt.Font("Eurostile", 1, 17)); // NOI18N
@@ -472,6 +475,8 @@ public class MainWin extends javax.swing.JFrame {
                 AddDisLikeMouseClicked(evt);
             }
         });
+        likeButton.setVisible(client != null);
+        likeButton.setEnabled(client != null);
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
         dislikeButton.setText("63");
@@ -480,6 +485,8 @@ public class MainWin extends javax.swing.JFrame {
                 AddLikeMouseClicked(evt);
             }
         });
+        dislikeButton.setVisible(client != null);
+        dislikeButton.setEnabled(client != null);
 
         javax.swing.GroupLayout layer1Layout = new javax.swing.GroupLayout(layer1);
         layer1.setLayout(layer1Layout);
@@ -531,6 +538,7 @@ public class MainWin extends javax.swing.JFrame {
         createComment.setToolTipText("Add Comment");
         createComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         createComment.addActionListener(this::CreateCommentActionPerformed);
+        createComment.setEnabled(client != null);
 
         postComment.setText("post");
         postComment.setToolTipText("");
@@ -541,6 +549,7 @@ public class MainWin extends javax.swing.JFrame {
             	}
             }
         });
+        postComment.setEnabled(client != null);
 
         javax.swing.GroupLayout writeCommentPanelLayout = new javax.swing.GroupLayout(writeCommentPanel);
         writeCommentPanel.setLayout(writeCommentPanelLayout);
@@ -623,8 +632,10 @@ public class MainWin extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void createNewNote(MouseEvent evt) {
-        AddNote addnote = new AddNote(client,currentCourse);
-        addnote.setVisible(true);
+    	if (client != null) {
+    		AddNote addnote = new AddNote(client,currentCourse);
+    		addnote.setVisible(true);
+    	}
     }
 
     private void displayCurrentNote() {
@@ -647,12 +658,16 @@ public class MainWin extends javax.swing.JFrame {
 
     private void AddDisLikeMouseClicked(MouseEvent evt) {
         System.out.println("Adding a like");
-        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
+        if (client != null) {
+        	client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
+        }
     }
 
     private void AddLikeMouseClicked(MouseEvent evt) {
         System.out.println("Adding a dislike...");
-        client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
+        if (client != null) {
+	        client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
+        }
     }
 
     private void lectureMouseEntered(java.awt.event.MouseEvent evt) {                                     
@@ -672,10 +687,12 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
-        System.out.println("POPPING UP PRESENTATION WINDOW..");
-        UserPresentation presentation = new UserPresentation(this.client,currentCourse);
-        client.setUserPresentationWindow(presentation);
-        presentation.setVisible(true);
+    	if (client != null) {
+	        System.out.println("POPPING UP PRESENTATION WINDOW..");
+	        UserPresentation presentation = new UserPresentation(this.client,currentCourse);
+	        client.setUserPresentationWindow(presentation);
+	        presentation.setVisible(true);
+    	}
     }                                    
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
@@ -718,7 +735,12 @@ public class MainWin extends javax.swing.JFrame {
     private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("POPPING UP VIEW ClASSMATES...");
         if (currentCourse != null) {
-        	ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
+        	ViewStudentsInClass viewClassMate;
+        	if (client != null) {
+        		viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(), currentCourse.getInstructor());
+        	} else {
+        		viewClassMate = new ViewStudentsInClass(null, currentCourse.getStudents(), currentCourse.getInstructor());
+        	}
         	viewClassMate.setVisible(true);
         } else {
             System.out.println("Current course is null");
@@ -767,12 +789,16 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {
-        postComment();
+    	if (client != null) {
+	        postComment();
+    	}
     }
 
 
     private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {
-        postComment();
+    	if (client != null) {
+	        postComment();
+    	}
     }
 
     private void postComment() {
@@ -900,7 +926,7 @@ public class MainWin extends javax.swing.JFrame {
                 courseInList.addNote(note);
                 updateNote();
                 System.out.println("Note added!");
-                return;
+                break;
             }
         }
         System.out.println("Adding note failed");
