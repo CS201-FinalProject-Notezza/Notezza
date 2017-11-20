@@ -549,6 +549,7 @@ public class MainWin extends javax.swing.JFrame {
             	}
             }
         });
+        postComment.setVisible(false);
         postComment.setEnabled(client != null);
 
         javax.swing.GroupLayout writeCommentPanelLayout = new javax.swing.GroupLayout(writeCommentPanel);
@@ -719,9 +720,11 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {
-        System.out.println("POPPING UP PROFILES...");
-        UserProfile profile = new UserProfile(client.getUser(), client.getUser());
-        profile.setVisible(true);
+        if (currentCourse != null) {
+	        System.out.println("POPPING UP PROFILES...");
+	        UserProfile profile = new UserProfile(client.getUser(), client.getUser());
+	        profile.setVisible(true);
+        }
     }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
