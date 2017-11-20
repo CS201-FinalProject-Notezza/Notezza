@@ -175,6 +175,8 @@ public class AddNote extends JFrame {
                 Note note = new Note(user,title,tags,d,textContent);
                 CourseANDNote cn = new CourseANDNote(course,note);
                 client.sendCommand(new Command(CommandType.ADD_NOTE,cn));
+                
+                setVisible(false);
             }
 		}
 	}
