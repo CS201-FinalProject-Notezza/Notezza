@@ -9,11 +9,14 @@ import NotezzaClient.NotezzaClient;
 import objects.Course;
 import objects.CourseList;
 import objects.Note;
+import objects.SortType;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.border.LineBorder;
@@ -30,6 +33,9 @@ public class MainWinInstr extends javax.swing.JFrame {
     private Course currentCourse;
     private Note currentNote;
     private DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
+    private Vector<Note> notes;
+    private DefaultComboBoxModel dropDownModel;
+    
     /**
      * Creates new form MainWin
      */
@@ -83,20 +89,20 @@ public class MainWinInstr extends javax.swing.JFrame {
         viewMember = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        OverviewList = new javax.swing.JList<>();
+        overviewList = new javax.swing.JList<>();
         jPanel6 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         layer2 = new javax.swing.JPanel();
-        PostScroll = new javax.swing.JScrollPane();
-        Post = new javax.swing.JTextPane();
+        postScroll = new javax.swing.JScrollPane();
+        post = new javax.swing.JTextPane();
         layer1 = new javax.swing.JPanel();
         likeButton = new javax.swing.JButton();
         dislikeButton = new javax.swing.JButton();
         CommentScroll = new javax.swing.JScrollPane();
         Comments = new javax.swing.JTextPane();
         writeCommentPanel = new javax.swing.JPanel();
-        CreateComment = new javax.swing.JTextField();
-        PostComment = new javax.swing.JButton();
+        createComment = new javax.swing.JTextField();
+        postComment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,6 +134,12 @@ public class MainWinInstr extends javax.swing.JFrame {
         searchNote.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchNoteMouseClicked(evt);
+            }
+        });
+        
+        searchNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchNoteActionPerformed(evt);
             }
         });
 
@@ -353,11 +365,11 @@ public class MainWinInstr extends javax.swing.JFrame {
 //            public int getSize() { return strings.length; }
 //            public String getElementAt(int i) { return strings[i]; }
 //        });
-        OverviewList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        OverviewList.setCellRenderer(getCellRenderer());
-        OverviewList.setSelectionBackground(new java.awt.Color(223, 227, 238));
-        OverviewList.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        jScrollPane1.setViewportView(OverviewList);
+        overviewList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        overviewList.setCellRenderer(getCellRenderer());
+        overviewList.setSelectionBackground(new java.awt.Color(223, 227, 238));
+        overviewList.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setViewportView(overviewList);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -376,11 +388,11 @@ public class MainWinInstr extends javax.swing.JFrame {
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLayeredPane1.setOpaque(true);
 
-        PostScroll.setBorder(null);
+        postScroll.setBorder(null);
 
-        Post.setEditable(false);
-        Post.setContentType("text/html"); // NOI18N
-        PostScroll.setViewportView(Post);
+        post.setEditable(false);
+        post.setContentType("text/html"); // NOI18N
+        postScroll.setViewportView(post);
 
         javax.swing.GroupLayout layer2Layout = new javax.swing.GroupLayout(layer2);
         layer2.setLayout(layer2Layout);
@@ -388,13 +400,13 @@ public class MainWinInstr extends javax.swing.JFrame {
             layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 561, Short.MAX_VALUE)
             .addGroup(layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(PostScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+                .addComponent(postScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
         );
         layer2Layout.setVerticalGroup(
             layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 157, Short.MAX_VALUE)
             .addGroup(layer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(PostScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                .addComponent(postScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
         );
 
         layer1.setOpaque(false);
@@ -464,19 +476,19 @@ public class MainWinInstr extends javax.swing.JFrame {
 
         writeCommentPanel.setBackground(new java.awt.Color(231, 239, 246));
 
-        CreateComment.setToolTipText("Add Comment");
-        CreateComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        CreateComment.addActionListener(new java.awt.event.ActionListener() {
+        createComment.setToolTipText("Add Comment");
+        createComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        createComment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CreateCommentActionPerformed(evt);
+                createCommentActionPerformed(evt);
             }
         });
 
-        PostComment.setText("Post");
-        PostComment.setToolTipText("");
-        PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
+        postComment.setText("Post");
+        postComment.setToolTipText("");
+        postComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PostCommentMouseClicked(evt);
+                postCommentMouseClicked(evt);
             }
         });
 
@@ -486,9 +498,9 @@ public class MainWinInstr extends javax.swing.JFrame {
             writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(writeCommentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(CreateComment)
+                .addComponent(createComment)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PostComment, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(postComment, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         writeCommentPanelLayout.setVerticalGroup(
             writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,9 +508,9 @@ public class MainWinInstr extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(writeCommentPanelLayout.createSequentialGroup()
-                        .addComponent(PostComment)
+                        .addComponent(postComment)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(CreateComment))
+                    .addComponent(createComment))
                 .addContainerGap())
         );
 
@@ -573,47 +585,47 @@ public class MainWinInstr extends javax.swing.JFrame {
 			jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
 			jComboBox1.setToolTipText("Change Class");
 			// Posts Overview
-			OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
+			overviewList.setModel(new javax.swing.AbstractListModel<String>() {
     				String[] strings = { "<html><h3>No Posts Available<h3><html>" };
     				public int getSize() { return strings.length; }
     				public String getElementAt(int i) { return strings[i]; }
     			});
 			
 			// Post Content
-			this.Post.setText("<html><body style='background-color:#f0f8ff;'>"
+			this.post.setText("<html><body style='background-color:#f0f8ff;'>"
 					+ "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
 					+ "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
 					+ "<h1>You have no classes now.</h1></div></body></html>");
 			this.likeButton.setEnabled(false);
 			this.dislikeButton.setEnabled(false);
-			this.PostComment.setEnabled(false);
+			this.postComment.setEnabled(false);
 			this.jButton1.setEnabled(false);
 			this.searchNote.setEnabled(false);
 			this.sortChoiceBox.setEnabled(false);
-			this.CreateComment.setEnabled(false);
+			this.createComment.setEnabled(false);
 			return;
 		}
 		courses = courseList.getCourses();
 		// classes dropdown box
-		DefaultComboBoxModel dropDownModel = new DefaultComboBoxModel();
+		dropDownModel = new DefaultComboBoxModel();
 		for (Course course : courses) {
 			dropDownModel.addElement(course.getCourseName());
 		}
 		jComboBox1.setModel(dropDownModel);
 		jComboBox1.setToolTipText("Change Class");
 		
-		// Posts
-		Course currentCourse = courses.get(1); 
+		// Post Overview
+		currentCourse = courses.get(1); 
 		//Course currentCourse = courses.get(0); 
-		Vector<Note> notes = currentCourse.getAllNotes();
+		notes = currentCourse.getAllNotes();
 		for (Note note : notes) {
 			notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
 		}
 		
-		this.OverviewList.setModel(notesOverviewModel);
+		this.overviewList.setModel(notesOverviewModel);
 		
 		// Post Content
-		this.Post.setText("<html><body style='background-color:#f0f8ff;'>"
+		this.post.setText("<html><body style='background-color:#f0f8ff;'>"
 				+ "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
 				+ "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
 				+ "<h1>Welcome to Notezza!"
@@ -621,14 +633,10 @@ public class MainWinInstr extends javax.swing.JFrame {
 				+ "</body></html>");
 		this.likeButton.setEnabled(false);
 		this.dislikeButton.setEnabled(false);
-		this.PostComment.setEnabled(false);
-		this.CreateComment.setEnabled(false);
+		this.postComment.setEnabled(false);
+		this.createComment.setEnabled(false);
     }
     
-    public void update() {
-    		
-    }
-
     private void addClassMouseEntered(java.awt.event.MouseEvent evt) {                                      
         addClass.setBackground(new Color(139,157,195));
     }                                     
@@ -669,10 +677,12 @@ public class MainWinInstr extends javax.swing.JFrame {
         searchNote.setText("");
     }                                       
 
-    private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) {                                               
-        
+    private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) { 
+    		int sortTypeInt = sortChoiceBox.getSelectedIndex();
+    		notes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
+    		refreshList();
     }                                              
-
+    
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {                                     
         
     }                                    
@@ -697,11 +707,11 @@ public class MainWinInstr extends javax.swing.JFrame {
         viewMember.setBackground(new Color(139,157,195));
     }                                       
 
-    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    private void createCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
 
     }                                             
 
-    private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
+    private void postCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
     		
     }     
     
@@ -711,6 +721,26 @@ public class MainWinInstr extends javax.swing.JFrame {
     
     private void dislikeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
 		
+    }
+    
+    private void searchNoteActionPerformed(java.awt.event.ActionEvent evt) {                                         
+		String keyword = this.searchNote.getText();
+		notes = currentCourse.searchNote(keyword);
+		this.refreshList();
+		System.out.println("Performing search");
+    }
+    
+    private void refreshList() {
+    		this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
+		notesOverviewModel.removeAllElements();
+		for (Note note: notes) {
+			this.notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
+		}
+    }
+    
+    private void clearList() {
+    		this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
+    		notesOverviewModel.removeAllElements();
     }
 
     /**
@@ -765,13 +795,13 @@ public class MainWinInstr extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane CommentScroll;
     private javax.swing.JTextPane Comments;
-    private javax.swing.JTextField CreateComment;
+    private javax.swing.JTextField createComment;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel Menu;
-    private javax.swing.JList<String> OverviewList;
-    private javax.swing.JTextPane Post;
-    private javax.swing.JButton PostComment;
-    private javax.swing.JScrollPane PostScroll;
+    private javax.swing.JList<String> overviewList;
+    private javax.swing.JTextPane post;
+    private javax.swing.JButton postComment;
+    private javax.swing.JScrollPane postScroll;
     private javax.swing.JLabel addClass;
     private javax.swing.JButton dislikeButton;
     private javax.swing.JPanel functionBar;
