@@ -188,7 +188,7 @@ public class Login extends javax.swing.JPanel {
         System.out.println(passField.getPassword());
         System.out.println(unameField.getText());
         String password = String.copyValueOf(passField.getPassword());
-        LoginCredential loginCredential = new LoginCredential(unameField.getText(),password);
+        LoginCredential loginCredential = new LoginCredential(password, unameField.getText());
         Command login = new Command(CommandType.LOGIN,loginCredential);
         client.sendCommand(login);
 
