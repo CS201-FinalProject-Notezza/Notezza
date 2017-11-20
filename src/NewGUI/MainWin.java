@@ -420,7 +420,7 @@ public class MainWin extends javax.swing.JFrame {
                 this.createComment.setEnabled(true);
                 int noteForIndex = overviewList.getSelectedIndex();
                 if (noteForIndex < currentCourse.getAllNotes().size() && noteForIndex >= 0) {
-                    currentNote = currentCourse.getAllNotes().get(noteForIndex);
+                    currentNote = displayedNotes.get(noteForIndex); 
                     displayCurrentNote();
                 }
             }
