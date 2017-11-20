@@ -5,6 +5,7 @@
  */
 package NewGUI;
 
+import GUI.*;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
@@ -19,6 +20,7 @@ import objects.User;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,11 +29,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.border.LineBorder;
-
-import GUI.InstructorPresentation;
-import GUI.UserPresentation;
-import GUI.UserProfile;
-import GUI.ViewStudentsInClass;
 
 import javax.swing.*;
 
@@ -166,6 +163,11 @@ public class MainWinInstr extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(42, 77, 105));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/plus-17-dark.png"))); // NOI18N
         jButton1.setText("Add New Post");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createNewNote(evt);
+            }
+        });
 
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -605,8 +607,13 @@ public class MainWinInstr extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>  
-    
-    
+
+    private void createNewNote(MouseEvent evt) {
+        AddNote addnote = new AddNote(client,currentCourse);
+        addnote.setVisible(true);
+    }
+
+
     private void initContents() {
 		if (courseList == null || courseList.getCourses() == null || courseList.getCourses().isEmpty()) {
 			// No course available
@@ -715,7 +722,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     }   
     
     private void sortNotes() {
-    		int sortTypeInt = sortChoiceBox.getSelectedIndex();
+        int sortTypeInt = sortChoiceBox.getSelectedIndex();
 		notes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
 		refreshList();
     }
@@ -735,7 +742,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                    
 
     private void viewMemberMouseClicked(java.awt.event.MouseEvent evt) {                                        
-		System.out.println("POPPING UP VIEW ClASSMATES...");
+		System.out.println("POPPING UP VIEW CLASSMATES...");
 		if (currentCourse != null) {
 			ViewStudentsInClass viewClassMate = new ViewStudentsInClass(client.getUser(), currentCourse.getStudents(),
 					currentCourse.getInstructor());
@@ -753,20 +760,25 @@ public class MainWinInstr extends javax.swing.JFrame {
         viewMember.setBackground(new Color(139,157,195));
     }                                       
 
-    private void createCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
-    		
+    private void createCommentActionPerformed(java.awt.event.ActionEvent evt) {
+        postComment();
     }                                             
 
     private void postCommentMouseClicked(java.awt.event.MouseEvent evt) {                                         
-		System.out.println("post comment clicked...");
-		if (!createComment.getText().isEmpty()) {
-			String commentContent = createComment.getText();
-			Date date = Util.getCurrentDate();
-			User user = client.getUser();
-			Comment comment = new Comment(user, commentContent, date, currentNote);
-			client.sendCommand(new Command(CommandType.ADD_COMMENT, comment));
-		}
-    }     
+        postComment();
+    }
+
+    private void postComment() {
+        System.out.println("post comment clicked...");
+        if (!createComment.getText().isEmpty()) {
+            String commentContent = createComment.getText();
+            Date date = Util.getCurrentDate();
+            User user = client.getUser();
+            Comment comment = new Comment(user, commentContent, date, currentNote);
+            client.sendCommand(new Command(CommandType.ADD_COMMENT, comment));
+        }
+        createComment.setText("");
+    }
     
     private void likeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
     		System.out.println("Adding a like");
@@ -850,7 +862,7 @@ public class MainWinInstr extends javax.swing.JFrame {
                 courseInList.addNote(note);
                 updateNotes();
                 System.out.println("Note added!");
-                break;
+                return;
             }
         }
         System.out.println("Adding note failed");
