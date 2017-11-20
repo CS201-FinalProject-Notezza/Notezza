@@ -85,7 +85,6 @@ public class NewCourse extends JFrame {
 		emailText.setCaretColor(new java.awt.Color(52, 61, 70));
 		contentPane.add(emailText);
 		Action addClass = new AddClass();
-		Action action = new SwingAction();
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(136, 32, 164, 16);
@@ -104,17 +103,10 @@ public class NewCourse extends JFrame {
 		createCourseButton.setForeground(new Color(52, 61, 70));
 		createCourseButton.setFont(new Font("Dialog", Font.BOLD, 15));
 		createCourseButton.setBounds(80, 205, 160, 34);
+		createCourseButton.setAction(addClass);
 		contentPane.add(createCourseButton);
 	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "Cancel");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-			setVisible(false);
-		}
-	}
+
 	private class AddClass extends AbstractAction {
  		public AddClass() {
 						putValue(NAME, "OK");
@@ -128,6 +120,7 @@ public class NewCourse extends JFrame {
 
 			User instructor = client.getUser();
 			client.sendCommand(new Command(CommandType.CREATE_CLASS,new CreateClassInfo(courseName,studentEmailArrays,instructor)));
+			setVisible(false);
 		}
 	}
 }
