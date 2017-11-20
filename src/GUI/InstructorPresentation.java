@@ -250,7 +250,7 @@ public class InstructorPresentation extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			String chatContent = chatTextBox.getText();
 			String username = client.getUser().getUsername();
-			ChatMessage chatMessage = new ChatMessage(chatContent, username, course);
+			ChatMessage chatMessage = new ChatMessage(username, chatContent, course);
 			System.out.println("Sending the chat message...");
 			System.out.println(username + ": " + chatContent);
 			System.out.println("Chat has been sent");
