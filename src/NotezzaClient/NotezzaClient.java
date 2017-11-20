@@ -147,8 +147,7 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addComment(course,note,comment);
                 } else if (mainWinInstr != null) {
-                    //TODO uncomment
-                    //mainWinInstr.addComment(course,note,comment);
+                    mainWinInstr.addComment(course,note,comment);
                 }
                 break;
             case UPDATE_NOTE:
@@ -158,8 +157,7 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addNote(cn.getCourse(), cn.getNote());
                 } else if (mainWinInstr != null) {
-                    // TODO uncomment
-                    //mainWinInstr.addNote(cn.getCourse(),cn.getNote());
+                    mainWinInstr.addNote(cn.getCourse(),cn.getNote());
                 }
                 break;
             case UPDATE_CLASS:

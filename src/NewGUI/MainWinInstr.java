@@ -701,11 +701,13 @@ public class MainWinInstr extends javax.swing.JFrame {
         
     }                                     
 
-    private void lectureMouseClicked(java.awt.event.MouseEvent evt) {                                     
-		System.out.println("POPPING UP PRESENTATION WINDOW..");
-		InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
-		client.setInstructorPresentationWindow(presentation);
-		presentation.setVisible(true);
+    private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
+        if (currentCourse != null && currentCourse.getCurrentLecture() != null) {
+            System.out.println("POPPING UP PRESENTATION WINDOW..");
+            InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
+            client.setInstructorPresentationWindow(presentation);
+            presentation.setVisible(true);
+        }
     }                                    
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {                                    
