@@ -691,7 +691,8 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                  
 
     private void addClassMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        
+        NewCourse newCourse = new NewCourse(this.client);
+        newCourse.setVisible(true);
     }                                     
 
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
@@ -700,6 +701,9 @@ public class MainWinInstr extends javax.swing.JFrame {
             InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
             client.setInstructorPresentationWindow(presentation);
             presentation.setVisible(true);
+        } else {
+            NewPresentation newPresentation = new NewPresentation(this.client,currentCourse);
+            newPresentation.setVisible(true);
         }
     }                                    
 

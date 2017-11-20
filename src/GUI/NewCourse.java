@@ -121,6 +121,7 @@ public class NewCourse extends JFrame {
 						putValue(SHORT_DESCRIPTION, "Some short description");
 					}
  		public void actionPerformed(ActionEvent e) {
+			System.out.println("Creating class");
 			String courseName = courseNameText.getText();
 			String studentEmailStrings = emailText.getText();
 			String[] studentEmailArrays = studentEmailStrings.split(",");
