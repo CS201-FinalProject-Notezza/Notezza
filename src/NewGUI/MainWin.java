@@ -870,7 +870,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JLabel viewMember;
     private javax.swing.JPanel writeCommentPanel;
 
-    public void updateComment(Course course, Note note, Comment comment) {
+    public void addComment(Course course, Note note, Comment comment) {
         for (Course courseInList : courseList.getCourses()) {
             System.out.println("Checking courses..");
             if (courseInList.getCourseName().equals(course.getCourseName())) {
