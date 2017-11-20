@@ -28,6 +28,8 @@ import objects.Course;
 import objects.CourseANDNote;
 import objects.Note;
 import objects.User;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class AddNote extends JFrame {
 
@@ -64,7 +66,6 @@ public class AddNote extends JFrame {
 		this.course = course;
 		
 		setTitle("New Note");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 425);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -90,13 +91,17 @@ public class AddNote extends JFrame {
 		noteLabel.setForeground(new java.awt.Color(204, 204, 204));
 		contentPane.add(noteLabel);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(21, 106, 458, 233);
+		contentPane.add(scrollPane);
+		
 		descriptionText = new JTextPane();
+		scrollPane.setViewportView(descriptionText);
 		descriptionText.setBackground(new java.awt.Color(204, 204, 204));
 		descriptionText.setForeground(new java.awt.Color(52, 61, 70));
 		descriptionText.setBorder(null);
 		descriptionText.setCaretColor(new java.awt.Color(52, 61, 70));
-		descriptionText.setBounds(21, 106, 458, 233);
-		contentPane.add(descriptionText);
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setFont(new Font("Dialog", Font.BOLD, 15));
