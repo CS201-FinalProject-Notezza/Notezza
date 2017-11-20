@@ -416,14 +416,11 @@ public class MainWin extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 this.likeButton.setEnabled(true);
                 this.dislikeButton.setEnabled(true);
-              
                 this.postComment.setEnabled(true);
                 this.createComment.setEnabled(true);
                 int noteForIndex = overviewList.getSelectedIndex();
                 if (noteForIndex < currentCourse.getAllNotes().size() && noteForIndex >= 0) {
                     currentNote = displayedNotes.get(noteForIndex); 
-                    likeButton.setText(Integer.toString(currentNote.getNumLikes()));
-                    dislikeButton.setText(Integer.toString(currentNote.getDislikeUsers().size()));
                     displayCurrentNote();
                 }
             }
@@ -472,7 +469,7 @@ public class MainWin extends javax.swing.JFrame {
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
         // TODO HARD CODE
-        likeButton.setText("N/A");
+        likeButton.setText("63");
         likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddDisLikeMouseClicked(evt);
@@ -482,7 +479,7 @@ public class MainWin extends javax.swing.JFrame {
         likeButton.setEnabled(client != null);
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
-        dislikeButton.setText("N/A");
+        dislikeButton.setText("63");
         dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddLikeMouseClicked(evt);
@@ -543,7 +540,7 @@ public class MainWin extends javax.swing.JFrame {
         createComment.addActionListener(this::CreateCommentActionPerformed);
         createComment.setEnabled(client != null);
 
-        postComment.setText("post");
+        postComment.setText("Comment");
         postComment.setToolTipText("");
         postComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

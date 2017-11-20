@@ -102,16 +102,6 @@ public class UserPresentation extends JFrame {
 	public UserPresentation(NotezzaClient client, Course course) {
 		setTitle("Presentation");
 		setResizable(false);
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
 
 		this.client = client;
 		this.course = course;
@@ -120,6 +110,7 @@ public class UserPresentation extends JFrame {
 		setBounds(100, 100, 791, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(99, 172, 229));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -132,23 +123,28 @@ public class UserPresentation extends JFrame {
 		contentPane.add(scrollPane);
 		
 		chatWindow = new JList(chatDefaultListModel);
+		chatWindow.setBackground(new java.awt.Color(240, 248, 255));
+		chatWindow.setFont(new Font("Dialog", Font.PLAIN, 13));
 		scrollPane.setViewportView(chatWindow);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		
 
 		chatTextBox = new JTextField();
 		chatTextBox.setBounds(499, 473, 207, 27);
+		chatTextBox.setBackground(new java.awt.Color(240, 248, 255));
+		chatTextBox.setFont(new Font("Dialog", Font.PLAIN, 13));
 		contentPane.add(chatTextBox);
 		chatTextBox.setColumns(10);
 
 		sendChatButton = new JButton("Send");
 		sendChatButton.setBounds(707, 473, 68, 29);
+		sendChatButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		sendChatButton.setAction(sendChatMessage);
 		contentPane.add(sendChatButton);
 
 		slidePanel = new JPanel();
 		slidePanel.setBorder(null);
 		slidePanel.setBounds(20, 37, 468, 409);
+		slidePanel.setBackground(new java.awt.Color(99, 172, 229));
 		contentPane.add(slidePanel);
 
 		this.urls = course.getCurrentLecture().getLinks();
@@ -168,6 +164,7 @@ public class UserPresentation extends JFrame {
 
 		JPanel quizPanel = new JPanel();
 		quizPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		quizPanel.setBackground(new java.awt.Color(240, 248, 255));
 		quizPanel.setBounds(500, 42, 272, 218);
 		contentPane.add(quizPanel);
 		GridBagLayout gbl_quizPanel = new GridBagLayout();
@@ -178,7 +175,7 @@ public class UserPresentation extends JFrame {
 		quizPanel.setLayout(gbl_quizPanel);
 
 		questionLabel = new JLabel("Quiz Question");
-		questionLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		questionLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_questionLabel = new GridBagConstraints();
 		gbc_questionLabel.anchor = GridBagConstraints.WEST;
 		gbc_questionLabel.gridwidth = 2;
@@ -189,6 +186,7 @@ public class UserPresentation extends JFrame {
 		quizObjects.add(questionLabel);
 
 		answer1 = new JCheckBox("Answer 1");
+		answer1.setFont(new Font("Dialog", Font.PLAIN, 13));
 		GridBagConstraints gbc_answer1 = new GridBagConstraints();
 		gbc_answer1.anchor = GridBagConstraints.WEST;
 		gbc_answer1.gridwidth = 2;
@@ -200,6 +198,7 @@ public class UserPresentation extends JFrame {
 		checkboxes.add(answer1);
 
 		answer2 = new JCheckBox("Answer 2");
+		answer2.setFont(new Font("Dialog", Font.PLAIN, 13));
 		GridBagConstraints gbc_answer2 = new GridBagConstraints();
 		gbc_answer2.anchor = GridBagConstraints.WEST;
 		gbc_answer2.gridwidth = 2;
@@ -211,6 +210,7 @@ public class UserPresentation extends JFrame {
 		checkboxes.add(answer2);
 
 		answer3 = new JCheckBox("Answer 3");
+		answer3.setFont(new Font("Dialog", Font.PLAIN, 13));
 		GridBagConstraints gbc_answer3 = new GridBagConstraints();
 		gbc_answer3.anchor = GridBagConstraints.WEST;
 		gbc_answer3.gridwidth = 2;
@@ -222,6 +222,7 @@ public class UserPresentation extends JFrame {
 		checkboxes.add(answer3);
 
 		answer4 = new JCheckBox("Answer 4");
+		answer4.setFont(new Font("Dialog", Font.PLAIN, 13));
 		GridBagConstraints gbc_answer4 = new GridBagConstraints();
 		gbc_answer4.anchor = GridBagConstraints.WEST;
 		gbc_answer4.gridwidth = 2;
@@ -233,6 +234,7 @@ public class UserPresentation extends JFrame {
 		checkboxes.add(answer4);
 
 		answer5 = new JCheckBox("Answer 5");
+		answer5.setFont(new Font("Dialog", Font.PLAIN, 13));
 		GridBagConstraints gbc_answer5 = new GridBagConstraints();
 		gbc_answer5.anchor = GridBagConstraints.WEST;
 		gbc_answer5.gridwidth = 2;
@@ -244,6 +246,7 @@ public class UserPresentation extends JFrame {
 		checkboxes.add(answer5);
 
 		checkAnswerButton = new JButton("Check");
+		checkAnswerButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		checkAnswerButton.setAction(checkQuizAnswers);
 		checkAnswerButton.setText("Check");
 		GridBagConstraints gbc_checkAnswerButton = new GridBagConstraints();
@@ -254,6 +257,7 @@ public class UserPresentation extends JFrame {
 		quizObjects.addElement(checkAnswerButton);
 
 		correctLabel = new JLabel("Correct/Incorrect");
+		correctLabel.setFont(new Font("Dialog", Font.BOLD, 13));
 		GridBagConstraints gbc_correctLabel = new GridBagConstraints();
 		gbc_correctLabel.gridx = 1;
 		gbc_correctLabel.gridy = 6;
@@ -262,6 +266,8 @@ public class UserPresentation extends JFrame {
 
 		JPanel slideButtonPanel = new JPanel();
 		slideButtonPanel.setBounds(17, 473, 468, 27);
+		slideButtonPanel.setBackground(new java.awt.Color(99, 172, 229));
+		slideButtonPanel.setFont(new Font("Dialog", Font.BOLD, 13));
 		contentPane.add(slideButtonPanel);
 		GridBagLayout gbl_slideButtonPanel = new GridBagLayout();
 		gbl_slideButtonPanel.columnWidths = new int[]{220, 28, 220};
@@ -272,6 +278,7 @@ public class UserPresentation extends JFrame {
 
 		slideBackwardsButton = new JButton("<");
 		GridBagConstraints gbc_slideBackwardsButton = new GridBagConstraints();
+		slideBackwardsButton.setFont(new Font("Dialog", Font.BOLD, 13));
 		gbc_slideBackwardsButton.insets = new Insets(0, 0, 0, 5);
 		gbc_slideBackwardsButton.gridx = 0;
 		gbc_slideBackwardsButton.gridy = 0;
@@ -280,6 +287,7 @@ public class UserPresentation extends JFrame {
 
 		slideForwardButton = new JButton(">");
 		GridBagConstraints gbc_slideForwardButton = new GridBagConstraints();
+		slideForwardButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		gbc_slideForwardButton.gridx = 2;
 		gbc_slideForwardButton.gridy = 0;
 		slideButtonPanel.add(slideForwardButton, gbc_slideForwardButton);

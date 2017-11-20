@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -87,17 +88,6 @@ public class InstructorPresentation extends JFrame {
 	public InstructorPresentation(NotezzaClient client, Course course) {
 		setTitle("Presentation");
 		setResizable(false);
-		try {
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (Exception e) {
-			// If Nimbus is not available, you can set the GUI to another look and feel.
-		}
-
 		this.client = client;
 		this.course = course;
 		this.lectureIndex = 0;
@@ -105,17 +95,20 @@ public class InstructorPresentation extends JFrame {
 		setBounds(100, 100, 791, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new java.awt.Color(114, 137, 218));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		chatDefaultListModel = new DefaultListModel();
 		chatWindow = new JList(chatDefaultListModel);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		chatWindow.setBackground(new java.awt.Color(207, 216, 247));
 		chatWindow.setBounds(500, 100, 272, 373);
 		contentPane.add(chatWindow);
 
 		chatTextBox = new JTextField();
 		chatTextBox.setBounds(499, 473, 207, 27);
+		chatTextBox.setBackground(new java.awt.Color(207, 216, 247));
 		contentPane.add(chatTextBox);
 		chatTextBox.setColumns(10);
 
@@ -127,13 +120,14 @@ public class InstructorPresentation extends JFrame {
 		slidePanel = new JPanel();
 		slidePanel.setBorder(null);
 		slidePanel.setBounds(20, 37, 468, 409);
+		slidePanel.setBackground(new java.awt.Color(114, 137, 218));
 		contentPane.add(slidePanel);
 
 		this.urls = course.getCurrentLecture().getLinks();
 		
 		slideImageLabel = new JLabel("");
 		slidePanel.add(slideImageLabel);
-
+		
 		/* Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		// HARDCODE WARNING:
 		this.urls = new Vector<>();
@@ -146,6 +140,7 @@ public class InstructorPresentation extends JFrame {
 
 		JPanel slideButtonPanel = new JPanel();
 		slideButtonPanel.setBounds(17, 473, 468, 27);
+		slideButtonPanel.setBackground(new java.awt.Color(114, 137, 218));
 		contentPane.add(slideButtonPanel);
 		GridBagLayout gbl_slideButtonPanel = new GridBagLayout();
 		gbl_slideButtonPanel.columnWidths = new int[]{220, 28, 220};
@@ -215,6 +210,14 @@ public class InstructorPresentation extends JFrame {
 				lectureIndex++;
 				displayImage();
 			}
+
+			// HARDCODE WARNING: DELETE THIS AFTER POPULATING
+			/*if (lectureIndex < urls.size() - 1) {
+				lectureIndex++;
+				displayImage();
+			}*/
+
+
 		}
 	}
 

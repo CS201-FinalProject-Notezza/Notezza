@@ -9,7 +9,14 @@ import GUI.*;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.*;
+import objects.AddingDislike;
+import objects.AddingLike;
+import objects.Comment;
+import objects.Course;
+import objects.CourseList;
+import objects.Note;
+import objects.SortType;
+import objects.User;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -113,7 +120,7 @@ public class MainWinInstr extends javax.swing.JFrame {
 
         sortChoiceBox.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
-        sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of Comments", "Most Number of Likes" }));
+        sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Comments", "Most Likes" }));
         sortChoiceBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 sortChoiceBoxItemStateChanged(evt);
@@ -509,7 +516,7 @@ public class MainWinInstr extends javax.swing.JFrame {
             }
         });
 
-        postComment.setText("Post");
+        postComment.setText("Comment");
         postComment.setToolTipText("");
         postComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -691,8 +698,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                  
 
     private void addClassMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        NewCourse newCourse = new NewCourse(this.client);
-        newCourse.setVisible(true);
+        
     }                                     
 
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
@@ -701,9 +707,6 @@ public class MainWinInstr extends javax.swing.JFrame {
             InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
             client.setInstructorPresentationWindow(presentation);
             presentation.setVisible(true);
-        } else {
-            NewPresentation newPresentation = new NewPresentation(this.client,currentCourse);
-            newPresentation.setVisible(true);
         }
     }                                    
 
@@ -774,8 +777,7 @@ public class MainWinInstr extends javax.swing.JFrame {
             Date date = Util.getCurrentDate();
             User user = client.getUser();
             Comment comment = new Comment(user, commentContent, date, currentNote);
-            CourseNoteComment cnc = new CourseNoteComment(currentCourse,currentNote,comment);
-            client.sendCommand(new Command(CommandType.ADD_COMMENT, cnc));
+            client.sendCommand(new Command(CommandType.ADD_COMMENT, comment));
         }
         createComment.setText("");
     }
