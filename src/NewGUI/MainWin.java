@@ -720,7 +720,7 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {
-        if (currentCourse != null) {
+        if (client != null) {
 	        System.out.println("POPPING UP PROFILES...");
 	        UserProfile profile = new UserProfile(client.getUser(), client.getUser());
 	        profile.setVisible(true);
