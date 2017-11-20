@@ -151,6 +151,7 @@ public class NotezzaClient extends Thread {
                 break;
             case UPDATE_COMMENT:
                 // TODO update COMMENT
+                System.out.println("Updating comment");
                 break;
             case UPDATE_NOTE:
                 // TODO Update NOTE

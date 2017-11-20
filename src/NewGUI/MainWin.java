@@ -14,6 +14,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.*;
 
+import GUI.AddNote;
 import GUI.UserPresentation;
 import GUI.UserProfile;
 import GUI.ViewStudentsInClass;
@@ -195,6 +196,11 @@ public class MainWin extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(42, 77, 105));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/plus-17-dark.png"))); // NOI18N
         jButton1.setText("Add New post");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                createNewNote(evt);
+            }
+        });
 
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -616,6 +622,11 @@ public class MainWin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void createNewNote(MouseEvent evt) {
+        AddNote addnote = new AddNote(client,currentCourse);
+        addnote.setVisible(true);
+    }
+
     private void displayCurrentNote() {
         post.setText(Util.getHTMLforNoteDetail(currentNote));
         displayComment();
@@ -631,6 +642,7 @@ public class MainWin extends javax.swing.JFrame {
             notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
         }
         overviewList.setModel(notesOverviewModel);
+
     }
 
     private void AddDisLikeMouseClicked(MouseEvent evt) {
@@ -693,7 +705,7 @@ public class MainWin extends javax.swing.JFrame {
         System.out.println("POPPING UP PROFILES...");
         UserProfile profile = new UserProfile(client.getUser(), client.getUser());
         profile.setVisible(true);
-    }                                  
+    }                                    
 
     private void profileMouseExited(java.awt.event.MouseEvent evt) {                                    
         profile.setBackground(new Color(75,134,180));
@@ -736,6 +748,7 @@ public class MainWin extends javax.swing.JFrame {
         initPost();
         String courseName = (String) classes.getSelectedItem();
         clearList();
+        comments.setText("");
         for (Course course : courseList.getCourses()) {
             if (course.getCourseName().equals(courseName)) {
                 currentCourse = course;
@@ -752,6 +765,15 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {
+        postComment();
+    }
+
+
+    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {
+        postComment();
+    }
+
+    private void postComment() {
         System.out.println("post comment clicked...");
         if (!createComment.getText().isEmpty())
         {
@@ -761,11 +783,9 @@ public class MainWin extends javax.swing.JFrame {
             Comment comment = new Comment(user,commentContent,date,currentNote);
             client.sendCommand(new Command(CommandType.ADD_COMMENT,comment));
         }
-    }                                        
+        createComment.setText("");
+    }
 
-    private void CreateCommentActionPerformed(java.awt.event.ActionEvent evt) {                                              
-
-    }                                             
 
     /**
      * @param args the command line arguments
