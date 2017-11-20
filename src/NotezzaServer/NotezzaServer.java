@@ -148,11 +148,12 @@ public class NotezzaServer {
                 break;
             case ADD_COMMENT:
                 System.out.println("Received request to add comment...");
-                Comment comment = (Comment) obj;
+                CourseNoteComment cnc = (CourseNoteComment) obj;
+                Comment comment = cnc.getComment();
                 // Add to the database
                 dm.addComment(comment);
                 //Broadcast the comment
-                broadcast(new Command(UPDATE_COMMENT, comment));
+                broadcast(new Command(UPDATE_COMMENT, cnc));
                 break;
             case ADD_NOTE:
                 System.out.println("Received request to add note...");
@@ -160,7 +161,7 @@ public class NotezzaServer {
                 Course courseForNote = cn.getCourse();
                 Note note = cn.getNote();
                 dm.addNote(note,courseForNote);
-                broadcast(new Command(UPDATE_NOTE,note));
+                broadcast(new Command(UPDATE_NOTE,cn));
                 break;
             case SEND_CHAT_MESSAGE:
                 System.out.println("Received a chat message...");

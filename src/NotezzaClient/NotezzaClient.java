@@ -20,10 +20,7 @@ import NewGUI.MainWin;
 import NewGUI.MainWinInstr;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.ChatMessage;
-import objects.CourseList;
-import objects.Quiz;
-import objects.User;
+import objects.*;
 
 public class NotezzaClient extends Thread {
     private User user;
@@ -40,7 +37,8 @@ public class NotezzaClient extends Thread {
 
     // New GUI
     private JFrame loginWindow;
-    private JFrame mainWindow;
+    private MainWin mainWin;
+    private MainWinInstr mainWinInstr;
     private UserPresentation userPresentationWindow = null;
     private InstructorPresentation instrPresentationWindow = null;
 
@@ -126,15 +124,14 @@ public class NotezzaClient extends Thread {
                 courseList = (CourseList) obj;
                 System.out.println("WE GOT EVERYTHING! POPPING UP THE STUDENT WINDOW!");
                 loginWindow.setVisible(false);
-                //pop up userWindow OLD GUI
+                // pop up userWindow OLD GUI
                 /*
                 userWindow = new UserWindow(this, courseList);
                 userWindow.setVisible(true);
                 */
-                // TODO UPDATE TO NEW GUI WHEN READY
                 // new GUI
-                mainWindow = new MainWin(this,courseList);
-                mainWindow.setVisible(true);
+                mainWin = new MainWin(this,courseList);
+                mainWin.setVisible(true);
                 break;
             case INITIALIZATION_INSTRUCTOR:
                 courseList = (CourseList) obj;
@@ -145,16 +142,32 @@ public class NotezzaClient extends Thread {
                 instructorWindow = new InstructorWindow(this, courseList,userSet);
                 instructorWindow.setVisible(true);
                 */
-                // TODO UPDATE TO NEW GUI WHEN READY
-                mainWindow = new MainWinInstr(this,courseList);
-                mainWindow.setVisible(true);
+                mainWinInstr = new MainWinInstr(this,courseList);
+                mainWinInstr.setVisible(true);
                 break;
             case UPDATE_COMMENT:
-                // TODO update COMMENT
                 System.out.println("Updating comment");
+                CourseNoteComment cnc = (CourseNoteComment) obj;
+                Course course = cnc.getCourse();
+                Comment comment = cnc.getComment();
+                Note note = cnc.getNote();
+                if (mainWin != null) {
+                    mainWin.updateComment(course,note,comment);
+                } else if (mainWinInstr != null) {
+                    mainWinInstr.updateComment(course,note,comment);
+                }
                 break;
             case UPDATE_NOTE:
-                // TODO Update NOTE
+                // TODO update note
+                System.out.println("Updating note");
+                CourseANDNote cn = (CourseANDNote) obj;
+                if (mainWin != null) {
+                    mainWin.addNote(cn.getCourse(), cn.getNote());
+                } else if (mainWinInstr != null) {
+                    mainWinInstr.addNote(cn.getCourse(),cn.getNote());
+                }
+
+
                 break;
             case UPDATE_CLASS:
                 // TODO UPDATE CLASS

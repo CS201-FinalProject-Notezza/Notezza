@@ -759,6 +759,8 @@ public class MainWin extends javax.swing.JFrame {
         }
     }
 
+
+
     private void clearList() {
         this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
         notesOverviewModel.removeAllElements();
@@ -781,7 +783,8 @@ public class MainWin extends javax.swing.JFrame {
             Date date = Util.getCurrentDate();
             User user = client.getUser();
             Comment comment = new Comment(user,commentContent,date,currentNote);
-            client.sendCommand(new Command(CommandType.ADD_COMMENT,comment));
+            CourseNoteComment cnc = new CourseNoteComment(currentCourse,currentNote,comment);
+            client.sendCommand(new Command(CommandType.ADD_COMMENT,cnc));
         }
         createComment.setText("");
     }
@@ -828,7 +831,6 @@ public class MainWin extends javax.swing.JFrame {
             }
         };
     }
-    
 
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane CommentScroll;
@@ -867,5 +869,29 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sortChoiceBox;
     private javax.swing.JLabel viewMember;
     private javax.swing.JPanel writeCommentPanel;
+
+    public void updateComment(Course course, Note note, Comment comment) {
+        for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Checking courses..");
+            if (courseInList.getCourseName().equals(course.getCourseName())) {
+                System.out.println("Find course!");
+                System.out.println("Checking notes..");
+                for (Note noteInSideTheCourse : courseInList.getAllNotes()){
+                    if (noteInSideTheCourse.getTitle().equals(note.getTitle())) {
+                        System.out.println("Find note!");
+                        noteInSideTheCourse.addComment(comment);
+                        displayComment();
+                    }
+                }
+            }
+        }
+    }
+
+    public void addNote(Course course, Note note) {
+        for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Chec");
+        }
+    }
+
     // End of variables declaration                   
 }
