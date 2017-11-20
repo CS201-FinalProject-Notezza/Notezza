@@ -67,37 +67,7 @@ public class Util {
         sb.append("</font></body></html>");
         return sb.toString();
     }
-    
-    public static String getHTMLforComments(Note note) {
-        StringBuilder sb = new StringBuilder();
-        String title = note.getTitle();
-        String content = note.getTextContent();
-        Date date = note.getDateCreated();
-        String author = note.getUser().getUsername();
-        sb.append("<html>");
-        sb.append("<body style='margin: 10px; padding:5px' wrap=\"hard\">");
-        // Title
-        sb.append("<font style=\"padding:5px; margin:5px\" face=\"Lucida Grande\" size=\"5\"><b>");
-        sb.append(title);
-        sb.append("</b><br /><br />");
-        
-        // Content
-        sb.append("<font face=\"Lucida Grande\" size=\"4\">");
-        sb.append(content);
-        sb.append("</fonts><br /> <br />");
-        
-        // Author
-        sb.append("<div style='text-align: left; background-color: #f0f8ff; height: 15px; padding: 2px'>");
-        sb.append("<font face=\"Lucida Grande\" size=\"3\">");
-        sb.append("Update at ");
-        sb.append(getCalendarDateTime(date));
-        sb.append(" by ");
-        sb.append(author);
-        sb.append("</font></div>");
-        
-        sb.append("</font></body></html>");
-        return sb.toString();
-    }
+
     
     public static Date getCurrentDate() {
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
@@ -106,7 +76,7 @@ public class Util {
         return d;
     }
 
-    public static String displayComments(Note note) {
+    public static String getHTMLforComments(Note note) {
         StringBuilder sb = new StringBuilder();
         Vector<Comment> comments = note.getComments();
 

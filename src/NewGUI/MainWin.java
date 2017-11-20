@@ -622,7 +622,7 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void displayComment() {
-        comments.setText(Util.displayComments(currentNote));
+        comments.setText(Util.getHTMLforComments(currentNote));
     }
 
     private void updateNote() {
