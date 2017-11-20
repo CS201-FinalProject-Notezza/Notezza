@@ -347,6 +347,7 @@ public class UserPresentation extends JFrame {
 			System.out.println("Chat has been sent");
 			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
 			
+			chatTextBox.setText("");
 			
 		}
 	}
