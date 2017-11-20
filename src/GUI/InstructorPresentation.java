@@ -36,6 +36,8 @@ import NotezzaServer.CommandType;
 import objects.ChatMessage;
 import objects.Course;
 import objects.Quiz;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class InstructorPresentation extends JFrame {
 
@@ -65,6 +67,7 @@ public class InstructorPresentation extends JFrame {
 	
 	private JButton newPresentationButton;
 	private JComboBox questionBox;
+	private JScrollPane scrollPane;
 	
 	/**
 	 * Launch the application.
@@ -100,11 +103,16 @@ public class InstructorPresentation extends JFrame {
 		contentPane.setLayout(null);
 
 		chatDefaultListModel = new DefaultListModel();
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(500, 100, 272, 373);
+		contentPane.add(scrollPane);
 		chatWindow = new JList(chatDefaultListModel);
+		scrollPane.setViewportView(chatWindow);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		chatWindow.setBackground(new java.awt.Color(207, 216, 247));
-		chatWindow.setBounds(500, 100, 272, 373);
-		contentPane.add(chatWindow);
 
 		chatTextBox = new JTextField();
 		chatTextBox.setBounds(499, 473, 207, 27);
@@ -251,6 +259,8 @@ public class InstructorPresentation extends JFrame {
 			System.out.println(username + ": " + chatContent);
 			System.out.println("Chat has been sent");
 			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
+			
+			chatTextBox.setText("");
 		}
 	}
 
