@@ -80,20 +80,21 @@ public class Util {
         StringBuilder sb = new StringBuilder();
         Vector<Comment> comments = note.getComments();
 
-        sb.append("<html>").append("<body style='margin:10px; padding:5px' wrap=\"hard\">");
-        sb.append("<ul style=\"list-style-type:none\">");
+        sb.append("<html>").append("<body style='padding:5px' wrap=\"hard\">");
+        //sb.append("<ul style=\"list-style-type:none margin:10px\">");
         for (Comment comment : comments) {
-            sb.append("<li style=\"background-color:#f0f8ff; margin:5px; padding:10px\">");
+            sb.append("<div style=\"font-family:Lucida Grande; background-color:#f0f8ff; margin:5px; padding:10px\">");
             String userName = comment.getUser().getUsername();
             String commentContent = comment.getContent();
             String date = getCalendarDateTime(comment.getDateCreated());
+            sb.append("<font size=\"4\">");
             sb.append("<b>").append(userName).append("</b>  ").append(date).append("<br />");
-            sb.append("<font face=\"Lucida Grande\" size=\"3\">");
             sb.append(commentContent);
             sb.append("</font>");
-            sb.append("</li>");
+            sb.append("</div>");
         }
-        sb.append("</ul>").append("</body></html>");
+//        sb.append("</ul>");
+        sb.append("</body></html>");
         return sb.toString();
     }
 
