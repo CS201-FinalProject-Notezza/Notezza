@@ -154,7 +154,7 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addComment(course,note,comment);
                 } else if (mainWinInstr != null) {
-                    mainWinInstr.updateComment(course,note,comment);
+                    mainWinInstr.addComment(course,note,comment);
                 }
                 break;
             case UPDATE_NOTE:
