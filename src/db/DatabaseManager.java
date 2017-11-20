@@ -324,14 +324,18 @@ public class DatabaseManager {
 					for (String link : p.getLinks()) {
 						System.out.println("\t\t\tLink: " + link);
 					}
-					for (Quiz qu : p.getQuizzes()) {
-						System.out.println("\t\t\tQuestion: " + qu.getQuestion());
-						Vector<String> choices = qu.getChoices();
-						Set<Integer> answers = qu.getAnswers();
-						for (int i = 0; i < choices.size(); i++) {
-							System.out.print("\t\t\t\tChoice: " + choices.get(i));
-							if (answers.contains(i)) { System.out.print(" CORRECT"); }
-							System.out.println("");
+					if (p.getQuizzes()!= null) {
+						for (Quiz qu : p.getQuizzes()) {
+							System.out.println("\t\t\tQuestion: " + qu.getQuestion());
+							Vector<String> choices = qu.getChoices();
+							Set<Integer> answers = qu.getAnswers();
+							for (int i = 0; i < choices.size(); i++) {
+								System.out.print("\t\t\t\tChoice: " + choices.get(i));
+								if (answers.contains(i)) {
+									System.out.print(" CORRECT");
+								}
+								System.out.println("");
+							}
 						}
 					}
 				}
