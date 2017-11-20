@@ -6,19 +6,29 @@
 package NewGUI;
 
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
 
 import GUI.CreateNewUser;
-import GUI.GuestWindow;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
+import objects.Course;
+import objects.CourseList;
 import objects.LoginCredential;
+import objects.Note;
+import objects.User;
 
 /**
  *
  * @author user
  */
 public class Login extends javax.swing.JPanel {
+	
+	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 
     private NotezzaClient client;
     /**
@@ -213,7 +223,34 @@ public class Login extends javax.swing.JPanel {
     }
 
     private void guestLabelMouseClicked(java.awt.event.MouseEvent evt) {
-    	GuestWindow guest = new GuestWindow();
+    	User instructor = new User("Tommy", "Trojan", "tommytrojan", "tommy@usc.edu", 11111, true, true);
+    	User publicUser = new User("Public", "User", "publicuser", "public@usc.edu", 22222, false, true);
+    	User privateUser = new User("Private", "User", "privateuser", "private@usc.edu", 33333, false, false);
+    	Vector<User> users = new Vector<User>();
+    	users.add(publicUser);
+    	users.add(privateUser);
+    	Vector<String> tags1 = new Vector<String>();
+    	tags1.add("tag");
+    	tags1.addElement("example");
+    	SimpleDateFormat format = new SimpleDateFormat("mm/dd/yyyy");
+    	Date d1 = null;
+    	Date d2 = null;
+    	try {
+	    	d1 = format.parse("11/19/2017");
+	    	d2 = format.parse("11/20/2017");
+    	} catch (ParseException pe) {}
+    	Note note1 = new Note(publicUser, "Example Note 1", tags1, d1, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus, sem et aliquam convallis, risus justo blandit augue, at imperdiet ex risus sit amet lectus. Vivamus fermentum massa orci, finibus fermentum sem aliquet nec. Vestibulum interdum leo in neque luctus ornare. Maecenas hendrerit ultricies purus, vitae gravida lacus porttitor a.");
+    	Note note2 = new Note(privateUser, "Example Note 2", tags1, d2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id sodales tellus. Etiam non mollis felis. Etiam quis commodo dolor. Integer semper volutpat iaculis. Vestibulum facilisis at metus facilisis commodo. Nam at metus nec erat congue dictum. Vestibulum ultricies urna a tempus lacinia. Sed sit amet lectus sit amet dolor.");
+    	Vector<Note> notes = new Vector<Note>();
+    	notes.add(note1);
+    	notes.add(note2);
+    	Course c = new Course("Example Course", instructor, users);
+    	c.setAllNotes(notes);
+    	Vector<Course> course = new Vector<Course>();
+    	course.add(c);
+    	CourseList cl = new CourseList(course);
+    	
+    	MainWin guest = new MainWin(null, cl);
         guest.setVisible(true);
     }
 
