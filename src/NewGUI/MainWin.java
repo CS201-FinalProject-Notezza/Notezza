@@ -13,8 +13,6 @@ import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import GUI.UserPresentation;
 import GUI.UserProfile;
@@ -150,7 +148,7 @@ public class MainWin extends javax.swing.JFrame {
         likeButton = new javax.swing.JButton();
         dislikeButton = new javax.swing.JButton();
         CommentScroll = new javax.swing.JScrollPane();
-        Comments = new javax.swing.JTextPane();
+        comments = new javax.swing.JTextPane();
         writeCommentPanel = new javax.swing.JPanel();
         createComment = new javax.swing.JTextField();
         postComment = new javax.swing.JButton();
@@ -161,7 +159,7 @@ public class MainWin extends javax.swing.JFrame {
 
         sortChoiceBox.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         sortChoiceBox.setForeground(new java.awt.Color(42, 77, 105));
-        sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of Comments", "Most Number of Likes" }));
+        sortChoiceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Latest Date", "Highest Rating", "Most Number of comments", "Most Number of Likes" }));
         sortChoiceBox.addItemListener(this::sortChoiceBoxItemStateChanged);
         //sortChoiceBox.addActionListener(this::sortChoiceBoxActionPerformed);
 
@@ -518,9 +516,9 @@ public class MainWin extends javax.swing.JFrame {
                     .addGap(0, 51, Short.MAX_VALUE)))
         );
 
-        Comments.setEditable(false);
-        Comments.setContentType("text/html"); // NOI18N
-        CommentScroll.setViewportView(Comments);
+        comments.setEditable(false);
+        comments.setContentType("text/html"); // NOI18N
+        CommentScroll.setViewportView(comments);
 
         writeCommentPanel.setBackground(new java.awt.Color(231, 239, 246));
 
@@ -620,12 +618,15 @@ public class MainWin extends javax.swing.JFrame {
 
     private void displayCurrentNote() {
         post.setText(Util.getHTMLforNoteDetail(currentNote));
+        displayComment();
+    }
+
+    private void displayComment() {
+        comments.setText(Util.displayComments(currentNote));
     }
 
     private void updateNote() {
-        displayedNotes.clear();
-        displayedNotes.addAll(currentCourse.getAllNotes());
-
+        displayedNotes = currentCourse.getAllNotes();
         for (Note note : displayedNotes) {
             notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
         }
@@ -661,6 +662,7 @@ public class MainWin extends javax.swing.JFrame {
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("POPPING UP PRESENTATION WINDOW..");
         UserPresentation presentation = new UserPresentation(this.client,currentCourse);
+        client.setUserPresentationWindow(presentation);
         presentation.setVisible(true);
     }                                    
 
@@ -733,15 +735,20 @@ public class MainWin extends javax.swing.JFrame {
     private void classesItemStateChanged(java.awt.event.ItemEvent evt) {
         initPost();
         String courseName = (String) classes.getSelectedItem();
-        notesOverviewModel.removeAllElements();
-        overviewList.setModel(notesOverviewModel);
+        clearList();
         for (Course course : courseList.getCourses()) {
             if (course.getCourseName().equals(courseName)) {
                 currentCourse = course;
                 updateNote();
+                sortChoiceBox.setSelectedIndex(0);
                 break;
             }
         }
+    }
+
+    private void clearList() {
+        this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
+        notesOverviewModel.removeAllElements();
     }
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {
@@ -806,7 +813,7 @@ public class MainWin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane CommentScroll;
-    private javax.swing.JTextPane Comments;
+    private javax.swing.JTextPane comments;
     private javax.swing.JTextField createComment;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel Menu;
