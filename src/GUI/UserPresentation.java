@@ -1,11 +1,5 @@
 package GUI;
 
-import NotezzaClient.NotezzaClient;
-import NotezzaServer.Command;
-import NotezzaServer.CommandType;
-import objects.ChatMessage;
-import objects.Course;
-
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -18,23 +12,54 @@ import java.net.URL;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+
+import NotezzaClient.NotezzaClient;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.ChatMessage;
+import objects.Course;
+import objects.Quiz;
 
 public class UserPresentation extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField chatTextBox;
 	private JPanel slidePanel;
+	private Vector<JComponent> quizObjects = new Vector<JComponent>();
 
 	private NotezzaClient client;
 	private Course course;
+	private Quiz currQuiz = null;
 
 	private JLabel slideImageLabel;
 	private URL temp;
 	private BufferedImage image;
+	
+	private JLabel questionLabel;
+	private JCheckBox answer1;
+	private JCheckBox answer2;
+	private JCheckBox answer3;
+	private JCheckBox answer4;
+	private JCheckBox answer5;
+	private JButton checkAnswerButton;
+	private JLabel correctLabel;
+	private Vector<JCheckBox> checkboxes = new Vector<JCheckBox>();
 
 	private JButton slideBackwardsButton;
 	private JButton slideForwardButton;
@@ -42,6 +67,7 @@ public class UserPresentation extends JFrame {
 	private final Action slideForwards = new SlideForwards();
 	private final Action slideBackwards = new SlideBackwards();
 	private final Action sendChatMessage = new SendChatMessage();
+	private final Action checkQuizAnswers = new CheckQuizAnswers();
 	private int lectureIndex;
 	private Vector<String> urls;
 	
@@ -140,7 +166,7 @@ public class UserPresentation extends JFrame {
 		gbl_quizPanel.rowWeights = new double[]{Double.MIN_VALUE, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		quizPanel.setLayout(gbl_quizPanel);
 
-		JLabel questionLabel = new JLabel("Quiz Question");
+		questionLabel = new JLabel("Quiz Question");
 		questionLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
 		GridBagConstraints gbc_questionLabel = new GridBagConstraints();
 		gbc_questionLabel.anchor = GridBagConstraints.WEST;
@@ -149,8 +175,9 @@ public class UserPresentation extends JFrame {
 		gbc_questionLabel.gridx = 0;
 		gbc_questionLabel.gridy = 0;
 		quizPanel.add(questionLabel, gbc_questionLabel);
+		quizObjects.add(questionLabel);
 
-		JCheckBox answer1 = new JCheckBox("Answer 1");
+		answer1 = new JCheckBox("Answer 1");
 		GridBagConstraints gbc_answer1 = new GridBagConstraints();
 		gbc_answer1.anchor = GridBagConstraints.WEST;
 		gbc_answer1.gridwidth = 2;
@@ -158,8 +185,10 @@ public class UserPresentation extends JFrame {
 		gbc_answer1.gridx = 0;
 		gbc_answer1.gridy = 1;
 		quizPanel.add(answer1, gbc_answer1);
+		quizObjects.add(answer1);
+		checkboxes.add(answer1);
 
-		JCheckBox answer2 = new JCheckBox("Answer 2");
+		answer2 = new JCheckBox("Answer 2");
 		GridBagConstraints gbc_answer2 = new GridBagConstraints();
 		gbc_answer2.anchor = GridBagConstraints.WEST;
 		gbc_answer2.gridwidth = 2;
@@ -167,8 +196,10 @@ public class UserPresentation extends JFrame {
 		gbc_answer2.gridx = 0;
 		gbc_answer2.gridy = 2;
 		quizPanel.add(answer2, gbc_answer2);
+		quizObjects.add(answer2);
+		checkboxes.add(answer2);
 
-		JCheckBox answer3 = new JCheckBox("Answer 3");
+		answer3 = new JCheckBox("Answer 3");
 		GridBagConstraints gbc_answer3 = new GridBagConstraints();
 		gbc_answer3.anchor = GridBagConstraints.WEST;
 		gbc_answer3.gridwidth = 2;
@@ -176,8 +207,10 @@ public class UserPresentation extends JFrame {
 		gbc_answer3.gridx = 0;
 		gbc_answer3.gridy = 3;
 		quizPanel.add(answer3, gbc_answer3);
+		quizObjects.add(answer3);
+		checkboxes.add(answer3);
 
-		JCheckBox answer4 = new JCheckBox("Answer 4");
+		answer4 = new JCheckBox("Answer 4");
 		GridBagConstraints gbc_answer4 = new GridBagConstraints();
 		gbc_answer4.anchor = GridBagConstraints.WEST;
 		gbc_answer4.gridwidth = 2;
@@ -185,8 +218,10 @@ public class UserPresentation extends JFrame {
 		gbc_answer4.gridx = 0;
 		gbc_answer4.gridy = 4;
 		quizPanel.add(answer4, gbc_answer4);
+		quizObjects.add(answer4);
+		checkboxes.add(answer4);
 
-		JCheckBox answer5 = new JCheckBox("Answer 5");
+		answer5 = new JCheckBox("Answer 5");
 		GridBagConstraints gbc_answer5 = new GridBagConstraints();
 		gbc_answer5.anchor = GridBagConstraints.WEST;
 		gbc_answer5.gridwidth = 2;
@@ -194,19 +229,25 @@ public class UserPresentation extends JFrame {
 		gbc_answer5.gridx = 0;
 		gbc_answer5.gridy = 5;
 		quizPanel.add(answer5, gbc_answer5);
+		quizObjects.add(answer5);
+		checkboxes.add(answer5);
 
-		JButton checkAnswerButton = new JButton("Check");
+		checkAnswerButton = new JButton("Check");
+		checkAnswerButton.setAction(checkQuizAnswers);
+		checkAnswerButton.setText("Check");
 		GridBagConstraints gbc_checkAnswerButton = new GridBagConstraints();
 		gbc_checkAnswerButton.insets = new Insets(0, 0, 0, 5);
 		gbc_checkAnswerButton.gridx = 0;
 		gbc_checkAnswerButton.gridy = 6;
 		quizPanel.add(checkAnswerButton, gbc_checkAnswerButton);
+		quizObjects.addElement(checkAnswerButton);
 
-		JLabel correctLabel = new JLabel("Correct/Incorrect");
+		correctLabel = new JLabel("Correct/Incorrect");
 		GridBagConstraints gbc_correctLabel = new GridBagConstraints();
 		gbc_correctLabel.gridx = 1;
 		gbc_correctLabel.gridy = 6;
 		quizPanel.add(correctLabel, gbc_correctLabel);
+		quizObjects.addElement(correctLabel);
 
 		JPanel slideButtonPanel = new JPanel();
 		slideButtonPanel.setBounds(17, 473, 468, 27);
@@ -232,6 +273,10 @@ public class UserPresentation extends JFrame {
 		gbc_slideForwardButton.gridy = 0;
 		slideButtonPanel.add(slideForwardButton, gbc_slideForwardButton);
 		slideForwardButton.setAction(slideForwards);
+		
+		for (JComponent jc : quizObjects) {
+			jc.setVisible(false);
+		}
 	}
 
 	private class SlideForwards extends AbstractAction {
@@ -300,6 +345,40 @@ public class UserPresentation extends JFrame {
 			
 		}
 	}
+	
+	private class CheckQuizAnswers extends AbstractAction {
+		public CheckQuizAnswers() {
+			putValue(NAME, "Check Quiz Answers");
+			putValue(SHORT_DESCRIPTION, "Determines whether quiz answers are correct or incorrect");
+		}
+		public void actionPerformed(ActionEvent e) {
+			Boolean correct = true;
+			
+			for (int i = 0; i < currQuiz.getChoices().size(); i++) {
+				if (checkboxes.get(i).isSelected()) {
+					if (!currQuiz.getAnswers().contains(i)) {
+						correct = false;
+						break;
+					}
+				} else {
+					if (currQuiz.getAnswers().contains(i)) {
+						correct = false;
+						break;
+					}
+				}
+			}
+			
+			if (correct) {
+				correctLabel.setVisible(true);
+				correctLabel.setText("CORRECT");
+				correctLabel.setForeground(new java.awt.Color(0, 128, 0));
+			} else {
+				correctLabel.setVisible(true);
+				correctLabel.setText("INCORRECT");
+				correctLabel.setForeground(new java.awt.Color(128, 0, 0));
+			}
+		}
+	}
 
 	private void displayImage() {
 		try {
@@ -320,6 +399,34 @@ public class UserPresentation extends JFrame {
 	{
 		if(cm.getCourse().equals(course)) {
 			chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
+		}
+	}
+	
+	public void updateQuiz(Quiz q) {
+		if (q.equals(null)) {
+			for (JComponent jc : quizObjects) {
+				jc.setVisible(false);
+			}
+		} else {
+			
+			questionLabel.setText(q.getQuestion());
+			int i;
+			for (i = 0; i < q.getChoices().size(); i++) {
+				checkboxes.get(i).setSelected(false);
+				checkboxes.get(i).setText(q.getChoices().get(i));
+			}
+			
+			for (JComponent jc : quizObjects) {
+				if (!jc.equals(correctLabel)) {
+					jc.setVisible(true);
+				} else {
+					jc.setVisible(false);
+				}
+			}
+			
+			for (int j = i; j < 5; j++) {
+				checkboxes.get(j).setVisible(false);
+			}
 		}
 	}
 }

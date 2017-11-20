@@ -15,6 +15,7 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -59,6 +60,8 @@ public class InstructorPresentation extends JFrame {
 	private final Action action = new NewPresentationClicked();
 	
 	private JList chatWindow;
+	private DefaultListModel chatDefaultListModel;
+	
 	private JButton newPresentationButton;
 	private JComboBox questionBox;
 	
@@ -105,7 +108,8 @@ public class InstructorPresentation extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		chatWindow = new JList();
+		chatDefaultListModel = new DefaultListModel();
+		chatWindow = new JList(chatDefaultListModel);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		chatWindow.setBounds(500, 100, 272, 373);
 		contentPane.add(chatWindow);
@@ -281,6 +285,13 @@ public class InstructorPresentation extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			NewPresentation newPresentation = new NewPresentation(client, course);
 			newPresentation.setVisible(true);
+		}
+	}
+	
+	public void receiveChatMessage(ChatMessage cm)
+	{
+		if(cm.getCourse().equals(course)) {
+			chatDefaultListModel.addElement(cm.getUsername() + ": " + cm.getMessage());
 		}
 	}
 }

@@ -1,22 +1,29 @@
 package NotezzaClient;
 
-import GUI.*;
-import NewGUI.Login;
-import NewGUI.MainWin;
-import NewGUI.MainWinInstr;
-import objects.*;
-import NotezzaServer.Command;
-import NotezzaServer.CommandType;
+import static NotezzaServer.CommandType.INITIALIZATION_INSTRUCTOR;
+import static NotezzaServer.CommandType.INITIALIZATION_STUDENT;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Set;
 
-import static NotezzaServer.CommandType.*;
+import javax.swing.JFrame;
+
+import GUI.InstructorPresentation;
+import GUI.InstructorWindow;
+import GUI.UserPresentation;
+import GUI.UserWindow;
+import NewGUI.Login;
+import NewGUI.MainWin;
+import NewGUI.MainWinInstr;
+import NotezzaServer.Command;
+import NotezzaServer.CommandType;
+import objects.ChatMessage;
+import objects.CourseList;
+import objects.Quiz;
+import objects.User;
 
 public class NotezzaClient extends Thread {
     private User user;
@@ -34,7 +41,8 @@ public class NotezzaClient extends Thread {
     // New GUI
     private JFrame loginWindow;
     private JFrame mainWindow;
-    
+    private UserPresentation userPresentationWindow = null;
+    private InstructorPresentation instrPresentationWindow = null;
 
     NotezzaClient(String hostname, int port) {
 
@@ -66,6 +74,14 @@ public class NotezzaClient extends Thread {
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void setInstructorPresentationWindow(InstructorPresentation pw) {
+    	this.instrPresentationWindow = pw;
+    }
+    
+    public void setUserPresentationWindow(UserPresentation pw) {
+    	this.userPresentationWindow = pw;
     }
 
     public void sendCommand(Command cm) {
@@ -146,8 +162,19 @@ public class NotezzaClient extends Thread {
                 // TODO UPDATE PRESENTATION
                 break;
             case UPDATE_CHAT:
-                // TODO UPDATE CHAT
+            	ChatMessage message = (ChatMessage) obj;
+            	if (user.isInstructor()) {
+                	instrPresentationWindow.receiveChatMessage(message);
+            	} else {
+                	userPresentationWindow.receiveChatMessage(message);
+            	}
                 break;
+            case UPDATE_QUIZ:
+            	Quiz quiz = (Quiz) obj;
+            	if (!user.isInstructor()) {
+            		userPresentationWindow.updateQuiz(quiz);
+            	}
+            	break;
             default:
                 break;
         }
