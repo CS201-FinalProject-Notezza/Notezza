@@ -133,7 +133,7 @@ public class InstructorPresentation extends JFrame {
 		
 		slideImageLabel = new JLabel("");
 		slidePanel.add(slideImageLabel);
-		
+
 		/* Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		// HARDCODE WARNING:
 		this.urls = new Vector<>();
@@ -215,14 +215,6 @@ public class InstructorPresentation extends JFrame {
 				lectureIndex++;
 				displayImage();
 			}
-
-			// HARDCODE WARNING: DELETE THIS AFTER POPULATING
-			/*if (lectureIndex < urls.size() - 1) {
-				lectureIndex++;
-				displayImage();
-			}*/
-
-
 		}
 	}
 

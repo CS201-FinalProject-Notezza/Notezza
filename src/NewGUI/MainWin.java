@@ -416,11 +416,14 @@ public class MainWin extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 this.likeButton.setEnabled(true);
                 this.dislikeButton.setEnabled(true);
+              
                 this.postComment.setEnabled(true);
                 this.createComment.setEnabled(true);
                 int noteForIndex = overviewList.getSelectedIndex();
                 if (noteForIndex < currentCourse.getAllNotes().size() && noteForIndex >= 0) {
                     currentNote = displayedNotes.get(noteForIndex); 
+                    likeButton.setText(Integer.toString(currentNote.getNumLikes()));
+                    dislikeButton.setText(Integer.toString(currentNote.getDislikeUsers().size()));
                     displayCurrentNote();
                 }
             }
@@ -469,7 +472,7 @@ public class MainWin extends javax.swing.JFrame {
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
         // TODO HARD CODE
-        likeButton.setText("63");
+        likeButton.setText("N/A");
         likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddDisLikeMouseClicked(evt);
@@ -479,7 +482,7 @@ public class MainWin extends javax.swing.JFrame {
         likeButton.setEnabled(client != null);
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
-        dislikeButton.setText("63");
+        dislikeButton.setText("N/A");
         dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddLikeMouseClicked(evt);
@@ -549,7 +552,7 @@ public class MainWin extends javax.swing.JFrame {
             	}
             }
         });
-        postComment.setVisible(false);
+        postComment.setVisible(client != null);
         postComment.setEnabled(client != null);
 
         javax.swing.GroupLayout writeCommentPanelLayout = new javax.swing.GroupLayout(writeCommentPanel);
