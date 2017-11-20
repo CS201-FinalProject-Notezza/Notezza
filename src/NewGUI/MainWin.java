@@ -7,12 +7,8 @@ package NewGUI;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ListCellRenderer;
@@ -35,6 +31,7 @@ import objects.*;
 public class MainWin extends javax.swing.JFrame {
     private NotezzaClient client;
     private CourseList courseList;
+    private Vector<Course> courses;
     private Course currentCourse;
     private Note currentNote;
 
@@ -51,15 +48,34 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void initContent() {
-        Vector<Course> courses;
         if (courseList == null || courseList.getCourses() == null || courseList.getCourses().isEmpty()) {
             // No course available
+
             // classes dropdown box
             classes.setModel(new javax.swing.DefaultComboBoxModel<>(new String [] {"No Classes"}));
             classes.setToolTipText("Change Class");
-            // Posts
+            // Posts Overview
+            overviewList.setModel(new javax.swing.AbstractListModel<String>() {
+                String[] strings = { "<html><h3>No Posts Available<h3><html>" };
+                public int getSize() { return strings.length; }
+                public String getElementAt(int i) { return strings[i]; }
+            });
+
+            // post Content
+            this.post.setText("<html><body style='background-color:#f0f8ff;'>"
+                    + "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
+                    + "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
+                    + "<h1>You have no classes now.</h1></div></body></html>");
+            this.likeButton.setEnabled(false);
+            this.dislikeButton.setEnabled(false);
+            this.postComment.setEnabled(false);
+            this.jButton1.setEnabled(false);
+            this.searchNote.setEnabled(false);
+            this.sortChoiceBox.setEnabled(false);
+            this.createComment.setEnabled(false);
             return;
         }
+
         courses = courseList.getCourses();
         // classes dropdown box
         DefaultComboBoxModel dropDownModel = new DefaultComboBoxModel();
@@ -71,19 +87,27 @@ public class MainWin extends javax.swing.JFrame {
 
         // Posts
         notesOverviewModel = new DefaultListModel<String>();
-        // TODO change this back when done coz hardcoding to the second element
         currentCourse = courses.get(0);
         displayedNotes = new Vector<>();
         updateNote();
+        initPost();
 
-        //    		OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
-        //    			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-        //    			public int getSize() { return strings.length; }
-        //    			public String getElementAt(int i) { return strings[i]; }
-        //    		});
 
-        // Post Area
     }
+    private void initPost() {
+        // post Content
+        this.post.setText("<html><body style='background-color:#f0f8ff;'>"
+                + "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
+                + "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
+                + "<h1>Welcome to Notezza!"
+                + "<br/>Select a note to view!</h1></div>"
+                + "</body></html>");
+        this.likeButton.setEnabled(false);
+        this.dislikeButton.setEnabled(false);
+        this.postComment.setEnabled(false);
+        this.createComment.setEnabled(false);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,12 +140,12 @@ public class MainWin extends javax.swing.JFrame {
         viewMember = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        OverviewList = new javax.swing.JList<>();
+        overviewList = new javax.swing.JList<>();
         jPanel6 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         layer2 = new javax.swing.JPanel();
         PostScroll = new javax.swing.JScrollPane();
-        Post = new javax.swing.JTextPane();
+        post = new javax.swing.JTextPane();
         layer1 = new javax.swing.JPanel();
         likeButton = new javax.swing.JButton();
         dislikeButton = new javax.swing.JButton();
@@ -129,7 +153,7 @@ public class MainWin extends javax.swing.JFrame {
         Comments = new javax.swing.JTextPane();
         writeCommentPanel = new javax.swing.JPanel();
         createComment = new javax.swing.JTextField();
-        PostComment = new javax.swing.JButton();
+        postComment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,7 +196,7 @@ public class MainWin extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(42, 77, 105));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/plus-17-dark.png"))); // NOI18N
-        jButton1.setText("Add New Post");
+        jButton1.setText("Add New post");
 
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -183,9 +207,10 @@ public class MainWin extends javax.swing.JFrame {
         classes.setToolTipText("Change Your Class");
         classes.addItemListener(this::classesItemStateChanged);
         classes.addActionListener(e -> {
+            initPost();
             String courseName = (String) classes.getSelectedItem();
             notesOverviewModel.removeAllElements();
-            OverviewList.setModel(notesOverviewModel);
+            overviewList.setModel(notesOverviewModel);
             for (Course course : courseList.getCourses()) {
                 if (course.getCourseName().equals(courseName)) {
                     currentCourse = course;
@@ -371,26 +396,29 @@ public class MainWin extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(231, 239, 246));
 
-        OverviewList.setModel(new javax.swing.AbstractListModel<String>() {
+        overviewList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        OverviewList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        OverviewList.setCellRenderer(getCellRenderer());
-        OverviewList.setSelectionBackground(new java.awt.Color(173, 203, 227));
-        OverviewList.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        OverviewList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    // TODO update comment
-                    int indexForComment = OverviewList.getSelectedIndex();
-
+        overviewList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        overviewList.setCellRenderer(getCellRenderer());
+        overviewList.setSelectionBackground(new java.awt.Color(173, 203, 227));
+        overviewList.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        overviewList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                this.likeButton.setEnabled(true);
+                this.dislikeButton.setEnabled(true);
+                this.postComment.setEnabled(true);
+                this.createComment.setEnabled(true);
+                int noteForIndex = overviewList.getSelectedIndex();
+                if (noteForIndex < currentCourse.getAllNotes().size() && noteForIndex >= 0) {
+                    currentNote = currentCourse.getAllNotes().get(noteForIndex);
+                    displayCurrentNote();
                 }
             }
         });
-        jScrollPane1.setViewportView(OverviewList);
+        jScrollPane1.setViewportView(overviewList);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -411,9 +439,9 @@ public class MainWin extends javax.swing.JFrame {
 
         PostScroll.setBorder(null);
 
-        Post.setEditable(false);
-        Post.setContentType("text/html"); // NOI18N
-        PostScroll.setViewportView(Post);
+        post.setEditable(false);
+        post.setContentType("text/html"); // NOI18N
+        PostScroll.setViewportView(post);
 
         javax.swing.GroupLayout layer2Layout = new javax.swing.GroupLayout(layer2);
         layer2.setLayout(layer2Layout);
@@ -500,9 +528,9 @@ public class MainWin extends javax.swing.JFrame {
         createComment.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         createComment.addActionListener(this::CreateCommentActionPerformed);
 
-        PostComment.setText("Post");
-        PostComment.setToolTipText("");
-        PostComment.addMouseListener(new java.awt.event.MouseAdapter() {
+        postComment.setText("post");
+        postComment.setToolTipText("");
+        postComment.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
             	if (currentNote != null) {
             		PostCommentMouseClicked(evt);
@@ -518,7 +546,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(createComment)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PostComment, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(postComment, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         writeCommentPanelLayout.setVerticalGroup(
             writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,7 +554,7 @@ public class MainWin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(writeCommentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(writeCommentPanelLayout.createSequentialGroup()
-                        .addComponent(PostComment)
+                        .addComponent(postComment)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(createComment))
                 .addContainerGap())
@@ -590,6 +618,10 @@ public class MainWin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void displayCurrentNote() {
+        post.setText(Util.getHTMLforNoteDetail(currentNote));
+    }
+
     private void updateNote() {
         displayedNotes.clear();
         displayedNotes.addAll(currentCourse.getAllNotes());
@@ -597,7 +629,7 @@ public class MainWin extends javax.swing.JFrame {
         for (Note note : displayedNotes) {
             notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
         }
-        OverviewList.setModel(notesOverviewModel);
+        overviewList.setModel(notesOverviewModel);
     }
 
     private void AddDisLikeMouseClicked(MouseEvent evt) {
@@ -690,7 +722,7 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void PostCommentMouseClicked(java.awt.event.MouseEvent evt) {
-        System.out.println("Post comment clicked...");
+        System.out.println("post comment clicked...");
         if(!createComment.getText().isEmpty())
         {
             String commentContent = createComment.getText();
@@ -755,9 +787,9 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JTextField createComment;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel Menu;
-    private javax.swing.JList<String> OverviewList;
-    private javax.swing.JTextPane Post;
-    private javax.swing.JButton PostComment;
+    private javax.swing.JList<String> overviewList;
+    private javax.swing.JTextPane post;
+    private javax.swing.JButton postComment;
     private javax.swing.JScrollPane PostScroll;
     private javax.swing.JComboBox<String> classes;
     private javax.swing.JButton dislikeButton;
