@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -35,6 +36,8 @@ import NotezzaServer.CommandType;
 import objects.ChatMessage;
 import objects.Course;
 import objects.Quiz;
+import javax.swing.JScrollBar;
+import javax.swing.ScrollPaneConstants;
 
 public class UserPresentation extends JFrame {
 
@@ -73,6 +76,7 @@ public class UserPresentation extends JFrame {
 	
 	private JList chatWindow;
 	private DefaultListModel chatDefaultListModel;
+	private JScrollPane scrollPane;
 	
 	//private final Action slideBackwards;
 
@@ -121,10 +125,16 @@ public class UserPresentation extends JFrame {
 
 		chatDefaultListModel = new DefaultListModel();
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setBounds(500, 271, 272, 202);
+		contentPane.add(scrollPane);
+		
 		chatWindow = new JList(chatDefaultListModel);
+		scrollPane.setViewportView(chatWindow);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		chatWindow.setBounds(500, 271, 272, 202);
-		contentPane.add(chatWindow);
+		
 
 		chatTextBox = new JTextField();
 		chatTextBox.setBounds(499, 473, 207, 27);
