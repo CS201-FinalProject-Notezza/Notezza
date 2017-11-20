@@ -142,11 +142,13 @@ public class UserPresentation extends JFrame {
 		contentPane.add(slidePanel);
 
 		this.urls = course.getCurrentLecture().getLinks();
+		
+		slideImageLabel = new JLabel("");
+		slidePanel.add(slideImageLabel);
+		
 		// Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		// HARDCODE WARNING:
 		/*this.urls = new Vector<>();
-		slideImageLabel = new JLabel("");
-		slidePanel.add(slideImageLabel);
 
 		urls.add("http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg");
 		urls.add("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif");*/
@@ -380,8 +382,11 @@ public class UserPresentation extends JFrame {
 			// old url = urls.get(lectureIndex)
 			System.out.println("url is " + course.getCurrentLecture().getLinks().get(lectureIndex));
 			temp = new URL(course.getCurrentLecture().getLinks().get(lectureIndex));
+			System.out.println(temp.getHost());
 			image = ImageIO.read(temp);
+			System.out.println(image.getHeight());
 			ImageIcon icon = new ImageIcon(image);
+			System.out.println(icon.getIconHeight());
 			slideImageLabel.setIcon(icon);
 			slidePanel.repaint();
 		} catch (IOException e) {

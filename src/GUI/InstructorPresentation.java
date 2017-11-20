@@ -130,11 +130,13 @@ public class InstructorPresentation extends JFrame {
 		contentPane.add(slidePanel);
 
 		this.urls = course.getCurrentLecture().getLinks();
+		
+		slideImageLabel = new JLabel("");
+		slidePanel.add(slideImageLabel);
+		
 		/* Hardcoded URL is here: "http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif";
 		// HARDCODE WARNING:
 		this.urls = new Vector<>();
-		slideImageLabel = new JLabel("");
-		slidePanel.add(slideImageLabel);
 
 		urls.add("http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg");
 		urls.add("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif"); */

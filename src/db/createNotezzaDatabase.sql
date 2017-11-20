@@ -122,7 +122,8 @@ INSERT INTO UserCourse (userID, courseID)
                         (5, 1);
         
 INSERT INTO PresentationLink (link, courseID)
-		VALUES 	("http://www-scf.usc.edu/~csci201/lectures/Lecture1/Introduction.pdf", 1);
+		VALUES 	("http://www-scf.usc.edu/~csci201/images/jeffrey_miller.jpg", 1),
+						("http://1.bp.blogspot.com/-Uuu510AUdjk/Vqqo0jAUe5I/AAAAAAAAAc8/UCdgGmH5EUc/s1600/figure_01.gif", 1);
         
 INSERT INTO PresentationQuestion (content, courseID)
 		VALUES 	("What is the professor's first name?", 1),
