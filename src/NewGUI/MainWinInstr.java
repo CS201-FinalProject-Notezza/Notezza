@@ -38,7 +38,8 @@ public class MainWinInstr extends javax.swing.JFrame {
     private DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
     private Vector<Note> notes;
     private DefaultComboBoxModel dropDownModel;
-    
+    private InstructorPresentation presentation;
+
     /**
      * Creates new form MainWin
      */
@@ -652,7 +653,7 @@ public class MainWinInstr extends javax.swing.JFrame {
 		}
 		
 		this.overviewList.setModel(notesOverviewModel);
-		
+		sortNotes();
 		// Post Content
 		this.post.setText("<html><body style='background-color:#f0f8ff;'>"
 				+ "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
@@ -697,7 +698,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
         if (currentCourse != null && currentCourse.getCurrentLecture() != null) {
             System.out.println("POPPING UP PRESENTATION WINDOW..");
-            InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
+            presentation = new InstructorPresentation(this.client, currentCourse);
             client.setInstructorPresentationWindow(presentation);
             presentation.setVisible(true);
         } else {
@@ -824,7 +825,6 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void displayCurrentNote() {
         post.setText(Util.getHTMLforNoteDetail(currentNote));
         comments.setText(Util.getHTMLforComments(currentNote));
-        // TODO copy this to mainwin
         likeButton.setText(Integer.toString(currentNote.getNumLikes()));
         dislikeButton.setText(Integer.toString(currentNote.getNumDislikes()));
 
@@ -916,9 +916,25 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void displayComment() {
         comments.setText(Util.getHTMLforComments(currentNote));
     }
-    
-    
-    
+
+
+    public void changePresentation(PresentationANDCourse pc) {
+        System.out.println("Changing presentation..");
+        Presentation p = pc.getPresentation();
+        Course c = pc.getCourse();
+        for (Course course : courseList.getCourses()) {
+            if (course.getCourseName().equals(c.getCourseName())) {
+                course.setCurrentLecture(p);
+            }
+        }
+        if (currentCourse.getCourseName().equals(c.getCourseName())) {
+            presentation.setVisible(false);
+            presentation = new InstructorPresentation(this.client,currentCourse);
+            client.setInstructorPresentationWindow(presentation);
+            presentation.setVisible(true);
+        }
+
+    }
     /**
      * @param args the command line arguments
      */

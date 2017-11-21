@@ -138,7 +138,6 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addComment(course,note,comment);
                 } else if (mainWinInstr != null) {
-                    //TODO uncomment
                     mainWinInstr.addComment(course,note,comment);
                 }
                 break;
@@ -149,7 +148,6 @@ public class NotezzaClient extends Thread {
                 if (mainWin != null) {
                     mainWin.addNote(cn.getCourse(), cn.getNote());
                 } else if (mainWinInstr != null) {
-                    // TODO uncomment
                     mainWinInstr.addNote(cn.getCourse(),cn.getNote());
                 }
                 break;
@@ -160,7 +158,7 @@ public class NotezzaClient extends Thread {
                 // TODO UPDATE PRESENTATION
                 PresentationANDCourse pc = (PresentationANDCourse) obj;
                 if (user.isInstructor()) {
-                    //mainWinInstr.changePresentation(pc);
+                    mainWinInstr.changePresentation(pc);
                 } else {
                     mainWin.changePresentation(pc);
                 }
@@ -184,8 +182,7 @@ public class NotezzaClient extends Thread {
                 if (user.isInstructor()) {
                     mainWinInstr.addLike(addLike);
                 } else {
-                    // TODO uncomment
-                    // mainWin.addLike(addLike);
+                    mainWin.addLike(addLike);
                 }
                 break;
             case UPDATE_DISLIKE:
@@ -193,8 +190,7 @@ public class NotezzaClient extends Thread {
                 if (user.isInstructor()) {
                    mainWinInstr.addDisLike(addDislike);
                 } else {
-                    // TODO uncomment
-                   // mainWin.addDislike(addDislike);
+                   mainWin.addDisLike(addDislike);
                 }
                 break;
             default:

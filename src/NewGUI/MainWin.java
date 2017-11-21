@@ -642,6 +642,8 @@ public class MainWin extends javax.swing.JFrame {
     private void displayCurrentNote() {
         post.setText(Util.getHTMLforNoteDetail(currentNote));
         displayComment();
+        likeButton.setText(Integer.toString(currentNote.getNumLikes()));
+        dislikeButton.setText(Integer.toString(currentNote.getNumDislikes()));
     }
 
     private void displayComment() {
@@ -950,7 +952,11 @@ public class MainWin extends javax.swing.JFrame {
         System.out.println("Changing presentation..");
         Presentation p = pc.getPresentation();
         Course c = pc.getCourse();
-        c.setCurrentLecture(p);
+        for (Course course : courseList.getCourses()) {
+            if (course.getCourseName().equals(c.getCourseName())) {
+                course.setCurrentLecture(p);
+            }
+        }
         if (currentCourse.getCourseName().equals(c.getCourseName())) {
             presentation.setVisible(false);
             presentation = new UserPresentation(this.client,currentCourse);
@@ -958,6 +964,43 @@ public class MainWin extends javax.swing.JFrame {
             presentation.setVisible(true);
         }
 
+    }
+
+
+    public void addLike(AddingLike addLike) {
+        for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Receiving a like note now");
+            System.out.println("Checking notes...");
+            for (Note note1 : courseInList.getAllNotes()) {
+                if (note1.getTitle().equals(addLike.getNote().getTitle())) {
+                    note1.addLike(addLike.getUser());
+                    if (currentNote.getTitle().equals(note1.getTitle())) {
+                        displayCurrentNote();
+                    }
+                    System.out.println("Like added");
+                    return;
+                }
+            }
+        }
+        System.out.println("Add like failed");
+    }
+
+    public void addDisLike(AddingDislike addDisLike) {
+        for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Receiving a dislike note now");
+            System.out.println("Checking notes...");
+            for (Note note1 : courseInList.getAllNotes()) {
+                if (note1.getTitle().equals(addDisLike.getNote().getTitle())) {
+                    note1.addDislike(addDisLike.getUser());
+                    if (currentNote.getTitle().equals(note1.getTitle())) {
+                        displayCurrentNote();
+                    }
+                    System.out.println("DisLike added");
+                    return;
+                }
+            }
+        }
+        System.out.println("Add like failed");
     }
 
     // End of variables declaration                   
