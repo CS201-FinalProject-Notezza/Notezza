@@ -805,9 +805,13 @@ public class MainWinInstr extends javax.swing.JFrame {
 		for (Course course : courses) {
 			if (course.getCourseName().equals(courseName)) {
 				currentCourse = course;
-				updateNotes();
-				sortChoiceBox.setSelectedIndex(0);
-				sortNotes();
+				//updateNotes();
+				int index = sortChoiceBox.getSelectedIndex();
+				if (index == 0) {
+					sortNotes();
+				} else {
+					sortChoiceBox.setSelectedIndex(0);
+				}
 				break;
 			}
 		}

@@ -788,8 +788,13 @@ public class MainWin extends javax.swing.JFrame {
         for (Course course : courseList.getCourses()) {
             if (course.getCourseName().equals(courseName)) {
                 currentCourse = course;
-                updateNote();
-                sortChoiceBox.setSelectedIndex(0);
+                //updateNote();
+                int index = sortChoiceBox.getSelectedIndex();
+				if (index == 0) {
+					sortNotes();
+				} else {
+					sortChoiceBox.setSelectedIndex(0);
+				}
                 break;
             }
         }
