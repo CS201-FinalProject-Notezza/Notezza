@@ -692,9 +692,11 @@ public class MainWin extends javax.swing.JFrame {
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
     	if (client != null) {
 	        System.out.println("POPPING UP PRESENTATION WINDOW..");
-	        presentation = new UserPresentation(this.client,currentCourse);
-	        client.setUserPresentationWindow(presentation);
-	        presentation.setVisible(true);
+	        if (currentCourse.getCurrentLecture() != null) {
+                presentation = new UserPresentation(this.client, currentCourse);
+                client.setUserPresentationWindow(presentation);
+                presentation.setVisible(true);
+            }
     	}
     }
 
