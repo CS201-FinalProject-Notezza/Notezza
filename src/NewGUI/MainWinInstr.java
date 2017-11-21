@@ -809,11 +809,11 @@ public class MainWinInstr extends javax.swing.JFrame {
     }
 
     private void refreshList() {
-    		this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
-		notesOverviewModel.removeAllElements();
+    		this.notesOverviewModel = new DefaultListModel<String>();
 		for (Note note: notes) {
 			this.notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
 		}
+		this.overviewList.setModel(notesOverviewModel);
     }
     
     private void clearList() {
@@ -863,10 +863,13 @@ public class MainWinInstr extends javax.swing.JFrame {
                 System.out.println("Find course!");
                 courseInList.addNote(note);
                 //updateNotes();
-                if(currentCourse.getCourseName().equals(course.getCourseName())) {
-                		this.sortChoiceBox.setSelectedIndex(0);
-                		//sortNotes();
-                }
+				if (currentCourse.getCourseName().equals(course.getCourseName())) {
+					if (this.sortChoiceBox.getSelectedIndex() == 0) {
+						sortNotes();
+					} else {
+						this.sortChoiceBox.setSelectedIndex(0);
+					}
+				}
                 System.out.println("Note added!");
                 return;
             }
