@@ -862,7 +862,11 @@ public class MainWinInstr extends javax.swing.JFrame {
             if ( courseInList.getCourseName().equals(course.getCourseName())) {
                 System.out.println("Find course!");
                 courseInList.addNote(note);
-                updateNotes();
+                //updateNotes();
+                if(currentCourse.getCourseName().equals(course.getCourseName())) {
+                		this.sortChoiceBox.setSelectedIndex(0);
+                		//sortNotes();
+                }
                 System.out.println("Note added!");
                 return;
             }
