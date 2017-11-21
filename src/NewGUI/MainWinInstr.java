@@ -38,7 +38,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     private DefaultListModel<String> notesOverviewModel = new DefaultListModel<String>();
     private Vector<Note> notes;
     private DefaultComboBoxModel dropDownModel;
-    private InstructorPresentation presentation;
+    private InstructorPresentation presentation = null;
 
     /**
      * Creates new form MainWin
@@ -936,7 +936,7 @@ public class MainWinInstr extends javax.swing.JFrame {
             }
         }
         if (currentCourse.getCourseName().equals(c.getCourseName())) {
-            presentation.setVisible(false);
+            if (presentation != null) { presentation.setVisible(false); }
             presentation = new InstructorPresentation(this.client,currentCourse);
             client.setInstructorPresentationWindow(presentation);
             presentation.setVisible(true);
