@@ -721,7 +721,6 @@ public class DatabaseManager {
 					updatePresentationLinkString += "('" + l + "', " + courseID + ")";
 					first = false;
 			}
-			
 			st.executeUpdate(updatePresentationLinkString);
 			
 			// Get questionIDs to be deleted, delete choices first then delete all questionIDs corresponding to given course
@@ -739,12 +738,20 @@ public class DatabaseManager {
 			}
 			
 			// Delete all the choices associated with questions in this course then delete all questions associated with course
-			st.executeUpdate(deleteQuestionChoiceString);
-			st.executeUpdate("DELETE FROM PresentationQuestion WHERE courseID=" + courseID);
+			if (!deleteQuestionChoiceString.equals("DELETE FROM QuestionChoice WHERE ")) {
+				st.executeUpdate(deleteQuestionChoiceString);
+			}
+			rs = st.executeQuery("SELECT * FROM PresentationQuestion WHERE courseID=" + courseID);
+			Boolean found = false;
+			while (rs.next()) {
+				found = true;
+			}
+			if (found) {
+				st.executeUpdate("DELETE FROM PresentationQuestion WHERE courseID=" + courseID);
+			}
 			
 			Vector<Quiz> quizzes = p.getQuizzes();
 			for (Quiz q : quizzes) {
-				
 				String updatePresentationQuestionString = "INSERT INTO PresentationQuestion (content, courseID) VALUES ('" + q.getQuestion() + "', " + courseID + ")";
 				st.executeUpdate(updatePresentationQuestionString);
 				
