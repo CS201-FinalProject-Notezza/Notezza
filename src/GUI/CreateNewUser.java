@@ -242,8 +242,6 @@ public class CreateNewUser extends JFrame {
 				|| passwordField.getPassword().length == 0)
 			{
 				JOptionPane.showMessageDialog(contentPane, "ERROR: One or more of these fields are empty!", "ERROR",  JOptionPane.ERROR_MESSAGE);
-			
-			
 				//have an error message pop out
 			} else {
 				// A new User got created
