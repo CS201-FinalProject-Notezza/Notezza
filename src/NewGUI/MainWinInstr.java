@@ -775,7 +775,8 @@ public class MainWinInstr extends javax.swing.JFrame {
             Date date = Util.getCurrentDate();
             User user = client.getUser();
             Comment comment = new Comment(user, commentContent, date, currentNote);
-            client.sendCommand(new Command(CommandType.ADD_COMMENT, comment));
+            CourseNoteComment cnc = new CourseNoteComment(currentCourse,currentNote,comment);
+            client.sendCommand(new Command(CommandType.ADD_COMMENT, cnc));
         }
         createComment.setText("");
     }

@@ -468,10 +468,10 @@ public class MainWin extends javax.swing.JFrame {
         layer1.setOpaque(false);
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
-        // TODO HARD CODE
         likeButton.setText("0");
         likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("Like clicked");
                 AddLikeMouseClicked(evt);
             }
         });
@@ -482,6 +482,7 @@ public class MainWin extends javax.swing.JFrame {
         dislikeButton.setText("0");
         dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("DisLike clicked");
                 AddDisLikeMouseClicked(evt);
             }
         });
@@ -669,7 +670,7 @@ public class MainWin extends javax.swing.JFrame {
     private void AddLikeMouseClicked(MouseEvent evt) {
         System.out.println("Adding a like...");
         if (client != null) {
-	        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
+	        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingLike(client.getUser(),currentNote)));
         }
     }
 
