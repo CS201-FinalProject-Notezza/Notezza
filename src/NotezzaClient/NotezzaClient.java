@@ -217,6 +217,6 @@ public class NotezzaClient extends Thread {
     }
     
     public static void main(String[] args) {
-        NotezzaClient client = new NotezzaClient("localhost",8080);
+        NotezzaClient client = new NotezzaClient("52.37.158.10",8080);
     }
 }
