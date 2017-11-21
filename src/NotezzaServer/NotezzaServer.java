@@ -174,7 +174,7 @@ public class NotezzaServer {
                 User likedUser = addLike.getUser();
                 Note likedNote = addLike.getNote();
                 dm.addNoteVote(likedNote,likedUser,true);
-                broadcast(new Command(UPDATE_NOTE,likedNote));
+                broadcast(new Command(UPDATE_LIKE,addLike));
                 break;
             case ADD_DISLIKE:
                 System.out.println("Received a dislike...");
@@ -182,7 +182,7 @@ public class NotezzaServer {
                 User disLikedUser = addDislike.getUser();
                 Note disLikedNote = addDislike.getNote();
                 dm.addNoteVote(disLikedNote,disLikedUser,false);
-                broadcast(new Command(UPDATE_NOTE,disLikedNote));
+                broadcast(new Command(UPDATE_DISLIKE,addDislike));
                 break;
             case SEND_QUIZ:
                 System.out.println("Received a request to display quiz...");

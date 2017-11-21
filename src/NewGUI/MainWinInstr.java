@@ -9,14 +9,7 @@ import GUI.*;
 import NotezzaClient.NotezzaClient;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.AddingDislike;
-import objects.AddingLike;
-import objects.Comment;
-import objects.Course;
-import objects.CourseList;
-import objects.Note;
-import objects.SortType;
-import objects.User;
+import objects.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -783,7 +776,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     }
     
     private void likeButtonActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    		System.out.println("Adding a like");
+        System.out.println("Adding a like");
         client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingLike(client.getUser(),currentNote)));
     } 
     
@@ -828,6 +821,10 @@ public class MainWinInstr extends javax.swing.JFrame {
     private void displayCurrentNote() {
         post.setText(Util.getHTMLforNoteDetail(currentNote));
         comments.setText(Util.getHTMLforComments(currentNote));
+        // TODO copy this to mainwin
+        likeButton.setText(Integer.toString(currentNote.getNumLikes()));
+        dislikeButton.setText(Integer.toString(currentNote.getNumDislikes()));
+
     }
     
     private void updateNotes() {
@@ -868,6 +865,42 @@ public class MainWinInstr extends javax.swing.JFrame {
             }
         }
         System.out.println("Adding note failed");
+    }
+
+    public void addLike(AddingLike addLike) {
+        for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Receiving a like note now");
+            System.out.println("Checking notes...");
+            for (Note note1 : courseInList.getAllNotes()) {
+                if (note1.getTitle().equals(addLike.getNote().getTitle())) {
+                    note1.addLike(addLike.getUser());
+                    if (currentNote.getTitle().equals(note1.getTitle())) {
+                        displayCurrentNote();
+                    }
+                    System.out.println("Like added");
+                    return;
+                }
+            }
+        }
+        System.out.println("Add like failed");
+    }
+
+    public void addDisLike(AddingDislike addDisLike) {
+        for (Course courseInList : courseList.getCourses()) {
+            System.out.println("Receiving a dislike note now");
+            System.out.println("Checking notes...");
+            for (Note note1 : courseInList.getAllNotes()) {
+                if (note1.getTitle().equals(addDisLike.getNote().getTitle())) {
+                    note1.addDislike(addDisLike.getUser());
+                    if (currentNote.getTitle().equals(note1.getTitle())) {
+                        displayCurrentNote();
+                    }
+                    System.out.println("DisLike added");
+                    return;
+                }
+            }
+        }
+        System.out.println("Add like failed");
     }
     
     private void displayComment() {
@@ -963,5 +996,5 @@ public class MainWinInstr extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sortChoiceBox;
     private javax.swing.JLabel viewMember;
     private javax.swing.JPanel writeCommentPanel;
-    // End of variables declaration                   
+    // End of variables declaration
 }

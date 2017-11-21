@@ -76,6 +76,8 @@ public class Note implements Comparable<Note>, Serializable {
     public int getNumComments(){ return comments.size(); }
     
     public int getNumLikes(){ return likeUsers.size(); }
+
+    public int getNumDislikes() { return dislikeUsers.size(); }
     
     public int getRating() { return likeUsers.size() - dislikeUsers.size(); }
     

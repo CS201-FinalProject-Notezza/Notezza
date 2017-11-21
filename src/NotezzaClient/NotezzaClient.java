@@ -18,15 +18,7 @@ import NewGUI.MainWin;
 import NewGUI.MainWinInstr;
 import NotezzaServer.Command;
 import NotezzaServer.CommandType;
-import objects.ChatMessage;
-import objects.Comment;
-import objects.Course;
-import objects.CourseANDNote;
-import objects.CourseList;
-import objects.CourseNoteComment;
-import objects.Note;
-import objects.Quiz;
-import objects.User;
+import objects.*;
 
 public class NotezzaClient extends Thread {
     private User user;
@@ -100,7 +92,6 @@ public class NotezzaClient extends Thread {
         Object obj = cm.getObject();
 
         switch (type) {
-                
             case LOGIN:
                 user = (User) obj;
                 if(user.isInstructor()){
@@ -184,6 +175,26 @@ public class NotezzaClient extends Thread {
             		userPresentationWindow.updateQuiz(quiz);
             	}
             	break;
+            case UPDATE_LIKE:
+                AddingLike addLike = (AddingLike) obj;
+                if (user.isInstructor()) {
+                    // TODO uncomment
+                    mainWinInstr.addLike(addLike);
+                } else {
+                    // TODO uncomment
+                    //userPresentationWindow.addLike(addLike);
+                }
+                break;
+            case UPDATE_DISLIKE:
+                AddingDislike addDislike = (AddingDislike) obj;
+                if (user.isInstructor()) {
+                    // TODO uncomment
+                   mainWinInstr.addDisLike(addDislike);
+                } else {
+                    // TODO uncomment
+                   // userPresentationWindow.addDislike(addDislike);
+                }
+                break;
             default:
                 break;
         }
