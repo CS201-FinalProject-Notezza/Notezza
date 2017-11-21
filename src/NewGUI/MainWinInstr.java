@@ -700,6 +700,9 @@ public class MainWinInstr extends javax.swing.JFrame {
             InstructorPresentation presentation = new InstructorPresentation(this.client, currentCourse);
             client.setInstructorPresentationWindow(presentation);
             presentation.setVisible(true);
+        } else {
+            NewPresentation newPresentation = new NewPresentation(this.client,currentCourse);
+            newPresentation.setVisible(true);
         }
     }                                    
 
