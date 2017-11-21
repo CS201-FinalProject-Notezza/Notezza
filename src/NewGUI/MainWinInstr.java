@@ -946,7 +946,7 @@ public class MainWinInstr extends javax.swing.JFrame {
     
     
 	public void addCourse(Course course) {
-		if (course.containStudent(client.getUser().getUsername())) {
+		if (course.getInstructor().getUsername().equals(client.getUser().getUsername())) {
 			courseList.addACourse(course);
 			courses = courseList.getCourses();
 			int index = classes.getSelectedIndex();
