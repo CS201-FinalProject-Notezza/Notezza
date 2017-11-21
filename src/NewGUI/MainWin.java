@@ -690,11 +690,11 @@ public class MainWin extends javax.swing.JFrame {
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
     	if (client != null) {
 	        System.out.println("POPPING UP PRESENTATION WINDOW..");
-	        UserPresentation presentation = new UserPresentation(this.client,currentCourse);
+	        presentation = new UserPresentation(this.client,currentCourse);
 	        client.setUserPresentationWindow(presentation);
 	        presentation.setVisible(true);
     	}
-    }                                    
+    }
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {
         System.out.println("GOODBYE");
@@ -898,6 +898,7 @@ public class MainWin extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sortChoiceBox;
     private javax.swing.JLabel viewMember;
     private javax.swing.JPanel writeCommentPanel;
+    private UserPresentation presentation;
 
     public void addComment(Course course, Note note, Comment comment) {
         for (Course courseInList : courseList.getCourses()) {
@@ -934,6 +935,19 @@ public class MainWin extends javax.swing.JFrame {
             }
         }
         System.out.println("Adding note failed");
+    }
+
+    public void changePresentation(PresentationANDCourse pc) {
+        System.out.println("Changing presentation..");
+        Presentation p = pc.getPresentation();
+        Course c = pc.getCourse();
+        if (currentCourse.getCourseName().equals(c.getCourseName())) {
+            currentCourse.setCurrentLecture(p);
+            presentation.setVisible(false);
+            presentation = new UserPresentation(this.client,currentCourse);
+            client.setUserPresentationWindow(presentation);
+            presentation.setVisible(true);
+        }
     }
 
     // End of variables declaration                   

@@ -160,9 +160,9 @@ public class NotezzaClient extends Thread {
                 // TODO UPDATE PRESENTATION
                 PresentationANDCourse pc = (PresentationANDCourse) obj;
                 if (user.isInstructor()) {
-                    //instrPresentationWindow.updatePresentaion(pc);
+                    //mainWinInstr.changePresentation(pc);
                 } else {
-                    //userPresentationWindow.updatePresentation(pc);
+                    mainWin.changePresentation(pc);
                 }
                 break;
             case UPDATE_CHAT:
