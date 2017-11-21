@@ -14,4 +14,8 @@ public class CourseList implements Serializable {
     public Vector<Course> getCourses() {
         return course;
     }
+    
+    public void addACourse(Course courseToAdd) {
+    		this.course.add(courseToAdd);
+    }
 }

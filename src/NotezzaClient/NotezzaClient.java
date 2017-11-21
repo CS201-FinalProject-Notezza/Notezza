@@ -152,7 +152,13 @@ public class NotezzaClient extends Thread {
                 }
                 break;
             case UPDATE_CLASS:
-                // TODO UPDATE CLASS
+            		System.out.println("Updating class");
+            		Course courseToAdd = (Course) obj;
+            		if (mainWin != null) {
+            			mainWin.addCourse(courseToAdd);
+            		} else if (mainWinInstr != null) {
+            			mainWinInstr.addCourse(courseToAdd);
+            		}		
                 break;
             case UPDATE_PRESENTATION:
                 // TODO UPDATE PRESENTATION

@@ -36,6 +36,7 @@ public class MainWin extends javax.swing.JFrame {
 
     private Vector<Note> displayedNotes;
     private DefaultListModel<String> notesOverviewModel;
+    private DefaultComboBoxModel dropDownModel;
     /**
      * Creates new form MainWin
      */
@@ -471,7 +472,7 @@ public class MainWin extends javax.swing.JFrame {
         likeButton.setText("0");
         likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddDisLikeMouseClicked(evt);
+                AddLikeMouseClicked(evt);
             }
         });
         likeButton.setVisible(client != null);
@@ -481,7 +482,7 @@ public class MainWin extends javax.swing.JFrame {
         dislikeButton.setText("0");
         dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                AddLikeMouseClicked(evt);
+                AddDisLikeMouseClicked(evt);
             }
         });
         dislikeButton.setVisible(client != null);
@@ -659,16 +660,16 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void AddDisLikeMouseClicked(MouseEvent evt) {
-        System.out.println("Adding a like");
+        System.out.println("Adding a dislike");
         if (client != null) {
-        	client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
+        	client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
         }
     }
 
     private void AddLikeMouseClicked(MouseEvent evt) {
-        System.out.println("Adding a dislike...");
+        System.out.println("Adding a like...");
         if (client != null) {
-	        client.sendCommand(new Command(CommandType.ADD_DISLIKE, new AddingDislike(client.getUser(),currentNote)));
+	        client.sendCommand(new Command(CommandType.ADD_LIKE, new AddingDislike(client.getUser(),currentNote)));
         }
     }
 
@@ -1002,6 +1003,24 @@ public class MainWin extends javax.swing.JFrame {
             }
         }
         System.out.println("Add like failed");
+    }
+    
+    public void addCourse(Course course) {
+    		if(course.containStudent(client.getUser().getUsername())) {
+    			courseList.addACourse(course);
+        		courses = courseList.getCourses();
+        		int index = classes.getSelectedIndex();
+        		this.refreshClassesBox();
+        		classes.setSelectedIndex(index);
+    		}
+    }
+    
+    public void refreshClassesBox() {
+		dropDownModel = new DefaultComboBoxModel();
+		for (Course course : courses) {
+			dropDownModel.addElement(course.getCourseName());
+		}
+		classes.setModel(dropDownModel);
     }
 
     // End of variables declaration                   

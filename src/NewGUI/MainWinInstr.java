@@ -692,7 +692,8 @@ public class MainWinInstr extends javax.swing.JFrame {
     }                                  
 
     private void addClassMouseClicked(java.awt.event.MouseEvent evt) {                                      
-        
+        NewCourse newCourse = new NewCourse(client);
+        newCourse.setVisible(true);
     }                                     
 
     private void lectureMouseClicked(java.awt.event.MouseEvent evt) {
@@ -935,6 +936,27 @@ public class MainWinInstr extends javax.swing.JFrame {
         }
 
     }
+    
+    
+	public void addCourse(Course course) {
+		if (course.containStudent(client.getUser().getUsername())) {
+			courseList.addACourse(course);
+			courses = courseList.getCourses();
+			int index = classes.getSelectedIndex();
+			this.refreshClassesBox();
+			classes.setSelectedIndex(index);
+		}
+	}
+
+	public void refreshClassesBox() {
+		dropDownModel = new DefaultComboBoxModel();
+		for (Course course : courses) {
+			dropDownModel.addElement(course.getCourseName());
+		}
+		classes.setModel(dropDownModel);
+	}
+    
+    
     /**
      * @param args the command line arguments
      */

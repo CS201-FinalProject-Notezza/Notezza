@@ -55,7 +55,4 @@ public class ServerThread extends Thread {
         }
     }
     
-    void readCommand() {
-    		
-    }
 }
