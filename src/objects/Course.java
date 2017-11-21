@@ -81,6 +81,7 @@ public class Course implements Serializable {
 			note.setSortBy(type);
 		}
 		Collections.sort(allNotes);
+		Collections.reverse(allNotes);
 		return allNotes;
     }
 }
