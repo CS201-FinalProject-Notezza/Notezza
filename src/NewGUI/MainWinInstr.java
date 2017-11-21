@@ -947,6 +947,21 @@ public class MainWinInstr extends javax.swing.JFrame {
     
 	public void addCourse(Course course) {
 		if (course.getInstructor().getUsername().equals(client.getUser().getUsername())) {
+			if(courseList == null) {
+				courseList = new CourseList(new Vector<Course>());
+				this.post.setText("<html><body style='background-color:#f0f8ff;'>"
+						+ "<div style='border: 1px solid; margin: 10px; padding: 20px; border-radius:25px; "
+						+ "text-align:center; background: #ffffff; font-family: Lucida Grande'>"
+						+ "<h1>Welcome to Notezza!"
+						+ "<br/>Select a note to view!</h1></div>"
+						+ "</body></html>");
+				this.lecture.setEnabled(true);
+				this.viewMember.setEnabled(true);
+				this.jButton1.setEnabled(true);
+				this.sortChoiceBox.setEnabled(true);
+				currentCourse = course;
+				this.sortNotes();
+			}
 			courseList.addACourse(course);
 			courses = courseList.getCourses();
 			int index = classes.getSelectedIndex();

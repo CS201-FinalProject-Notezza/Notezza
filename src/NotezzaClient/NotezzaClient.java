@@ -111,6 +111,7 @@ public class NotezzaClient extends Thread {
                     mainWinInstr = new MainWinInstr(this, courseList);
                     mainWinInstr.setVisible(true);
                 }
+                loginWindow.setVisible(false);
                 break;
             case INITIALIZATION_STUDENT:
                 courseList = (CourseList) obj;
