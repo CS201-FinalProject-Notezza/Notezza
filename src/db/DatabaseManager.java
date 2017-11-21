@@ -465,7 +465,7 @@ public class DatabaseManager {
 			}
 			
 			for (Note n : allCourses.get(courseName).getAllNotes()) {
-				if (n.equals(c.getNote())) {
+				if (n.getTitle().equals(c.getNote().getTitle())) {
 					n.addComment(c);
 				}
 			}
