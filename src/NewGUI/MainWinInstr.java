@@ -634,6 +634,8 @@ public class MainWinInstr extends javax.swing.JFrame {
 			this.searchNote.setEnabled(false);
 			this.sortChoiceBox.setEnabled(false);
 			this.createComment.setEnabled(false);
+			this.lecture.setEnabled(false);
+            	this.viewMember.setEnabled(false);
 			return;
 		}
 		courses = courseList.getCourses();
