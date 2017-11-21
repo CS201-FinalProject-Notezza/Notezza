@@ -209,7 +209,7 @@ public class NotezzaClient extends Thread {
         Login lg = new Login(this);
         loginWindow.setLayout(new BorderLayout());
         loginWindow.add(lg, BorderLayout.CENTER);
-        loginWindow.setSize(630, 400);
+        loginWindow.setSize(650, 420);
         loginWindow.setLocationRelativeTo(null);
         loginWindow.setResizable(false);
         loginWindow.setVisible(true);
