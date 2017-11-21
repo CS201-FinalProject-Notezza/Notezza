@@ -941,13 +941,14 @@ public class MainWin extends javax.swing.JFrame {
         System.out.println("Changing presentation..");
         Presentation p = pc.getPresentation();
         Course c = pc.getCourse();
+        c.setCurrentLecture(p);
         if (currentCourse.getCourseName().equals(c.getCourseName())) {
-            currentCourse.setCurrentLecture(p);
             presentation.setVisible(false);
             presentation = new UserPresentation(this.client,currentCourse);
             client.setUserPresentationWindow(presentation);
             presentation.setVisible(true);
         }
+
     }
 
     // End of variables declaration                   
