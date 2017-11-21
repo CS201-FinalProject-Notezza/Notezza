@@ -864,7 +864,7 @@ public class DatabaseManager {
 			}
 			
 			for (Note no : allCourses.get(courseName).getAllNotes()) {
-				if (no.equals(n)) {
+				if (no.getTitle().equals(n.getTitle())) {
 					if (isLike) { no.addLike(u); }
 					else { no.addDislike(u); }
 				}
