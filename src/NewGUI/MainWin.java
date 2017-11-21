@@ -706,17 +706,21 @@ public class MainWin extends javax.swing.JFrame {
     }                                       
 
     private void sortChoiceBoxItemStateChanged(java.awt.event.ItemEvent evt) {
+        sortNotes();
+    }
+    
+    private void sortNotes() {
         int sortTypeInt = sortChoiceBox.getSelectedIndex();
-        displayedNotes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
-        refreshList();
+		displayedNotes = currentCourse.getSortedNotes(SortType.values()[sortTypeInt]);
+		refreshList();
     }
 
     private void refreshList() {
-        this.notesOverviewModel = (DefaultListModel) overviewList.getModel();
-        notesOverviewModel.removeAllElements();
-        for (Note note: displayedNotes) {
-            this.notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
-        }
+		this.notesOverviewModel = new DefaultListModel<String>();
+		for (Note note : displayedNotes) {
+			this.notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
+		}
+		this.overviewList.setModel(notesOverviewModel);
     }
 
     private void profileMouseClicked(java.awt.event.MouseEvent evt) {
@@ -928,8 +932,13 @@ public class MainWin extends javax.swing.JFrame {
             if ( courseInList.getCourseName().equals(course.getCourseName())) {
                 System.out.println("Find course!");
                 courseInList.addNote(note);
-                updateNote();
-                sortChoiceBox.setSelectedIndex(0);
+				if (currentCourse.getCourseName().equals(course.getCourseName())) {
+					if (this.sortChoiceBox.getSelectedIndex() == 0) {
+						sortNotes();
+					} else {
+						this.sortChoiceBox.setSelectedIndex(0);
+					}
+				}
                 System.out.println("Note added!");
                 return;
             }
