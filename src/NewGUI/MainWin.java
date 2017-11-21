@@ -90,8 +90,7 @@ public class MainWin extends javax.swing.JFrame {
         displayedNotes = new Vector<>();
         updateNote();
         initPost();
-
-
+        sortNotes();
     }
     private void initPost() {
         // post Content
@@ -469,7 +468,7 @@ public class MainWin extends javax.swing.JFrame {
 
         likeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/like-22.png"))); // NOI18N
         // TODO HARD CODE
-        likeButton.setText("63");
+        likeButton.setText("0");
         likeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddDisLikeMouseClicked(evt);
@@ -479,7 +478,7 @@ public class MainWin extends javax.swing.JFrame {
         likeButton.setEnabled(client != null);
 
         dislikeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/dislike-22.png"))); // NOI18N
-        dislikeButton.setText("63");
+        dislikeButton.setText("0");
         dislikeButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AddLikeMouseClicked(evt);
