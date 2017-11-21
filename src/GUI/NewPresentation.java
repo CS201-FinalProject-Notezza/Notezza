@@ -146,7 +146,7 @@ public class NewPresentation extends JFrame {
 		setBounds(100, 100, 400, 640);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setBackground(new java.awt.Color(52, 61, 70));
+		contentPane.setBackground(new java.awt.Color(59, 89, 152));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -160,9 +160,9 @@ public class NewPresentation extends JFrame {
 		linkText = new JTextPane();
 		linkText.setBounds(15, 43, 368, 85);
 		linkText.setBackground(new java.awt.Color(204, 204, 204));
-		linkText.setForeground(new java.awt.Color(52, 61, 70));
+		linkText.setForeground(new java.awt.Color(59, 89, 152));
 		linkText.setBorder(null);
-		linkText.setCaretColor(new java.awt.Color(52, 61, 70));
+		linkText.setCaretColor(new java.awt.Color(59, 89, 152));
 		contentPane.add(linkText);
 
 		q1Label = new JLabel("Question 1: ");
@@ -365,7 +365,7 @@ public class NewPresentation extends JFrame {
 		q1Text.setBounds(94, 131, 290, 26);
 		q1Text.setForeground(new Color(204, 204, 204));
 		q1Text.setCaretColor(new Color(204, 204, 204));
-		q1Text.setBackground(new Color(52, 61, 70));
+		q1Text.setBackground(new Color(59, 89, 152));
 		q1Text.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(q1Text);
 		q1Text.setColumns(10);
@@ -383,7 +383,7 @@ public class NewPresentation extends JFrame {
 		q3Text.setBounds(94, 418, 290, 26);
 		q3Text.setForeground(new Color(204, 204, 204));
 		q3Text.setCaretColor(new Color(204, 204, 204));
-		q3Text.setBackground(new Color(52, 61, 70));
+		q3Text.setBackground(new Color(59, 89, 152));
 		q3Text.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(q3Text);
 																																										
@@ -396,7 +396,7 @@ public class NewPresentation extends JFrame {
 		q1Choice1Text.setBounds(94, 159, 261, 26);
 		q1Choice1Text.setForeground(new Color(204, 204, 204));
 		q1Choice1Text.setCaretColor(new Color(204, 204, 204));
-		q1Choice1Text.setBackground(new Color(52, 61, 70));
+		q1Choice1Text.setBackground(new Color(59, 89, 152));
 		q1Choice1Text.setBorder(null);
 		contentPane.add(q1Choice1Text);
 																																														
@@ -409,7 +409,7 @@ public class NewPresentation extends JFrame {
 		q1Choice2Text.setBounds(94, 181, 261, 26);
 		q1Choice2Text.setForeground(new Color(204, 204, 204));
 		q1Choice2Text.setCaretColor(new Color(204, 204, 204));
-		q1Choice2Text.setBackground(new Color(52, 61, 70));
+		q1Choice2Text.setBackground(new Color(59, 89, 152));
 		q1Choice2Text.setBorder(null);
 		contentPane.add(q1Choice2Text);
 																																																		
@@ -422,7 +422,7 @@ public class NewPresentation extends JFrame {
 		q1Choice3Text.setBounds(94, 203, 261, 26);
 		q1Choice3Text.setForeground(new Color(204, 204, 204));
 		q1Choice3Text.setCaretColor(new Color(204, 204, 204));
-		q1Choice3Text.setBackground(new Color(52, 61, 70));
+		q1Choice3Text.setBackground(new Color(59, 89, 152));
 		q1Choice3Text.setBorder(null);
 		contentPane.add(q1Choice3Text);
 																																																								
@@ -435,7 +435,7 @@ public class NewPresentation extends JFrame {
 		q1Choice4Text.setBounds(94, 225, 261, 26);
 		q1Choice4Text.setForeground(new Color(204, 204, 204));
 		q1Choice4Text.setCaretColor(new Color(204, 204, 204));
-		q1Choice4Text.setBackground(new Color(52, 61, 70));
+		q1Choice4Text.setBackground(new Color(59, 89, 152));
 		q1Choice4Text.setBorder(null);
 		contentPane.add(q1Choice4Text);
 
@@ -448,7 +448,7 @@ public class NewPresentation extends JFrame {
 		q2Text.setBounds(94, 274, 290, 26);
 		q2Text.setForeground(new Color(204, 204, 204));
 		q2Text.setCaretColor(new Color(204, 204, 204));
-		q2Text.setBackground(new Color(52, 61, 70));
+		q2Text.setBackground(new Color(59, 89, 152));
 		q2Text.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(q2Text);
 
@@ -457,7 +457,7 @@ public class NewPresentation extends JFrame {
 		q1Choice5Text.setBounds(94, 247, 261, 26);
 		q1Choice5Text.setForeground(new Color(204, 204, 204));
 		q1Choice5Text.setCaretColor(new Color(204, 204, 204));
-		q1Choice5Text.setBackground(new Color(52, 61, 70));
+		q1Choice5Text.setBackground(new Color(59, 89, 152));
 		q1Choice5Text.setBorder(null);
 		contentPane.add(q1Choice5Text);
 
@@ -482,7 +482,7 @@ public class NewPresentation extends JFrame {
 		q2Choice1Text.setBounds(94, 302, 261, 26);
 		q2Choice1Text.setForeground(new Color(204, 204, 204));
 		q2Choice1Text.setCaretColor(new Color(204, 204, 204));
-		q2Choice1Text.setBackground(new Color(52, 61, 70));
+		q2Choice1Text.setBackground(new Color(59, 89, 152));
 		q2Choice1Text.setBorder(null);
 		contentPane.add(q2Choice1Text);
 
@@ -491,7 +491,7 @@ public class NewPresentation extends JFrame {
 		q2Choice2Text.setBounds(94, 324, 261, 26);
 		q2Choice2Text.setForeground(new Color(204, 204, 204));
 		q2Choice2Text.setCaretColor(new Color(204, 204, 204));
-		q2Choice2Text.setBackground(new Color(52, 61, 70));
+		q2Choice2Text.setBackground(new Color(59, 89, 152));
 		q2Choice2Text.setBorder(null);
 		contentPane.add(q2Choice2Text);
 
@@ -500,7 +500,7 @@ public class NewPresentation extends JFrame {
 		q2Choice3Text.setBounds(94, 346, 261, 26);
 		q2Choice3Text.setForeground(new Color(204, 204, 204));
 		q2Choice3Text.setCaretColor(new Color(204, 204, 204));
-		q2Choice3Text.setBackground(new Color(52, 61, 70));
+		q2Choice3Text.setBackground(new Color(59, 89, 152));
 		q2Choice3Text.setBorder(null);
 		contentPane.add(q2Choice3Text);
 
@@ -513,7 +513,7 @@ public class NewPresentation extends JFrame {
 		q2Choice4Text.setBounds(94, 368, 261, 26);
 		q2Choice4Text.setForeground(new Color(204, 204, 204));
 		q2Choice4Text.setCaretColor(new Color(204, 204, 204));
-		q2Choice4Text.setBackground(new Color(52, 61, 70));
+		q2Choice4Text.setBackground(new Color(59, 89, 152));
 		q2Choice4Text.setBorder(null);
 		contentPane.add(q2Choice4Text);
 
@@ -522,7 +522,7 @@ public class NewPresentation extends JFrame {
 		q2Choice5Text.setBounds(94, 390, 261, 26);
 		q2Choice5Text.setForeground(new Color(204, 204, 204));
 		q2Choice5Text.setCaretColor(new Color(204, 204, 204));
-		q2Choice5Text.setBackground(new Color(52, 61, 70));
+		q2Choice5Text.setBackground(new Color(59, 89, 152));
 		q2Choice5Text.setBorder(null);
 		contentPane.add(q2Choice5Text);
 
@@ -551,7 +551,7 @@ public class NewPresentation extends JFrame {
 		q3Choice1Text.setBounds(94, 446, 261, 26);
 		q3Choice1Text.setForeground(new Color(204, 204, 204));
 		q3Choice1Text.setCaretColor(new Color(204, 204, 204));
-		q3Choice1Text.setBackground(new Color(52, 61, 70));
+		q3Choice1Text.setBackground(new Color(59, 89, 152));
 		q3Choice1Text.setBorder(null);
 		contentPane.add(q3Choice1Text);
 
@@ -560,7 +560,7 @@ public class NewPresentation extends JFrame {
 		q3Choice2Text.setBounds(94, 468, 261, 26);
 		q3Choice2Text.setForeground(new Color(204, 204, 204));
 		q3Choice2Text.setCaretColor(new Color(204, 204, 204));
-		q3Choice2Text.setBackground(new Color(52, 61, 70));
+		q3Choice2Text.setBackground(new Color(59, 89, 152));
 		q3Choice2Text.setBorder(null);
 		contentPane.add(q3Choice2Text);
 
@@ -569,7 +569,7 @@ public class NewPresentation extends JFrame {
 		q3Choice3Text.setBounds(94, 490, 261, 26);
 		q3Choice3Text.setForeground(new Color(204, 204, 204));
 		q3Choice3Text.setCaretColor(new Color(204, 204, 204));
-		q3Choice3Text.setBackground(new Color(52, 61, 70));
+		q3Choice3Text.setBackground(new Color(59, 89, 152));
 		q3Choice3Text.setBorder(null);
 		contentPane.add(q3Choice3Text);
 
@@ -578,7 +578,7 @@ public class NewPresentation extends JFrame {
 		q3Choice4Text.setBounds(94, 512, 261, 26);
 		q3Choice4Text.setForeground(new Color(204, 204, 204));
 		q3Choice4Text.setCaretColor(new Color(204, 204, 204));
-		q3Choice4Text.setBackground(new Color(52, 61, 70));
+		q3Choice4Text.setBackground(new Color(59, 89, 152));
 		q3Choice4Text.setBorder(null);
 		contentPane.add(q3Choice4Text);
 
@@ -587,7 +587,7 @@ public class NewPresentation extends JFrame {
 		q3Choice5Text.setBounds(94, 534, 261, 26);
 		q3Choice5Text.setForeground(new Color(204, 204, 204));
 		q3Choice5Text.setCaretColor(new Color(204, 204, 204));
-		q3Choice5Text.setBackground(new Color(52, 61, 70));
+		q3Choice5Text.setBackground(new Color(59, 89, 152));
 		q3Choice5Text.setBorder(null);
 		contentPane.add(q3Choice5Text);
 	}

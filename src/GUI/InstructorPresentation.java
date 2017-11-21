@@ -113,11 +113,11 @@ public class InstructorPresentation extends JFrame {
 		scrollPane.setViewportView(chatWindow);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		chatWindow.setFont(new Font("Dialog", Font.PLAIN, 13));
-		chatWindow.setBackground(new java.awt.Color(207, 216, 247));
+		chatWindow.setBackground(new java.awt.Color(227, 232, 247));
 
 		chatTextBox = new JTextField();
 		chatTextBox.setBounds(499, 473, 207, 27);
-		chatTextBox.setBackground(new java.awt.Color(207, 216, 247));
+		chatTextBox.setBackground(new java.awt.Color(227, 232, 247));
 		chatTextBox.setFont(new Font("Dialog", Font.PLAIN, 13));
 		contentPane.add(chatTextBox);
 		chatTextBox.setColumns(10);
