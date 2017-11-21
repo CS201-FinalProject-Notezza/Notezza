@@ -36,8 +36,6 @@ import NotezzaServer.CommandType;
 import objects.ChatMessage;
 import objects.Course;
 import objects.Quiz;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 
 public class InstructorPresentation extends JFrame {
 
@@ -67,7 +65,6 @@ public class InstructorPresentation extends JFrame {
 	
 	private JButton newPresentationButton;
 	private JComboBox questionBox;
-	private JScrollPane scrollPane;
 	
 	/**
 	 * Launch the application.
@@ -103,25 +100,23 @@ public class InstructorPresentation extends JFrame {
 		contentPane.setLayout(null);
 
 		chatDefaultListModel = new DefaultListModel();
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane.setBounds(500, 100, 272, 373);
-		contentPane.add(scrollPane);
 		chatWindow = new JList(chatDefaultListModel);
-		scrollPane.setViewportView(chatWindow);
 		chatWindow.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		chatWindow.setFont(new Font("Dialog", Font.PLAIN, 13));
 		chatWindow.setBackground(new java.awt.Color(207, 216, 247));
+		chatWindow.setBounds(500, 100, 272, 373);
+		contentPane.add(chatWindow);
 
 		chatTextBox = new JTextField();
 		chatTextBox.setBounds(499, 473, 207, 27);
 		chatTextBox.setBackground(new java.awt.Color(207, 216, 247));
+		chatTextBox.setFont(new Font("Dialog", Font.PLAIN, 13));
 		contentPane.add(chatTextBox);
 		chatTextBox.setColumns(10);
 
 		sendChatButton = new JButton("Send");
 		sendChatButton.setBounds(707, 473, 68, 29);
+		sendChatButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		sendChatButton.setAction(sendChatMessage);
 		contentPane.add(sendChatButton);
 
@@ -159,6 +154,7 @@ public class InstructorPresentation extends JFrame {
 
 		slideBackwardsButton = new JButton("<");
 		GridBagConstraints gbc_slideBackwardsButton = new GridBagConstraints();
+		slideBackwardsButton.setFont(new Font("Dialog", Font.BOLD, 13));
 		gbc_slideBackwardsButton.insets = new Insets(0, 0, 0, 5);
 		gbc_slideBackwardsButton.gridx = 0;
 		gbc_slideBackwardsButton.gridy = 0;
@@ -167,6 +163,7 @@ public class InstructorPresentation extends JFrame {
 
 		slideForwardButton = new JButton(">");
 		GridBagConstraints gbc_slideForwardButton = new GridBagConstraints();
+		slideForwardButton.setFont(new Font("Dialog", Font.BOLD, 13));
 		gbc_slideForwardButton.gridx = 2;
 		gbc_slideForwardButton.gridy = 0;
 		slideButtonPanel.add(slideForwardButton, gbc_slideForwardButton);
@@ -199,6 +196,7 @@ public class InstructorPresentation extends JFrame {
 		newPresentationButton = new JButton("New Presentation");
 		newPresentationButton.setAction(action);
 		newPresentationButton.setText("New Presentation");
+		newPresentationButton.setFont(new Font("Dialog", Font.PLAIN, 13));
 		newPresentationButton.setBounds(619, 20, 152, 29);
 		contentPane.add(newPresentationButton);
 	}
@@ -259,8 +257,6 @@ public class InstructorPresentation extends JFrame {
 			System.out.println(username + ": " + chatContent);
 			System.out.println("Chat has been sent");
 			client.sendCommand(new Command(CommandType.SEND_CHAT_MESSAGE, chatMessage));
-			
-			chatTextBox.setText("");
 		}
 	}
 

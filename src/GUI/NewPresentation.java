@@ -641,11 +641,12 @@ public class NewPresentation extends JFrame {
 			if (quiz3 != null) {
 				quizzes.add(quiz3);
 			}
-
+			
 			Presentation presentation = new Presentation(links, quizzes);
 			// send to server
 			PresentationANDCourse pc = new PresentationANDCourse(presentation,course);
 			client.sendCommand(new Command(CommandType.CREATE_PRESENTATION, pc));
+			setVisible(false);
 		}
 
 		private Quiz createQuiz(String name, String[] quizArray,JCheckBox[] checkBoxes) {
