@@ -252,13 +252,11 @@ public class Login extends javax.swing.JPanel {
     	
     	MainWin guest = new MainWin(null, cl);
         guest.setVisible(true);
-        setVisible(false);
     }
 
     private void signupLabelMouseClicked(java.awt.event.MouseEvent evt) {
     	 CreateNewUser createNewUser = new CreateNewUser(client);
          createNewUser.setVisible(true);
-         setVisible(false);
     }
 
 

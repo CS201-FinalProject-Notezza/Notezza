@@ -12,6 +12,7 @@ import java.net.Socket;
 import javax.swing.JFrame;
 
 import GUI.InstructorPresentation;
+import GUI.LoginError;
 import GUI.UserPresentation;
 import NewGUI.Login;
 import NewGUI.MainWin;
@@ -43,10 +44,6 @@ public class NotezzaClient extends Thread {
             System.out.println("Connected to " + hostname + ":" + port);
             ois = new ObjectInputStream(s.getInputStream());
             oos = new ObjectOutputStream(s.getOutputStream());
-            /* Below is the Old GUI
-            LoginScreen loginScreen = new LoginScreen(this);
-            loginScreen.frame.setVisible(true);
-            */
             popUpLogin();
             System.out.println("Window opened");
             this.start();
@@ -101,7 +98,8 @@ public class NotezzaClient extends Thread {
                 }
                 break;
             case LOGIN_FAIL:
-                // TODO Need to display login failure message on login windW\; Wait for GUI to finish
+                LoginError le = new LoginError();
+                le.setVisible(true);
                 break;
             case REGISTER_DONE:
                 user = (User) obj;
