@@ -144,7 +144,7 @@ public class NotezzaServer {
                 Presentation presentation = pc.getPresentation();
                 Course courseForPresentation = pc.getCourse();
                 dm.addPresentation(presentation,courseForPresentation);
-                broadcast(new Command(UPDATE_PRESENTATION, presentation));
+                broadcast(new Command(UPDATE_PRESENTATION, pc));
                 break;
             case ADD_COMMENT:
                 System.out.println("Received request to add comment...");

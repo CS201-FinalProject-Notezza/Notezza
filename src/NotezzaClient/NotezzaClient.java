@@ -158,6 +158,12 @@ public class NotezzaClient extends Thread {
                 break;
             case UPDATE_PRESENTATION:
                 // TODO UPDATE PRESENTATION
+                PresentationANDCourse pc = (PresentationANDCourse) obj;
+                if (user.isInstructor()) {
+                    //instrPresentationWindow.updatePresentaion(pc);
+                } else {
+                    //userPresentationWindow.updatePresentation(pc);
+                }
                 break;
             case UPDATE_CHAT:
             	ChatMessage message = (ChatMessage) obj;
@@ -176,21 +182,19 @@ public class NotezzaClient extends Thread {
             case UPDATE_LIKE:
                 AddingLike addLike = (AddingLike) obj;
                 if (user.isInstructor()) {
-                    // TODO uncomment
                     mainWinInstr.addLike(addLike);
                 } else {
                     // TODO uncomment
-                    //userPresentationWindow.addLike(addLike);
+                    // mainWin.addLike(addLike);
                 }
                 break;
             case UPDATE_DISLIKE:
                 AddingDislike addDislike = (AddingDislike) obj;
                 if (user.isInstructor()) {
-                    // TODO uncomment
                    mainWinInstr.addDisLike(addDislike);
                 } else {
                     // TODO uncomment
-                   // userPresentationWindow.addDislike(addDislike);
+                   // mainWin.addDislike(addDislike);
                 }
                 break;
             default:
