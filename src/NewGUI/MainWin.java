@@ -649,12 +649,12 @@ public class MainWin extends javax.swing.JFrame {
     }
 
     private void updateNote() {
+        notesOverviewModel.removeAllElements();
         displayedNotes = currentCourse.getAllNotes();
         for (Note note : displayedNotes) {
             notesOverviewModel.addElement(Util.getHTMLforNoteOverview(note));
         }
         overviewList.setModel(notesOverviewModel);
-
     }
 
     private void AddDisLikeMouseClicked(MouseEvent evt) {
@@ -928,8 +928,9 @@ public class MainWin extends javax.swing.JFrame {
                 System.out.println("Find course!");
                 courseInList.addNote(note);
                 updateNote();
+                sortChoiceBox.setSelectedIndex(0);
                 System.out.println("Note added!");
-                break;
+                return;
             }
         }
         System.out.println("Adding note failed");
